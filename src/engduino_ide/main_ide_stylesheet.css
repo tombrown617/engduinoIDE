@@ -1,0 +1,63 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.testing_button {
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #731e1e;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #1d1d1d;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.main_bg{
+
+	-fx-background-color : #cacaca; 
+
+}
+
+.main_bg_header_buttons{
+	
+	-fx-background-color : #b6b6b6 ;
+	
+	
+	
+	
+	-fx-background-color: 
+        #a3a3a3,
+        linear-gradient(#8a8a8a 0%, #737475 20%, #adadad 100%),
+        linear-gradient(#929292, #bcbcbc),
+        radial-gradient(center 50% 0%, radius 100%, rgba(164,165,168,0), rgba(190,191,192,0));
+    /*-fx-background-radius: 5,4,3,5;*/
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+	-fx-effect: dropshadow(three-pass-box, grey, 1, 0, 0, 1);
+	
+}
+
+.testing_button:hover {
+    -fx-background-color: #3a3a3a;
+}
+
+.testing_button:pressed, .testing_button:default:hover:pressed {
+  -fx-background-color: white;
+  -fx-text-fill: #1d1d1d;
+}
+
+.testing_button:focused {
+    -fx-border-color: white, white;
+    -fx-border-width: 1, 1;
+    -fx-border-style: solid, segments(1, 1);
+    -fx-border-radius: 0, 0;
+    -fx-border-insets: 1 1 1 1, 0;
+}
+
+.testing_button:disabled, .testing_button:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: white;
+}
+
