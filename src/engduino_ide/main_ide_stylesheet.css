@@ -61,3 +61,37 @@
     -fx-text-fill: white;
 }
 
+.main_sketch_window_tab_pane{
+
+	 -fx-background-radius: 5.0;
+	 -fx-background-color:#FFF ;
+	 -fx-effect: dropshadow(three-pass-box, grey, 4, 0.2, 0, 0);
+}
+
+.tab-pane{
+	-fx-background-color:#FFF ;
+	
+}
+
+.main_sketch_window{
+
+	-fx-background-color:#FFF ;
+	 -fx-background-radius: 0 0 10 10;
+}
+
+
+.tab-content-area 
+{
+-fx-background-color:#ffffff ; 
+}
+
+.tab{
+	
+	}
+	
+.tab-pane:top *.tab-header-area {
+   
+	
+	-fx-background-color:#ffffff ; 
+}
+
