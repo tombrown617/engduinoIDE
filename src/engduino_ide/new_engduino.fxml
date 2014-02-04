@@ -2,14 +2,16 @@
 
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" minHeight="761.0" minWidth="1000" prefHeight="761.0" prefWidth="1000.0" style="-fx-background-color:#d2d2d2;" styleClass="main_bg" stylesheets="file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/engduino_ide/main_ide_stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="engduino.fxml.FXMLDocumentController">
    <children><HBox maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1000.0" styleClass="main_bg_header_buttons" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    
    
-   <GridPane  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="45.0"   hgap="7.0" layoutY="47.0" prefHeight="714.0" prefWidth="1000.0" vgap="7.0" xmlns:fx="http://javafx.com/fxml"><padding>
-<Insets right="10.0" top="10.0" left="10.0" bottom="10.0" />
+   <GridPane hgap="7.0" layoutY="47.0" prefHeight="714.0" prefWidth="1000.0" vgap="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" xmlns:fx="http://javafx.com/fxml">
+       <padding>
+<Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 </padding>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
@@ -19,15 +21,15 @@
     <RowConstraints minHeight="10.0" percentHeight="75.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
-<children><Pane styleClass="main_sketch_window_tab_pane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #;" GridPane.columnIndex="1">
+<children><AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #;" styleClass="main_sketch_window_tab_pane" GridPane.columnIndex="1">
 <padding>
-<Insets right="10.0" top="10.0" />
+<Insets right="0.0" top="5.0" />
 </padding>
-<children><!--<TabPane layoutX="5.0" layoutY="5.0" prefHeight="470.0" prefWidth="680.0" side="TOP" tabClosingPolicy="ALL_TABS" xmlns:fx="http://javafx.com/fxml">
+<children><TabPane styleClass = "sketch_scroll_pane" id="sketches_tab_pane" layoutX="5.0" layoutY="5.0" prefHeight="510.0" prefWidth="669.0" side="TOP" style="-fx-background-color: #ffffff;" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0" xmlns:fx="http://javafx.com/fxml">
   <tabs>
     <Tab text="Sketch 1">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="470.0" prefWidth="696.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0">
 </AnchorPane>
       </content>
     </Tab>
@@ -41,16 +43,59 @@
 <String fx:value="tab-pane" />
 <String fx:value="floating" />
 </styleClass>
-</TabPane>-->
-</children></Pane>
+</TabPane>
+</children>
+</AnchorPane>
 
-<Pane prefHeight="57.0" prefWidth="100.0" styleClass="main_sketch_window_tab_pane"  GridPane.columnSpan="1" GridPane.rowSpan="2">
+<AnchorPane prefHeight="57.0" prefWidth="100.0" styleClass="main_sketch_window_tab_pane" GridPane.columnSpan="1" GridPane.rowSpan="2">
 <padding>
-<Insets bottom="10.0" left="10.0" top="10.0" />
-</padding></Pane><Pane styleClass="main_sketch_window_tab_pane" prefHeight="200.0" prefWidth="200.0"  GridPane.columnIndex="1" GridPane.rowIndex="1">
+<Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
+</padding>
+
+    <children><TabPane id="controls_tab_pane" layoutX="5.0" layoutY="5.0" prefHeight="510.0" prefWidth="669.0" side="TOP" style="-fx-background-color: #;-fx-background-radius:5; -fx-border-color: " tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0" xmlns:fx="http://javafx.com/fxml">
+        <tabs>
+          <Tab text="Flow Control" styleClass="firstFlowControlTab" >
+            <content>
+         <ScrollPane layoutX="-5.0" styleClass="control_scroll_pane"  minHeight="466.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0">
+                
+                  <AnchorPane prefHeight="710.0" prefWidth="276.0"></AnchorPane>
+                      
+                  
+            </ScrollPane>
+            </content>
+          </Tab>
+          <Tab text="Sensors">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          
+          <Tab text="LEDs">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+      
+          <Tab text="All">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+      
+        </tabs>
+      <styleClass>
+      <String fx:value="tab-pane" />
+      <String fx:value="floating" />
+      </styleClass>
+      </TabPane>
+      </children>
+
+
+</AnchorPane>
+<AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="main_sketch_window_tab_pane" GridPane.columnIndex="1" GridPane.rowIndex="1">
 <padding>
 <Insets bottom="10.0" right="10.0" />
-</padding></Pane>
+</padding></AnchorPane>
 </children>
 </GridPane>
 </children>
