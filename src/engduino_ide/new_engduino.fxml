@@ -4,9 +4,234 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
 
-<AnchorPane id="AnchorPane" minHeight="761.0" minWidth="1000" prefHeight="761.0" prefWidth="1000.0" style="-fx-background-color:#d2d2d2;" styleClass="main_bg" stylesheets="file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/engduino_ide/main_ide_stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="engduino.fxml.FXMLDocumentController">
-   <children><HBox maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1000.0" styleClass="main_bg_header_buttons" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+<AnchorPane fx:controller="engduino_ide.FXMLDocumentController" id="AnchorPane" minHeight="761.0" minWidth="1000" prefHeight="761.0" prefWidth="1000.0" style="-fx-background-color:#d2d2d2;" styleClass="main_bg" xmlns:fx="http://javafx.com/java1" xmlns="http://javafx.com/javafx/8" >
+   <children>
+       <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1000.0" styleClass="main_bg_header_buttons" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" >
+           
+            <padding>
+                <Insets bottom="0.0" left="10.0" right="10.0" top="0.0" />
+            </padding>
+           
+           <children>
+                  <GridPane hgap="7.0" layoutY="0.0" prefHeight="0.0" prefWidth="1000.0" vgap="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns:fx="http://javafx.com/fxml">
+                        <padding>
+                              <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
+                         </padding>
+
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="75.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="NEVER" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
+
+                     </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="45.0"  prefHeight="45.0" vgrow="NEVER" />
+                    </rowConstraints>
+
+
+                    <children>
+
+                        <AnchorPane prefHeight="200.0"   style="" styleClass="" GridPane.columnIndex="0">
+                            <padding>
+                            <Insets right="0.0" top="0.0" />
+                            </padding>
+                            
+                            <children>
+                                
+                                <!--Grid pane for buttons -->
+                                 <GridPane hgap="7.0" layoutY="0.0" prefHeight="0.0" prefWidth="700.0" vgap="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns:fx="http://javafx.com/fxml">
+                                        <padding>
+                                              <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
+                                         </padding>
+
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="45" minWidth="40.0"  prefWidth="45.0" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="45" minWidth="40.0"  prefWidth="45.0" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="45" minWidth="40.0"  prefWidth="45.0" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="5" minWidth="5.0"  prefWidth="5.0" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="45" minWidth="40.0"  prefWidth="45.0" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="45" minWidth="40.0"  prefWidth="45.0" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="5" minWidth="5.0"  prefWidth="5.0" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="45" minWidth="40.0"  prefWidth="45.0" />
+                                        
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="45" minWidth="40.0"  prefWidth="45.0" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="5" minWidth="5.0"  prefWidth="5.0" />
+                                         <ColumnConstraints hgrow="NEVER" maxWidth="45" minWidth="40.0"  prefWidth="45.0" />
+                                        
+                                        
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="45.0"  prefHeight="45.0" vgrow="NEVER" />
+                                    </rowConstraints>
+
+
+                                    <children>
+
+                                        <AnchorPane    style="" styleClass="" GridPane.columnIndex="0">
+                                            <padding>
+                                            <Insets right="0.0" top="10.0" left = "0.0" bottom = "0.0" />
+                                            </padding>
+
+                                            <children>
+                                                    
+                                                <ToggleButton prefHeight="45.0" prefWidth="45.0" styleClass = "create_new_button"   mnemonicParsing="false" text="" />
+                                                
+                                            </children>
+
+                                        </AnchorPane>
+
+                                        <AnchorPane  styleClass=""  GridPane.columnIndex="1" >
+                                            <padding>
+                                                <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
+                                            </padding>
+                                            
+                                            <children>
+                                                    
+                                                <Button fx:id = "open_project_button" styleClass = "open_project_button" style = ""  mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+                                                </Button>
+                                                
+                                            </children>
+                                            
+
+                                        </AnchorPane>
+                                        
+                                        
+                                        <AnchorPane  styleClass=""  GridPane.columnIndex="2" >
+                                            <padding>
+                                                <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
+                                            </padding>
+                                            
+                                            <children>
+                                                    
+                                                <Button fx:id = "save_project_button" styleClass = "save_project_button" style = ""  mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+                                                </Button>
+                                                
+                                            </children>
+                                            
+
+                                        </AnchorPane>
+                                        
+                                        <Separator  orientation="VERTICAL" prefHeight="40.0" GridPane.columnIndex="3" />
+                                        
+                                         <AnchorPane  styleClass=""  GridPane.columnIndex="4" >
+                                            <padding>
+                                                <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
+                                            </padding>
+                                            
+                                            <children>
+                                                    
+                                                <Button fx:id = "undo_project_button" styleClass = "undo_project_button" style = ""  mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+                                                </Button>
+                                                
+                                            </children>
+                                            
+
+                                        </AnchorPane>
+                                        
+                                        <AnchorPane  styleClass=""  GridPane.columnIndex="5" >
+                                            <padding>
+                                                <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
+                                            </padding>
+                                            
+                                            <children>
+                                                    
+                                                <Button fx:id = "undo_project_button" styleClass = "redo_project_button" style = ""  mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+                                                </Button>
+                                                
+                                            </children>
+                                            
+
+                                        </AnchorPane>
+                                        
+                                         <Separator  orientation="VERTICAL" prefHeight="40.0" GridPane.columnIndex="6" />
+
+                                           <AnchorPane  styleClass=""  GridPane.columnIndex="7" >
+                                            <padding>
+                                                <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
+                                            </padding>
+                                            
+                                            <children>
+                                                    
+                                                <Button fx:id = "print_code_button" styleClass = "print_code_button" style = ""  mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+                                                </Button>
+                                                
+                                            </children>
+                                            
+
+                                        </AnchorPane>
+                                        
+                                        <AnchorPane  styleClass=""  GridPane.columnIndex="8" >
+                                            <padding>
+                                                <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
+                                            </padding>
+                                            
+                                            <children>
+                                                    
+                                                <Button fx:id = "debug_button" styleClass = "debug_button" style = ""  mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+                                                </Button>
+                                                
+                                            </children>
+                                            
+
+                                        </AnchorPane>
+                                        
+                                        <Separator  orientation="VERTICAL" prefHeight="40.0" GridPane.columnIndex="9" />
+                                    
+                                         <AnchorPane  styleClass=""  GridPane.columnIndex="10" >
+                                            <padding>
+                                                <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
+                                            </padding>
+                                            
+                                            <children>
+                                                    
+                                                <Button fx:id = "upload_button" styleClass = "upload_button" style = ""  mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+                                                </Button>
+                                                
+                                            </children>
+                                            
+
+                                        </AnchorPane>
+                                        
+                                    </children>
+                                </GridPane>
+
+                <!-- end of the grid pane for button container -->
+                                
+                            </children>
+                            
+                        </AnchorPane>
+
+                        <AnchorPane prefHeight="45.0" styleClass="search_box_container"  GridPane.columnIndex="1" >
+                             
+                            
+                            <children>
+                                
+                                <TextField promptText="Search"  prefHeight="25" prefWidth="200" AnchorPane.topAnchor="7.5" AnchorPane.rightAnchor="3.0"      styleClass = "search_box" fx:id="search_box" >
+                                    
+                                    
+                                    
+                                </TextField>
+                            </children>
+
+                        </AnchorPane>
+                        <!--<AnchorPane prefHeight="200.0" prefWidth="200.0" styleClass="testing_menu_tabs" GridPane.columnIndex="0" >
+                        <padding>
+                        <Insets bottom="10.0" right="10.0" />
+                        </padding></AnchorPane>-->
+                    </children>
+                </GridPane>
+     
+
+            </children>
+       </AnchorPane>
    
    
    <GridPane hgap="7.0" layoutY="47.0" prefHeight="714.0" prefWidth="1000.0" vgap="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" xmlns:fx="http://javafx.com/fxml">
@@ -21,7 +246,7 @@
     <RowConstraints minHeight="10.0" percentHeight="75.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
-<children><AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #;" styleClass="main_sketch_window_tab_pane" GridPane.columnIndex="1">
+<children><AnchorPane prefHeight="200.0" prefWidth="200.0" style="" styleClass="main_sketch_window_tab_pane" GridPane.columnIndex="1">
 <padding>
 <Insets right="0.0" top="5.0" />
 </padding>
@@ -52,7 +277,7 @@
 <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
 </padding>
 
-    <children><TabPane id="controls_tab_pane" layoutX="5.0" layoutY="5.0" prefHeight="510.0" prefWidth="669.0" side="TOP" style="-fx-background-color: #;-fx-background-radius:5; -fx-border-color: " tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0" xmlns:fx="http://javafx.com/fxml">
+    <children><TabPane id="controls_tab_pane" layoutX="5.0" layoutY="5.0" prefHeight="510.0" prefWidth="669.0" side="TOP" style="-fx-background-radius:5; -fx-border-color: " tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0" xmlns:fx="http://javafx.com/fxml">
         <tabs>
           <Tab text="Flow Control" styleClass="firstFlowControlTab" >
             <content>

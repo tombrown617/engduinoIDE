@@ -217,3 +217,117 @@
 
 }
 
+.testing_menu_tabs{
+
+	-fx-background-color:#33C ;
+}
+
+
+.testing_menu_tabs2{
+
+	-fx-background-color:#FC3 ;
+}
+
+.create_new_button{
+
+	 -fx-background-color:transparent ;
+	 -fx-background-image:url('../graphics/testing_image2.png') ;
+	 -fx-background-repeat: no-repeat;
+	 -fx-background-position: center;
+	 
+}
+
+.open_project_button{
+
+	 -fx-background-color:transparent ;
+	 -fx-background-image:url('../graphics/open_icon.png') ;
+	 -fx-background-repeat: no-repeat;
+	 -fx-background-position: center;
+	 
+}
+
+.save_project_button{
+
+	 -fx-background-color:transparent ;
+	 -fx-background-image:url('../graphics/save_icon.png') ;
+	 -fx-background-repeat: no-repeat;
+	 -fx-background-position: center;
+	 
+}
+
+
+.print_code_button{
+
+	 -fx-background-color:transparent ;
+	 -fx-background-image:url('../graphics/printer-icon.png') ;
+	 -fx-background-repeat: no-repeat;
+	 -fx-background-position: center;
+	 
+}
+
+
+.undo_project_button{
+
+	 -fx-background-color:transparent ;
+	 -fx-background-image:url('../graphics/undo-5-256.png') ;
+	 -fx-background-repeat: no-repeat;
+	 -fx-background-position: center;
+	 
+}
+
+
+.debug_button{
+
+	 -fx-background-color:transparent ;
+	 -fx-background-image:url('../graphics/debug.png') ;
+	 -fx-background-repeat: no-repeat;
+	 -fx-background-position: center;
+	 
+}
+
+.upload_button{
+
+	 -fx-background-color:transparent ;
+	 -fx-background-image:url('../graphics/upload.png') ;
+	 -fx-background-repeat: no-repeat;
+	 -fx-background-position: center;
+	 
+}
+
+
+.redo_project_button{
+
+	 -fx-background-color:transparent ;
+	 -fx-background-image:url('../graphics/redo.png') ;
+	 -fx-background-repeat: no-repeat;
+	 -fx-background-position: center;
+	 
+}
+
+
+.toggle-button{
+
+	-fx-background-image: url('../graphics/testing_image2.png');
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: center;
+}
+
+.seperator{
+
+	-fx-border-style:dotted ;
+	-fx-border-color:#000 ;
+	-fx-background-color:#000 ;
+}
+
+
+.search_box{
+
+	-fx-background-radius: 2em;
+	
+}
+
+.search_box_container{
+
+	-fx-background-position: center;
+	
+}
