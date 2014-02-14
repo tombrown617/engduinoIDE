@@ -231,7 +231,7 @@
 .create_new_button{
 
 	 -fx-background-color:transparent ;
-	 -fx-background-image:url('../graphics/testing_image2.png') ;
+	 -fx-background-image:url('../graphics/new_project_image.png') ;
 	 -fx-background-repeat: no-repeat;
 	 -fx-background-position: center;
 	 
@@ -330,4 +330,19 @@
 
 	-fx-background-position: center;
 	
+}
+
+.modItem{
+
+	
+}
+
+.context-menu {
+    -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
+    -fx-background-insets: 0, 1, 2;
+	-fx-backgroung:#000 ;
+    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em; /* 4 1 8 1 */
+	-fx-width:200 ;
+	-fx-opacity:0.5 ;
+	-fx-text-fill: rgba(255,0,0,0.5) ;
 }

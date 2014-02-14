@@ -6,15 +6,127 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
 
-<AnchorPane fx:controller="engduino_ide.FXMLDocumentController" id="AnchorPane" minHeight="761.0" minWidth="1000" prefHeight="761.0" prefWidth="1000.0" style="-fx-background-color:#d2d2d2;" styleClass="main_bg" xmlns:fx="http://javafx.com/java1" xmlns="http://javafx.com/javafx/8" >
+<AnchorPane fx:controller="engduino_ide.FXMLDocumentController" id="AnchorPane" minHeight="761.0" minWidth="1000" prefHeight="791.0" prefWidth="1000.0" style="-fx-background-color:#d2d2d2;" styleClass="main_bg" xmlns:fx="http://javafx.com/java1" xmlns="http://javafx.com/javafx/8" >
    <children>
-       <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1000.0" styleClass="main_bg_header_buttons" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" >
+       
+       
+        <MenuBar id="modBar" prefWidth="1000" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"      styleClass="modBar">
+                    <menus>
+                      <Menu id="modItem" mnemonicParsing="false" styleClass="modItem" text="File" >
+                          <items>
+                              <MenuItem text="New Sketch" fx:id="subMenu1" />
+                             
+                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
+                              <MenuItem text="Open Project" fx:id="subMenu2" />
+                              
+                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
+                              
+                              <MenuItem text="Import Sketch" fx:id="import_sketch" />
+                              <MenuItem text="Export Sketch" fx:id="export_sketch" />
+                               <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
+                               <MenuItem text="Save Sketch" fx:id="save_sketch" />
+                              <MenuItem text="Save As" fx:id="save_as" />
+                              <MenuItem text="Save All" fx:id="save_all" />
+                              
+                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
+                              
+                              <MenuItem text="Print Code" fx:id="save_as" />
+                              <MenuItem text="Exit" fx:id="save_all" />
+                              
+                          </items>
+
+                </Menu>
+                      <Menu id="modItem" mnemonicParsing="false" styleClass="modItem" text="Edit" >
+                            
+                          <items>
+                              <MenuItem text="Undo" fx:id="subMenu1" />
+                              <MenuItem text="Redo" fx:id="subMenu1" />
+                             
+                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
+                              <MenuItem text="Cut" fx:id="subMenu2" />
+                               <MenuItem text="Copy" fx:id="import_sketch" />
+                              <MenuItem text="Paste" fx:id="export_sketch" />
+                              
+                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
+                              
+                              <MenuItem text="Select" fx:id="save_sketch" />
+                              <MenuItem text="Select All" fx:id="save_as" />
+                              
+                              <MenuItem text="Delete" fx:id="import_sketch" />
+                              <MenuItem text="Delete All" fx:id="export_sketch" />
+                               
+                              
+                          </items>
+                      
+                      </Menu>
+                      <Menu id="modItem" mnemonicParsing="false" styleClass="modItem" text="View" >
+                          
+                          <items>
+                              <MenuItem text="Code" fx:id="subMenu1" />
+                              <CheckMenuItem text = "Debugging Window" ></CheckMenuItem>
+                              
+                             
+                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
+                              <MenuItem text="IDE Logs" fx:id="subMenu2" />
+                               
+                               
+                              
+                          </items>
+                      
+                          
+                      </Menu>
+                       <Menu id="modItem" mnemonicParsing="false" styleClass="modItem" text="Run" >
+                           
+                           <items>
+                              <MenuItem text="Compile" fx:id="subMenu1" />
+                              <MenuItem text="Compile and Upload" fx:id="subMenu1" />
+                              <MenuItem text="Upload" fx:id="subMenu1" />
+                              <CheckMenuItem text = "Connect to Engduino" ></CheckMenuItem>
+                              
+                              
+                          </items>
+                           
+                       </Menu>
+                       <Menu id="modItem" mnemonicParsing="false" styleClass="modItem" text="Help" >
+                       
+                             <items>
+                              <MenuItem text="Help Contents" fx:id="subMenu1" />
+                              <MenuItem text="Online Documentation and Support" fx:id="subMenu1" />
+                              <MenuItem text="Keyboard Shortcuts" fx:id="subMenu1" />
+                              <CheckMenuItem text = "Report Issue" ></CheckMenuItem>
+                              
+                               
+                              
+                              
+                          </items>
+                       
+                       </Menu>
+                    </menus>
+     
+                </MenuBar>
+       
+       <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1000.0" styleClass="main_bg_header_buttons" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0"  >
            
             <padding>
                 <Insets bottom="0.0" left="10.0" right="10.0" top="0.0" />
             </padding>
            
            <children>
+                
+              
+               
+               <!--<Label text="Right click for options">
+                    <contextMenu>
+                      <ContextMenu>
+                        <items>
+                          <MenuItem text="Help" />
+                          <MenuItem text="Me" />
+                        </items>
+                      </ContextMenu>
+                    </contextMenu>
+                  </Label>-->
+              
+               
                   <GridPane hgap="7.0" layoutY="0.0" prefHeight="0.0" prefWidth="1000.0" vgap="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns:fx="http://javafx.com/fxml">
                         <padding>
                               <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
@@ -75,8 +187,9 @@
 
                                             <children>
                                                     
-                                                <ToggleButton prefHeight="45.0" prefWidth="45.0" styleClass = "create_new_button"   mnemonicParsing="false" text="" />
-                                                
+                                                 <Button fx:id = "new_project_button" styleClass = "create_new_button" style = ""  mnemonicParsing="false" prefHeight="45.0" prefWidth="45.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+
+                                                </Button>
                                             </children>
 
                                         </AnchorPane>
@@ -182,7 +295,7 @@
 
                                         </AnchorPane>
                                         
-                                        <Separator  orientation="VERTICAL" prefHeight="40.0" GridPane.columnIndex="9" />
+                                        <Separator  orientation="VERTICAL" prefHeight="35.0" GridPane.columnIndex="9" />
                                     
                                          <AnchorPane  styleClass=""  GridPane.columnIndex="10" >
                                             <padding>
@@ -234,7 +347,7 @@
        </AnchorPane>
    
    
-   <GridPane hgap="7.0" layoutY="47.0" prefHeight="714.0" prefWidth="1000.0" vgap="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" xmlns:fx="http://javafx.com/fxml">
+   <GridPane hgap="7.0" layoutY="47.0" prefHeight="714.0" prefWidth="1000.0" vgap="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" xmlns:fx="http://javafx.com/fxml">
        <padding>
 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
 </padding>
@@ -281,12 +394,9 @@
         <tabs>
           <Tab text="Flow Control" styleClass="firstFlowControlTab" >
             <content>
-         <ScrollPane layoutX="-5.0" styleClass="control_scroll_pane"  minHeight="466.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0">
-                
-                  <AnchorPane prefHeight="710.0" prefWidth="276.0"></AnchorPane>
-                      
-                  
-            </ScrollPane>
+                 <ScrollPane layoutX="-5.0" styleClass="control_scroll_pane"  minHeight="466.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0">                
+                        <AnchorPane fx:id = "flow_control_list_container" prefHeight="710.0" prefWidth="276.0"></AnchorPane>
+                  </ScrollPane>
             </content>
           </Tab>
           <Tab text="Sensors">

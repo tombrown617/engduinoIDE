@@ -6,108 +6,36 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" minHeight="761.0" minWidth="1000" prefHeight="761.0" prefWidth="1000.0" style="-fx-background-color:#d2d2d2;" styleClass="main_bg" stylesheets="file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/engduino_ide/main_ide_stylesheet.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="engduino.fxml.FXMLDocumentController">
-   <children><TabPane layoutX="1.0" layoutY="80.0" prefHeight="682.0" prefWidth="277.0" style="-fx-border-radius: 5px;" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml">
-  <tabs>
-    <Tab text="Flow Control">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="754.0" prefWidth="277.0" stylesheets="file:/Users/shehrozebhatti/Documents/Projects/Java/EngduinoIDE%20Testing/engduino.css">
-<children><ScrollPane minHeight="568.0" prefHeight="660.0" prefWidth="277.0" xmlns:fx="http://javafx.com/fxml">
-<content><AnchorPane prefHeight="710.0" prefWidth="276.0">
-<children>
-
-<ImageView id="loop_image" fitHeight="65.0" fitWidth="70.0" layoutX="40.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-
-        <image>
-            <Image url="https://cdn3.iconfinder.com/data/icons/iconic-1/32/loop_alt1-512.png" />
-          </image>
-
-</ImageView><Text layoutX="150.0" layoutY="130.0" scaleX="2.0" scaleY="2.0" strokeType="OUTSIDE" strokeWidth="0.0" text="IF..ELSE.." xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" /><ImageView id="loop_image" fitHeight="65.0" fitWidth="70.0" layoutX="40.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-<image>
-<Image url="http://www.clker.com/cliparts/5/5/7/0/1206557181271492137mcol_event_tree.svg.med.png" />
-</image>
-</ImageView><Label fx:id="loop_drag" layoutX="140.0" layoutY="35.0" scaleX="2.0" scaleY="2.0" text="Loop" />
-
-</children>
-</AnchorPane>
-</content>
-</ScrollPane>
-</children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="LEDs">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-<children><ScrollPane prefHeight="712.0" prefWidth="277.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-<content>
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="351.0" prefWidth="273.0" />
-</content>
-</ScrollPane>
-</children></AnchorPane>
-      </content>
-    </Tab><Tab text="Sensors" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-<content>
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-<children><ScrollPane prefHeight="712.0" prefWidth="277.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-<content>
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="351.0" prefWidth="273.0" />
-</content>
-</ScrollPane>
-</children></AnchorPane>
-</content>
-</Tab><Tab text="All" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-<content>
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-<children><ScrollPane prefHeight="712.0" prefWidth="277.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-<content>
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="351.0" prefWidth="273.0" />
-</content>
-</ScrollPane>
-</children></AnchorPane>
-</content>
-</Tab>
-  </tabs>
-</TabPane><TabPane layoutX="285.0" layoutY="80.0" prefHeight="480.0" prefWidth="714.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml">
-  <tabs>
-    <Tab text="New Sketch*">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="476.0" prefWidth="700.0">
-<children><ScrollPane fx:id="scroll_pane_drop" layoutX="-1.0" prefHeight="476.0" prefWidth="714.0" xmlns:fx="http://javafx.com/fxml" />
-    <AnchorPane fx:id="pane_to_drop" minHeight="0.0" minWidth="0.0" prefHeight="483.0" prefWidth="714.0">
-<children><ImageView fx:id="chore_image" fitHeight="100.0" fitWidth="100.0" layoutX="137.0" layoutY="131.0" opacity="0" pickOnBounds="true" preserveRatio="true">
-    
-     <image>
-            <Image fx:id="chore_image_url" url="http://i.imgur.com/7IKgTHk.png" />
-          </image>
-    
-    
-</ImageView>
-</children></AnchorPane>
-</children></AnchorPane>
-      </content>
-    </Tab>
-  </tabs>
-</TabPane><TabPane layoutX="285.0" layoutY="571.0" prefHeight="190.0" prefWidth="714.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml">
-  <tabs>
-    <Tab text="Code View">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="115.0" prefWidth="714.0">
-<children><ScrollPane prefHeight="150.0" prefWidth="714.0" xmlns:fx="http://javafx.com/fxml">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-  </content>
-</ScrollPane>
-</children></AnchorPane>
-      </content>
-    </Tab>
-    <Tab text="Errors">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
-  </tabs>
-</TabPane><HBox AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1000.0" styleClass="main_bg_header_buttons" />
-</children>
-    
-    
-</AnchorPane>
+<VBox id="vbox" prefHeight="400" prefWidth="800"
+      xmlns:fx="http://javafx.com/fxml"
+      >
+   <MenuBar fx:id="menuBar" onKeyPressed="">
+      <menus>
+         <Menu text="File">
+            <items>
+               <MenuItem text="New"/>
+               <MenuItem text="Open"/>
+               <MenuItem text="Save"/>
+               <MenuItem text="Save As"/>
+               <SeparatorMenuItem  />
+               <MenuItem text="Exit"/>
+            </items>
+         </Menu>
+         <Menu text="Edit">
+            <items>
+               <MenuItem text="Copy"/>
+               <MenuItem text="Cut"/>
+               <MenuItem text="Paste"/>
+            </items>
+         </Menu>
+         <Menu text="Help">
+            <items>
+               <MenuItem text="Search" disable="true"/>
+               <MenuItem text="Online Manual" visible="false"/>
+               <SeparatorMenuItem />
+               <MenuItem text="About" onAction=""/>
+            </items>
+         </Menu>
+      </menus>
+   </MenuBar>
+</VBox>
