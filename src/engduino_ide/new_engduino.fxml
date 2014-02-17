@@ -367,13 +367,17 @@
   <tabs>
     <Tab text="Sketch 1">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0">
-</AnchorPane>
+        <AnchorPane styleClass = "" fx:id = "sketch_1" minHeight="0.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0">
+
+            <children>
+                <HBox fx:id = "h_box" prefHeight="466.0" prefWidth="665.0"></HBox>
+            </children>
+        </AnchorPane>
       </content>
     </Tab>
     <Tab text="Sketch 2">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane fx:id = "sketch_2" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
       </content>
     </Tab>
   </tabs>
@@ -390,24 +394,35 @@
 <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
 </padding>
 
-    <children><TabPane id="controls_tab_pane" layoutX="5.0" layoutY="5.0" prefHeight="510.0" prefWidth="669.0" side="TOP" style="-fx-background-radius:5; -fx-border-color: " tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0" xmlns:fx="http://javafx.com/fxml">
+    <children><TabPane id="controls_tab_pane" layoutX="5.0" layoutY="5.0" prefHeight="510.0" prefWidth="669.0" side="TOP" style="-fx-background-radius:5;  " tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0" xmlns:fx="http://javafx.com/fxml">
         <tabs>
           <Tab text="Flow Control" styleClass="firstFlowControlTab" >
             <content>
-                 <ScrollPane layoutX="-5.0" styleClass="control_scroll_pane"  minHeight="466.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0">                
+                <!-- <ScrollPane layoutX="-5.0" styleClass="control_scroll_pane"  minHeight="466.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0">                
                         <AnchorPane fx:id = "flow_control_list_container" prefHeight="710.0" prefWidth="276.0"></AnchorPane>
-                  </ScrollPane>
+                 </ScrollPane>-->
+
+                  <ListView styleClass="control_scroll_pane" minHeight="466.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0" layoutX="-5.0" fx:id="flow_control_list_container">
+
+                     
+                  </ListView>
             </content>
           </Tab>
-          <Tab text="Sensors">
+          <Tab text="Hardware">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               <ListView styleClass="control_scroll_pane" minHeight="466.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0" layoutX="-5.0" fx:id="hardware_list_container">
+
+                     
+                  </ListView>
             </content>
           </Tab>
           
           <Tab text="LEDs">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               <ListView styleClass="control_scroll_pane" minHeight="466.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0" layoutX="-5.0" fx:id="led_list_container">
+
+                     
+                  </ListView>
             </content>
           </Tab>
       
