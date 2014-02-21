@@ -16,34 +16,28 @@ public class Allmodules {
     
     private ArrayList<String> flowControlList = new ArrayList<String>() ; ;
     
-    private ArrayList<String> sensorList ;
+    private ArrayList<String> sensorList = new ArrayList<String>() ; ;
     
-    private ArrayList<String> LEDs ;
+    private ArrayList<String> LEDs = new ArrayList<String>() ;  ;
     
     
     public void Allmodules(){
-    
-      
-        sensorList = new ArrayList<String>() ;
-        LEDs = new ArrayList<String>() ; 
         
-        this.fillFlowControlList() ;
+        fillFlowControlList() ;
         this.fillSensorList(); 
         this.fillLEDsList(); 
-        
-        
-    
     }
     
     private void fillFlowControlList(){
         
-        this.flowControlList.add("IF..ELSE..") ;
-        this.flowControlList.add("Switch") ;
-        this.flowControlList.add("For Loop") ;
-        this.flowControlList.add("Repeat Forever") ;
-        this.flowControlList.add("Repeat Once") ;
+        System.out.println("Filling list for flow control") ;
         
-        this.flowControlList.add("Wait") ;
+        flowControlList.add("IF..ELSE..") ;
+        flowControlList.add("Switch") ;
+        flowControlList.add("For Loop") ;
+        flowControlList.add("Repeat Forever") ;
+        flowControlList.add("Repeat Once") ;
+        flowControlList.add("Wait") ;
         
         
         

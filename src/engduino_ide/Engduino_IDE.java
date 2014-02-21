@@ -44,24 +44,12 @@ public class Engduino_IDE extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         
-        /*Button btn = new Button();
-        btn.setText("Say 'Hello World'");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World!");
-            }
-        });
         
-       */
+        
         Parent root = FXMLLoader.load(getClass().getResource("new_engduino.fxml"));
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add(this.getClass().getResource("/css/main_ide_stylesheet.css").toExternalForm());
-        
-       
- 
        
         primaryStage.setScene(scene);
         primaryStage.setTitle("Engduino - *New Sketch");

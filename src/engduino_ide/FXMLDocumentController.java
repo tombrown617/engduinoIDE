@@ -22,11 +22,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
@@ -44,23 +46,9 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private Label label;
-    
-    /*@FXML
-    private Label loop_drag ;
-    
+   
     @FXML
-    private AnchorPane pane_to_drop ;
-    
-    @FXML
-    private ImageView chore_image ;
-    
-    @FXML
-    private Image chore_image_url ;
-    
-    */
-    
-    @FXML
-    private Button create_new_project_button ;
+    private Button new_project_button ;
     
     @FXML
     private Button open_project_button ;
@@ -79,6 +67,9 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private AnchorPane sketch_2 ;
+    
+    @FXML
+    private AnchorPane controls_tab_paneanchor_pane_for_controls_tab ;
     
     private List<Label> flow_control_labels = new ArrayList<Label>() ;
     
@@ -100,6 +91,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
       
       Allmodules allmoduleList = new Allmodules() ; 
+      UtilitiesFactory utilityFactory = new UtilitiesFactory(this) ;
       
       int i = 0 ;
       int j = 0 ;
@@ -109,7 +101,7 @@ public class FXMLDocumentController implements Initializable {
           ArrayList<String> listData ;
           
            if(i == 0){
-               listData = this.fillFlowControlList() ;
+               listData = this.fillFlowControlList();
            }
            else if(i == 1){
                listData = this.fillSensorList() ;
@@ -126,10 +118,7 @@ public class FXMLDocumentController implements Initializable {
                 
                 new_label.setOnDragDetected(new EventHandler <MouseEvent>() {
                     public void handle(MouseEvent event) {
-                        //drag was detected, start drag-and-drop gesture
                         
-
-                        // allow any transfer mode 
                         Dragboard db = new_label.startDragAndDrop(TransferMode.ANY);
 
                         // put a string on dragboard 
@@ -167,62 +156,12 @@ public class FXMLDocumentController implements Initializable {
       hardware_list_container.setItems(FXCollections.observableList(hardware_control_labels));
       this.led_list_container.setItems(FXCollections.observableList(led_control_labels)) ;
       
-      /* 
-       
-       
-        pane_to_drop.setOnDragEntered(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* the drag-and-drop gesture entered the target 
-                /* show to the user that it is an actual gesture target 
-                if (event.getGestureSource() != pane_to_drop &&
-                        event.getDragboard().hasString()) {
-                    //pane_to_drop.setFill(Color.GREEN);
-                }
-                
-                event.consume();
-            }
-        });
-
-        pane_to_drop.setOnDragExited(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* mouse moved away, remove the graphical cues 
-                //pane_to_drop.setFill(Color.BLACK);
-                
-                event.consume();
-            }
-        });
-        
-        pane_to_drop.setOnDragDropped(new EventHandler <DragEvent>() {
-            public void handle(DragEvent event) {
-                /* data dropped 
-                System.out.println("onDragDropped");
-                /* if there is a string data on dragboard, read it and use it 
-                Dragboard db = event.getDragboard();
-                boolean success = false;
-                if (db.hasString()) {
-                    //pane_to_drop.setText(db.getString());
-                    
-                    chore_image.setOpacity(1);
-                   
-                    success = true;
-                }
-                /* let the source know whether the string was successfully 
-                 * transferred and used 
-                event.setDropCompleted(success);
-                
-                event.consume();
-            }
-        });
-
-        */
-        
-       
+      
        this.makeSketchAnchorPaneDroppable(); 
        
-        
-        
     } 
     
+   
     private void makeSketchAnchorPaneDroppable(){
     
         this.sketchPanes.add(sketch_1) ;
@@ -230,7 +169,7 @@ public class FXMLDocumentController implements Initializable {
         int i = 0 ;
         for(i = 0; i < this.sketchPanes.size() ; i++){
         
-            final AnchorPane sketch  = this.sketch_1 ;
+            final AnchorPane sketch  = this.sketchPanes.get(i) ;
             
             sketch.setOnDragOver(new EventHandler <DragEvent>() {
                     public void handle(DragEvent event) {
@@ -267,16 +206,37 @@ public class FXMLDocumentController implements Initializable {
                     Dragboard db = event.getDragboard();
                     boolean success = false;
                     if (db.hasString()) {
-                        //pane_to_drop.setText(db.getString());
+                        
+                       final ImageView img_view = new ImageView() ;
+                       Image chore = new Image("http://i.imgur.com/7IKgTHk.png") ;
+                       img_view.setImage(chore);
+                       
+                        img_view.setOnDragDetected(new EventHandler <MouseEvent>() {
+                            public void handle(MouseEvent event) {
 
-                        //chore_image.setOpacity(1);
-                        HBox box = new HBox();
+                                Dragboard db = img_view.startDragAndDrop(TransferMode.ANY);
 
-                        ImageView img_view = new ImageView() ;
-                        Image chore = new Image("http://i.imgur.com/7IKgTHk.png") ;
-                        img_view.setImage(chore);
-                       //box.getChildren().add(img_view) ;
+                                // put a string on dragboard 
+                                ClipboardContent content = new ClipboardContent();
+                                //content.putString(img_view.getText());
+                                //System.out.println("onDragDetected " + img_view.getText());
+                                db.setContent(content);
+
+                                event.consume();
+                            }
+                        });
+                       
                        sketch.getChildren().add(img_view) ;
+                       
+                       
+                       int x = (int) ((int) event.getSceneX() - sketch.getWidth()/2.0)  ; 
+                       int y = (int) ((int) event.getSceneY() - 150)  ;
+                       
+                       img_view.relocate(
+                        x,y
+                        );
+
+                       
                         success = true;
                     }
                     // let the source know whether the string was successfully 
@@ -306,6 +266,12 @@ public class FXMLDocumentController implements Initializable {
         flowControlList.add("Wait") ;
         
         return flowControlList ;
+        
+    }
+    
+    private void makeModuleDraggable(final ImageView img_view){
+        
+       
         
     }
     
@@ -341,6 +307,10 @@ public class FXMLDocumentController implements Initializable {
         return LEDs ;
     }
     
+    
+    public Button getNewProjectButton(){
+        return this.new_project_button ;
+    }
     
     
 }
