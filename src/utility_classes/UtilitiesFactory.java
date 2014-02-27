@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 
-package engduino_ide;
+package utility_classes;
 
+import SketchClasses.SketchController;
+import engduino_ide.FXMLDocumentController;
 import java.util.HashMap;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import utility_classes.Utility;
 import utility_classes.newUtility;
 
@@ -21,22 +24,21 @@ public class UtilitiesFactory {
     
     private HashMap<String,Utility> utilityList = new HashMap<String,Utility>() ;
     
+    private SketchController sketch_controller ;
+    
+    private Stage main_stage ;
+    
     private  FXMLDocumentController main_document_controller ;
     
-    public UtilitiesFactory(){
-        
-        
-        
-        
-        
-    }
-
-    public UtilitiesFactory(FXMLDocumentController doc_controller) {
+    public UtilitiesFactory(FXMLDocumentController doc_controller, Stage stage, SketchController sketch_controller) {
         //throw new UnsupportedOperationException("Not supported yet.");
         
         try{
             this.main_document_controller = doc_controller ;
-            newUtility new_utility = new newUtility(doc_controller) ;
+            this.main_stage = stage ;
+            this.sketch_controller = sketch_controller ;
+            
+            Utility new_utility = new newUtility(doc_controller, stage,this.sketch_controller) ;
             this.utilityList.put("new", new_utility) ;
             
             

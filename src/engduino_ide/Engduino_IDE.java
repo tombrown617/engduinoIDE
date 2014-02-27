@@ -6,6 +6,8 @@
 
 package engduino_ide;
 
+import utility_classes.UtilitiesFactory;
+import SketchClasses.SketchController;
 import java.io.IOException;
 import java.net.URL;
 import javafx.application.Application;
@@ -19,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.CheckMenuItemBuilder;
+import javafx.scene.control.Dialogs;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -46,7 +49,14 @@ public class Engduino_IDE extends Application {
         
         
         
-        Parent root = FXMLLoader.load(getClass().getResource("new_engduino.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("new_engduino.fxml"));
+        
+        
+        
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        Parent root = (Parent) fxmlLoader.load(getClass().getResource("new_engduino.fxml").openStream());
+        FXMLDocumentController main_doc_controller = (FXMLDocumentController) fxmlLoader.getController();
+        
         
         Scene scene = new Scene(root);
         scene.getStylesheets().add(this.getClass().getResource("/css/main_ide_stylesheet.css").toExternalForm());
@@ -55,7 +65,11 @@ public class Engduino_IDE extends Application {
         primaryStage.setTitle("Engduino - *New Sketch");
         primaryStage.show();
         
+        SketchController sketchController = new SketchController(main_doc_controller) ;
+        main_doc_controller.setSketchController(sketchController);
+        UtilitiesFactory utilityFactory = new UtilitiesFactory(main_doc_controller, primaryStage, sketchController) ;
         
+       
      
         
     }

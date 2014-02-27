@@ -6,6 +6,8 @@
 
 package SketchClasses;
 
+import ModuleClasses.ModuleController;
+
 /**
  *
  * @author shehrozebhatti
@@ -14,8 +16,12 @@ public class Sketch {
     
     private String name ;
     
+    private ModuleController module_controller ;
+    
     public Sketch(String name){
         this.name = name ;
+        ModuleController new_module_controller = new ModuleController() ;
+        this.module_controller = new_module_controller ;
     }
     
     public String getName(){
@@ -24,5 +30,9 @@ public class Sketch {
     
     public void setName(String new_name){
         this.name = new_name ;
+    }
+    
+    public ModuleController getModuleController(){
+        return this.module_controller ;
     }
 }
