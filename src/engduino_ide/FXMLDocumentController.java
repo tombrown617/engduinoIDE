@@ -6,6 +6,10 @@
 
 package engduino_ide;
 
+import ModuleClasses.Moduleanchor;
+import ModuleClasses.Condition;
+import ModuleClasses.Module;
+import ModuleClasses.ModuleCanvas;
 import SketchClasses.SketchController;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,7 +44,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import sun.plugin.javascript.navig.Anchor;
-
+import javafx.scene.shape.*;
 /**
  *
  * @author shehrozebhatti
@@ -76,6 +80,12 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private List<ImageView> image_view = new ArrayList<ImageView>() ;
+    
+    @FXML
+    private List<Moduleanchor> anchors = new ArrayList<Moduleanchor>() ;
+    
+     @FXML
+    private List<ModuleCanvas> modules_canvas = new ArrayList<ModuleCanvas>() ;
     
     @FXML
     private AnchorPane controls_tab_paneanchor_pane_for_controls_tab ;
@@ -161,7 +171,7 @@ public class FXMLDocumentController implements Initializable {
     } 
     
    
-    private void makeSketchAnchorPaneDroppable(final AnchorPane sketch, final List<ImageView> image_views, final SketchController sketchController){
+    private void makeSketchAnchorPaneDroppable(final AnchorPane sketch,final List<Moduleanchor> anchors_list, final List<ImageView> image_views, final SketchController sketchController){
     
        
             sketch.setOnDragOver(new EventHandler <DragEvent>() {
@@ -176,13 +186,9 @@ public class FXMLDocumentController implements Initializable {
                     event.consume();
                 }
             });
-            
-            
-             sketch.setOnDragExited(new EventHandler <DragEvent>() {
+ 
+            sketch.setOnDragExited(new EventHandler <DragEvent>() {
                 public void handle(DragEvent event) {
-                    // mouse moved away, remove the graphical cues 
-                    //sketch.setFill(Color.BLACK);
-
                     event.consume();
                 }
             });
@@ -217,15 +223,47 @@ public class FXMLDocumentController implements Initializable {
                            
                             String sketch_name = sketch.getId().substring(0,sketch.getId().length() - 11) ;
                             
-                            sketchController.getSketch(sketch_name).getModuleController().createModule(db.getString());
-                           
-                            final ImageView img_view = new ImageView() ;
+                            int x = (int) ((int) event.getSceneX() - sketch.getWidth()/2.0)  ; 
+                            int y = (int) ((int) event.getSceneY() - 150)  ;
+
+                            Condition mod = sketchController.getSketch(sketch_name).getModuleController().createModule(db.getString(), image_views.size() + 1,x,y, sketch) ;
+                            mod.getAnchor() ;
+                            //sketch.getChildren().add(mod) ;
+                            image_views.add(mod.getAnchor() ) ;
+                            sketch.getChildren().add(mod.getAnchor() ) ;
+                            anchors_list.add(mod.getAnchor()) ;
+                            
+                            sketch.getChildren().add(mod.getAnchor().getMarker()) ;
+                            
+                            sketch.getChildren().add(mod.getAnchor().getInputMarker()) ;
+                            
+                            if(anchors_list.size() == 2){
+                                System.out.println("two anchors");
+                                //Beziercurve new_curve = new Beziercurve(anchors_list.get(0), anchors_list.get(1)) ;
+                                //sketch.getChildren().add(new_curve.getCurve()) ;
+                            }
+                            
+                            sketch.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                                new EventHandler<MouseEvent>() {
+                                    @Override public void handle(MouseEvent e) {
+                                        if (MouseButton.PRIMARY.equals(e.getButton()) ){
+                                           for(int i = 0; i < image_views.size(); i++){
+                                               anchors.get(i).hideContextMenu();
+                                           }  
+                                        }  
+
+                                    }
+                            });
+                            
+                            /*final ImageView img_view = new ImageView() ;
                             img_view.setId("new_module_" + image_views.size() + 1);
                             Image chore = new Image("http://i.imgur.com/7IKgTHk.png") ;
+                            //img_view.setStyle("-fx-border-color:darkblue ; -fx-border-insets:3; -fx-border-width:1.0;");
                             img_view.setImage(chore);
                             image_views.add(img_view) ;
+                            */
                             
-                            img_view.setOnDragDetected(new EventHandler <MouseEvent>() {
+                            /*img_view.setOnDragDetected(new EventHandler <MouseEvent>() {
                                  public void handle(MouseEvent event) {
 
                                      Dragboard db2 = img_view.startDragAndDrop(TransferMode.ANY);
@@ -238,13 +276,14 @@ public class FXMLDocumentController implements Initializable {
                                      event.consume();
                                  }
                              });
-
-                            sketch.getChildren().add(img_view) ;
+                                    */
+                            
+                            /*sketch.getChildren().add(img_view) ;
 
                             int x = (int) ((int) event.getSceneX() - sketch.getWidth()/2.0)  ; 
                             int y = (int) ((int) event.getSceneY() - 150)  ;
 
-                            img_view.relocate(x,y);
+                            img_view.relocate(x,y);*/
                             success = true;
                            
                        }
@@ -253,10 +292,7 @@ public class FXMLDocumentController implements Initializable {
                     else{
                         
                     }
-                    // let the source know whether the string was successfully 
-                     // transferred and used 
                     event.setDropCompleted(success);
-
                     event.consume();
                 }
             }); 
@@ -321,10 +357,18 @@ public class FXMLDocumentController implements Initializable {
         new_tab.setText(name);
         new_tab.setContent(tab_anchor_pane);
         
-        this.makeSketchAnchorPaneDroppable(tab_anchor_pane, this.image_view, this.sketch_controller);
+        this.makeSketchAnchorPaneDroppable(tab_anchor_pane,this.anchors, this.image_view, this.sketch_controller);
         this.sketches_tab_pane.getTabs().add(new_tab) ;
         this.sketchPanes.add(tab_anchor_pane) ;
         //this.sketchPanes.add(new_tab) ;
+        
+        //Beziercurve new_curve = new Beziercurve(300,300,500,300 );
+        //tab_anchor_pane.getChildren().add(new_curve.getCurve()) ;
+        //tab_anchor_pane.getChildren().add(new_curve.getStartingAnchor()) ;
+        //tab_anchor_pane.getChildren().add(new_curve.getEndingAnchor());
+        
+        //tab_anchor_pane.getChildren().add(new ModuleCanvas(this.sketchPanes.get(0).getWidth())) ;
+        
         
     }
     

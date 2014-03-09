@@ -346,3 +346,12 @@
 	-fx-opacity:0.5 ;
 	-fx-text-fill: rgba(255,0,0,0.5) ;
 }
+
+.testing_color{
+
+	-fx-border-width: 0 0 1 0 ;
+	-fx-border-insets: 0 0 2 0  ;
+	-fx-border-color:#999 ;
+	-fx-background-color:#ffffff ; 
+}
+

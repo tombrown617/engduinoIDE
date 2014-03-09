@@ -7,6 +7,7 @@
 package ModuleClasses;
 
 import java.util.HashMap;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.HashMap;
  */
 public class ModuleController {
     
-    private HashMap<String,Module> module_list = new HashMap<String,Module>() ;
+    private HashMap<String,Condition> module_list = new HashMap<String,Condition>() ;
     
     private final HashMap<Integer,String> module_types = new HashMap<Integer,String>() ;
     
@@ -24,27 +25,43 @@ public class ModuleController {
         
     }
     
-    public void createModule(String type){
+    public Condition createModule(String type, int id_num, double x_coordinate, double y_coordinate, AnchorPane sketch){
        
+        Condition new_module ;
+        
        if(type.indexOf("IF..ELSE..") != -1){
-           Module new_module = new Condition() ;
+           new_module = new Condition(id_num, x_coordinate, y_coordinate,sketch) ;
            module_list.put("Condition", new_module) ;
-       }     
+           
+           //new_module = new ModuleCanvas(x_coordinate, y_coordinate) ;
+           //module_list.put("Condition", new_module) ;
+           
+       }else{
+           new_module = new Condition(id_num, x_coordinate, y_coordinate,sketch) ;
+           module_list.put("Condition", new_module) ;
+           
+           //new_module = new ModuleCanvas(x_coordinate, y_coordinate) ;
+           //module_list.put("Condition", new_module) ;
+            
+       }
+       
+       
+       return new_module ;
        
     }
     
     public void addModule(Module module){
         String type = "" ;
-        this.module_list.put(type, module) ;
+        //this.module_list.put(type, module) ;
     }
     
     public void addModule(Module module, String type){
         
-        this.module_list.put(type, module) ;
+        //this.module_list.put(type, module) ;
     }
     
-    public Module getModule(String name){
-        return this.module_list.get(name) ;
+    public void getModule(String name){
+        //return this.module_list.get(name) ;
     }
     
      private void fillModuleTypesList(){

@@ -14,8 +14,8 @@ public class FlowControlModule extends Module {
     
     private String type ;
     
-    public FlowControlModule(){
-        
+    public FlowControlModule(Moduleanchor anchor){
+        super(anchor) ;
     }
     
     public String getCode(){

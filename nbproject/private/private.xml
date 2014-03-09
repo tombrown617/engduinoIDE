@@ -4,8 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/ModuleClasses/Condition.java</file>
+            <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/ModuleClasses/Outputmarker.java</file>
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/SketchClasses/SketchController.java</file>
+            <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/ModuleClasses/Inputmarker.java</file>
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/utility_classes/UtilitiesFactory.java</file>
+            <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/ModuleClasses/MainModuleImage.java</file>
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/ModuleClasses/FlowControlModule.java</file>
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/utility_classes/Utility.java</file>
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/engduino_ide/Allmodules.java</file>
@@ -17,7 +20,10 @@
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/javafx/scene/control/Dialogs.java</file>
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/SketchClasses/Sketch.java</file>
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/engduino_ide/new_engduino.fxml</file>
+            <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/ModuleClasses/ModuleCanvas.java</file>
+            <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/ModuleClasses/Moduleanchor.java</file>
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/engduino_ide/Engduino_IDE.java</file>
+            <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/engduino_ide/Beziercurve.java</file>
             <file>file:/Users/shehrozebhatti/Documents/Projects/Java/engduino_IDE/src/engduino_ide/engduino_main_view.fxml</file>
         </group>
     </open-files>

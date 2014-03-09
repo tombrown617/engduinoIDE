@@ -459,7 +459,19 @@
           </Tab>
           <Tab text="Errors">
             <content>
-              <AnchorPane fx:id = "sketch_2" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane fx:id = "errors_tab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          
+           <Tab text="Code View">
+            <content>
+              <AnchorPane fx:id = "code_view_tabs" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          
+           <Tab text="Variables">
+            <content>
+              <AnchorPane fx:id = "varibales_tab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
         </tabs>

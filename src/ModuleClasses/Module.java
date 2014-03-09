@@ -17,10 +17,10 @@ public abstract class Module {
     
     private String module_type ;
     
+    private Moduleanchor module_anchor ;
     
-    
-    public Module(){
-       
+    public Module(Moduleanchor anchor){
+       this.module_anchor = anchor ;
     }
     
    
