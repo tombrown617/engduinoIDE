@@ -294,6 +294,15 @@
 	 
 }
 
+.verify_button{
+
+	 -fx-background-color:transparent ;
+	 -fx-background-image:url('../graphics/verify.png') ;
+	 -fx-background-repeat: no-repeat;
+	 -fx-background-position: center;
+	 
+}
+
 
 .redo_project_button{
 
@@ -353,5 +362,12 @@
 	-fx-border-insets: 0 0 2 0  ;
 	-fx-border-color:#999 ;
 	-fx-background-color:#ffffff ; 
+}
+
+.text_area_general{
+
+	-fx-border-color: transparent; -fx-border-width: 0; 
+            -fx-border-radius: 0; -fx-focus-color: transparent ;
+			-fx-background-color:transparent ;
 }
 

@@ -41,6 +41,13 @@ public class UtilitiesFactory {
             Utility new_utility = new newUtility(doc_controller, stage,this.sketch_controller) ;
             this.utilityList.put("new", new_utility) ;
             
+            Utility verify_code = new verifyCode(doc_controller, stage,this.sketch_controller) ;
+            this.utilityList.put("verify", verify_code) ;
+            
+            
+            Utility upload_code = new uploadUtility(doc_controller, stage,this.sketch_controller) ;
+            this.utilityList.put("upload", upload_code) ;
+            
             
                         
         }

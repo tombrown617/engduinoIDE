@@ -26,6 +26,7 @@ public class newUtility extends Utility {
     private final FXMLDocumentController doc_controller ;
     
     public newUtility(final FXMLDocumentController doc_controller, final Stage stage, final SketchController sketch_controller){
+        
         super("New", doc_controller, sketch_controller) ;
         this.doc_controller = doc_controller ;
         doc_controller.getNewProjectButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -40,8 +41,10 @@ public class newUtility extends Utility {
                             if(newName.equals("")){
                                 return ;
                             }
-                            doc_controller.createNewSketchTab(newName);
+                            
                             sketch_controller.addSketchToList(sketch_controller.createSketch(newName));
+                            
+                            sketch_controller.getSketch(newName).setSketchanchorPane(doc_controller.createNewSketchTab(newName));
                             
                         }
                     }

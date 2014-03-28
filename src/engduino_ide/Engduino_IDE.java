@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.URL;
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -47,12 +49,6 @@ public class Engduino_IDE extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         
-        
-        
-        //Parent root = FXMLLoader.load(getClass().getResource("new_engduino.fxml"));
-        
-        
-        
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = (Parent) fxmlLoader.load(getClass().getResource("new_engduino.fxml").openStream());
         FXMLDocumentController main_doc_controller = (FXMLDocumentController) fxmlLoader.getController();
@@ -62,15 +58,14 @@ public class Engduino_IDE extends Application {
         scene.getStylesheets().add(this.getClass().getResource("/css/main_ide_stylesheet.css").toExternalForm());
        
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Engduino - *New Sketch");
+        primaryStage.setTitle("Engduino IDE");
         primaryStage.show();
+        
+        
         
         SketchController sketchController = new SketchController(main_doc_controller) ;
         main_doc_controller.setSketchController(sketchController);
         UtilitiesFactory utilityFactory = new UtilitiesFactory(main_doc_controller, primaryStage, sketchController) ;
-        
-       
-     
         
     }
 

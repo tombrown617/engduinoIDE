@@ -6,7 +6,10 @@
 
 package SketchClasses;
 
+import CodeView.CodeViewController;
+import ModuleClasses.ModuleConnectionController;
 import ModuleClasses.ModuleController;
+import javafx.scene.layout.AnchorPane;
 
 /**
  *
@@ -18,11 +21,25 @@ public class Sketch {
     
     private ModuleController module_controller ;
     
+    private ModuleConnectionController module_connection_controller ;
+    
+    private CodeViewController codeViewController ;
+    
+    private AnchorPane sketch_pane ;
+    
     public Sketch(String name){
+        
+        
         this.name = name ;
         ModuleController new_module_controller = new ModuleController() ;
         this.module_controller = new_module_controller ;
+        this.module_controller.setSketch(this);
+       
+        this.module_connection_controller = new ModuleConnectionController() ;
+        this.codeViewController = new CodeViewController(this) ;
     }
+    
+   
     
     public String getName(){
         return this.name ;
@@ -34,5 +51,23 @@ public class Sketch {
     
     public ModuleController getModuleController(){
         return this.module_controller ;
+    }
+    
+    public CodeViewController getCodeViewController(){
+        return this.codeViewController ;
+    }
+    
+    public ModuleConnectionController getModuleConnectionController(){
+        
+        return this.module_connection_controller ;
+    }
+    
+    
+    public void setSketchanchorPane(AnchorPane sketch_anchor_pane){
+        this.sketch_pane = sketch_anchor_pane ;
+    }
+    
+    public AnchorPane getSketchAnchorPane(){
+        return this.sketch_pane ;
     }
 }

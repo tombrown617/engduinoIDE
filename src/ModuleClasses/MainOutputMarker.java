@@ -28,35 +28,31 @@ import javafx.scene.paint.Color;
  *
  * @author shehrozebhatti
  */
-public class Inputmarker extends ImageView {
+public class MainOutputMarker extends ImageView {
     
     private double x_coordinate ;
     
     private double y_coordinate ;
     
-    private int input_number ;
+    private boolean connected ;
     
     private Sketch main_sketch ;
     
-    private Moduleanchor mod_anchor ;
-    
-    public Inputmarker(double x, double y, AnchorPane sketch, Sketch main_sketch, int number, Moduleanchor module_anchor){
+    public MainOutputMarker(double x, double y, AnchorPane sketch, Sketch main_sketch){
         
         this.main_sketch = main_sketch ;
-        setImage(new Image("graphics/input_marker.png")) ;
-        this.input_number = number ;
-        this.mod_anchor = module_anchor ;
+        setImage(new Image("graphics/main_output_marker.png")) ;
         
-        //double new_x = x - 19 ;
-        //double new_y = y + 14 ;
+        double new_x = x ;
+        double new_y = y  ;
         
-        setX(x) ; 
-        setY(y) ;
-        relocate(x,y) ;
+        setX(new_x) ; 
+        setY(new_y) ;
+        relocate(new_x,new_y) ;
         
-        this.x_coordinate = x ;
-        this.y_coordinate = y ;
-        this.enableDrag(this,this.main_sketch);
+        this.x_coordinate = new_x ;
+        this.y_coordinate = new_y ;
+        this.enableDrag(this, this.main_sketch);
         
         
         
@@ -65,16 +61,8 @@ public class Inputmarker extends ImageView {
     
     public void updateCoordinates(double x, double y){
         
-        double new_x = x - 19 ;
-        double new_y = 0 ;
-        
-        if(this.input_number == 1){
-            new_y = y + 14 ;
-        }
-        else if(this.input_number == 2){
-            new_y = y + 30 ;
-        }
-         
+        double new_x = x  ;
+        double new_y = y ;
         
         setX(new_x) ;
         setY(new_y) ;
@@ -83,9 +71,7 @@ public class Inputmarker extends ImageView {
         
     }
     
-    private void enableDrag(final Inputmarker input_marker, final Sketch main_sketch) {
-      
-        
+    private void enableDrag(final MainOutputMarker main_output_marker, final Sketch main_sketch) {
       final Delta dragDelta = new Delta();
       
       
@@ -95,7 +81,7 @@ public class Inputmarker extends ImageView {
              
               event.acceptTransferModes(TransferMode.ANY);
               getScene().setCursor(Cursor.HAND);
-              setImage(new Image("graphics/input_mouse_over.png")) ;
+              setImage(new Image("graphics/main_input_marker_dropped.png")) ;
               //event.setDropCompleted(false);
               event.consume();
            }
@@ -104,14 +90,15 @@ public class Inputmarker extends ImageView {
       setOnMouseDragOver(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                setImage(new Image("graphics/input_mouse_over.png")) ;
+                setImage(new Image("graphics/main_input_marker_dropped.png")) ;
+                
             }
         }); 
       
       setOnMouseDragExited(new EventHandler<MouseDragEvent>(){
          @Override
          public void handle(MouseDragEvent e){
-              setImage(new Image("graphics/input_marker.png")) ;
+              setImage(new Image("graphics/main_output_marker.png")) ;
               
          }
       });
@@ -122,7 +109,7 @@ public class Inputmarker extends ImageView {
             mouseEvent.setDragDetect(true);
           if (mouseEvent.isPrimaryButtonDown() == true) {
             getScene().setCursor(Cursor.HAND);
-            setImage(new Image("graphics/input_mouse_over.png")) ;
+            setImage(new Image("graphics/main_input_marker_dropped.png")) ;
             
           }
         }
@@ -132,35 +119,30 @@ public class Inputmarker extends ImageView {
          @Override
          public void handle(MouseDragEvent e){
              
+             
              double x_dropped = e.getX() ;
              double y_dropped = e.getY( );
              
              Clipboard db = Clipboard.getSystemClipboard();
              
-             if(db.getString().equals("main")){
+             if(!db.getString().equals("main")){
+                
+                int output_marker_number = Integer.parseInt(db.getString().substring(db.getString().length() - 1,db.getString().length()))   ;
+                   
                  
-                 System.out.println("From main to module");
-                 MainInputMarker main_input = main_sketch.getModuleController().getMainInputMarker() ;
-                 
-                 Beziercurve new_final_curve = new Beziercurve(main_sketch.getSketchAnchorPane(), main_input,input_marker) ;
-                 
-                 main_sketch.getModuleConnectionController().createNewConnection(main_input, getModuleAnchor().getModule());
+                Outputmarker output_marker = main_sketch.getModuleController().getModule(db.getString().substring(0,db.getString().length() - 9)).getAnchor().getMarker(output_marker_number) ;
+                double x_start = output_marker.getX() ;
+                double y_start = output_marker.getY( );
+                
+                Beziercurve new_final_curve = new Beziercurve(main_sketch.getSketchAnchorPane(), output_marker,main_output_marker) ;
+             
+                main_sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), main_output_marker);
                   
-                 
-                 
-             }else{
-                 
-                  int output_marker_number = Integer.parseInt(db.getString().substring(db.getString().length() - 1,db.getString().length()))   ;
-                  Outputmarker output_marker = main_sketch.getModuleController().getModule(db.getString().substring(0,db.getString().length() - 9)).getAnchor().getMarker(output_marker_number) ;
-                  Beziercurve new_final_curve = new Beziercurve(main_sketch.getSketchAnchorPane(), output_marker,input_marker) ;
-                  
-                  main_sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), getModuleAnchor().getModule());
-                  
-                  
+             
              }
             
-            
-             //
+             //Beziercurve new_final_curve = new Beziercurve(output_marker.getCurve(), output_marker,input_marker) ;
+             //main_sketch.getModuleConnectionController().createNewConnection(output_marker, input_marker);
                     
          }
      });
@@ -169,7 +151,7 @@ public class Inputmarker extends ImageView {
           @Override public void handle(MouseEvent mouseEvent) {
           if (!mouseEvent.isPrimaryButtonDown()) {
             getScene().setCursor(Cursor.DEFAULT);
-            setImage(new Image("graphics/input_marker.png")) ;
+            setImage(new Image("graphics/main_output_marker.png")) ;
           }
         }
       });
@@ -195,8 +177,8 @@ public class Inputmarker extends ImageView {
         
     }
      
-     public Moduleanchor getModuleAnchor(){
-        return this.mod_anchor ;
-    }
+     public boolean isConnected(){
+         return this.connected ;
+     }
             
 }

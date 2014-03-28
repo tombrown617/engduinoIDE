@@ -6,6 +6,7 @@
 
 package ModuleClasses;
 
+import SketchClasses.Sketch;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -13,10 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.DataFormat;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
@@ -26,7 +24,7 @@ import javafx.scene.shape.StrokeLineCap;
  *
  * @author shehrozebhatti
  */
-public class Outputmarker extends ImageView {
+public class MainInputMarker extends ImageView {
     
     private double x_coordinate ;
     
@@ -34,21 +32,17 @@ public class Outputmarker extends ImageView {
     
     private CubicCurve curve ;
     
-    private int number ;
+    private boolean connected ;
     
-    private Moduleanchor module_anchor ;
-    
-    public Outputmarker(Image img, double x, double y, AnchorPane sketch, int number, Moduleanchor module_anchor){
+    public MainInputMarker(double x, double y, AnchorPane sketch){
         
-        super(img) ;
-        this.number = number ;
-        setStyle("-fx-background-color:transparent") ; 
+        setImage(new Image("graphics/main_input_marker.png"));
         
-        setX(x) ; 
+        setStyle("-fx-background-color:transparent; ") ; 
+        
+        setX(x) ;
         setY(y) ;
         relocate(x,y) ;
-        
-        this.module_anchor = module_anchor ;
         
         this.x_coordinate = x ;
         this.y_coordinate = y ;
@@ -68,18 +62,8 @@ public class Outputmarker extends ImageView {
     
     public void updateCoordinates(double x, double y){
         
-        double new_x = x + 79 ;
-        double new_y = 0 ; 
-        
-        if(number == 1){
-             new_y = y + 10 ;
-        }
-        else if(number == 2){
-            new_y = y + 28 ;
-        }
-        else if(number == 3){
-            new_y = y + 46 ;
-        }
+        double new_x = x  ;
+        double new_y = y ;
         
         setX(new_x) ;
         setY(new_y) ;
@@ -102,9 +86,8 @@ public class Outputmarker extends ImageView {
       setOnMouseReleased(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent mouseEvent) {
           getScene().setCursor(Cursor.DEFAULT);
-          setImage(new Image("graphics/output_marker.png")) ;
           
-          
+          setImage(new Image("graphics/main_input_marker.png")) ;
           
           curve.setStartX(getX() + 5);
           curve.setStartY(getY() + 5);
@@ -125,7 +108,10 @@ public class Outputmarker extends ImageView {
             //Dragboard db = startDragAndDrop(TransferMode.ANY);
             Clipboard db = Clipboard.getSystemClipboard();
             ClipboardContent new_content = new ClipboardContent() ;
-            new_content.putString(getId()) ;
+            String data = "main" ;
+            new_content.putString(data) ;
+            
+            
             
             db.setContent(new_content) ;
             startFullDrag();
@@ -138,7 +124,7 @@ public class Outputmarker extends ImageView {
       setOnMouseDragged(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent mouseEvent) {
           
-            setImage(new Image("graphics/output_dragged.png")) ;
+            setImage(new Image("graphics/main_output_marker_dropped.png")) ;
             mouseEvent.setDragDetect(true);
             double newX = mouseEvent.getX() + dragDelta.x ;
             double newY = mouseEvent.getY() + dragDelta.y ;
@@ -171,8 +157,7 @@ public class Outputmarker extends ImageView {
         @Override public void handle(MouseEvent mouseEvent) {
           if (!mouseEvent.isPrimaryButtonDown()) {
             getScene().setCursor(Cursor.DEFAULT);
-            setImage(new Image("graphics/output_marker.png")) ;
-          }
+            }
         }
       });
     }
@@ -186,8 +171,14 @@ public class Outputmarker extends ImageView {
     
      public void doBinding(DoubleProperty x, DoubleProperty y, boolean first){
         
-        x.bind(xProperty().add(15));
-        y.bind(yProperty().add(10)); 
+        if(first == true){
+            x.bind(xProperty().add(100));
+            y.bind(yProperty().add(15));
+        }
+        else{
+           x.bind(xProperty().add(15));
+           y.bind(yProperty().add(10)); 
+        }
         
     }
      
@@ -195,7 +186,9 @@ public class Outputmarker extends ImageView {
         return this.curve ;
     } 
     
-    public Moduleanchor getModuleAnchor(){
-        return this.module_anchor ;
+    public boolean isConnected(){
+        return this.connected ; 
+               
     }
+    
 }

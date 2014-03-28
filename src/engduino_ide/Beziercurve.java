@@ -6,12 +6,17 @@
 
 package engduino_ide;
 
+import ModuleClasses.Inputmarker;
+import ModuleClasses.MainInputMarker;
+import ModuleClasses.MainOutputMarker;
 import ModuleClasses.Moduleanchor;
+import ModuleClasses.Outputmarker;
 import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.CubicCurve;
@@ -24,9 +29,13 @@ import javafx.scene.shape.StrokeType;
  */
 public class Beziercurve {
     
-  private Moduleanchor starting_anchor ;
+  private Outputmarker starting_anchor ;
   
-  private Moduleanchor end_anchor;
+  private MainInputMarker main_input ;
+  
+  private MainOutputMarker main_output ;
+  
+  private Inputmarker end_anchor;
   
   private CubicCurve curve ;
   
@@ -38,68 +47,97 @@ public class Beziercurve {
   
   private int endY ;
     
-  public Beziercurve(int startX, int startY, int endX, int endY){
-    
-    this.startX = startX ;
-    this.startY = startY ;
-    this.endX = endX ;
-    this.endY = endY ;
+  public Beziercurve(CubicCurve curve, Outputmarker output_marker, Inputmarker input_marker){
       
-    this.curve = createStartingCurve();
-    //this.starting_anchor = new Anchor(Color.PALEGREEN, this.curve.startXProperty(),    this.curve.startYProperty());
-    //this.end_anchor = new Anchor(Color.TOMATO,    this.curve.endXProperty(), this.curve.endYProperty());
-    System.out.println("Thecstarting x = " + this.startX + "\nThe starting Y is " + this.startY + "\nThe end X is " + this.endX + "\nThe end Y is " + this.endY );
+      this.startX = (int) output_marker.getX( );
+      this.startY = (int) output_marker.getY( );
+      this.endX = (int) input_marker.getX( );
+      this.endY = (int) input_marker.getY( );
       
+      this.curve = curve ;
+      this.starting_anchor = output_marker ;
+      this.end_anchor = input_marker ;
       
-    this.starting_anchor = new Moduleanchor(new Image("http://i.imgur.com/7IKgTHk.png"), 1,this.curve.startXProperty(),    this.curve.startYProperty(),true);
-    this.end_anchor = new Moduleanchor(new Image("http://i.imgur.com/7IKgTHk.png"), 2,this.curve.endXProperty(), this.curve.endYProperty(),false) ;
+      this.starting_anchor.doBinding(this.curve.startXProperty(), this.curve.startYProperty(), false);
+      this.end_anchor.doBinding(this.curve.endXProperty(), this.curve.endYProperty(), false);
   }
   
-  public Beziercurve(Moduleanchor first_anchor, Moduleanchor second_anchor){
-    
-    this.startX = ((int) first_anchor.getX())  ;
-    this.startX = this.startX + 100 ;
-    this.startY = (int) first_anchor.getY() ;
-    this.endX = (int) second_anchor.getX() ;
-    this.endY = (int) second_anchor.getY() ;
-    
-    System.out.println("Thecstarting x = " + first_anchor.getX() + "\nThe starting Y is " + this.startY + "\nThe end X is " + this.endX + "\nThe end Y is " + this.endY );
+  public Beziercurve(AnchorPane anchor_pane, Outputmarker output_marker, Inputmarker input_marker){
       
-    this.curve = createStartingCurve();
-    
-    this.starting_anchor = first_anchor ;
-    this.starting_anchor.doBinding(this.curve.startXProperty(), this.curve.startYProperty(), true);
-    
-    this.end_anchor = second_anchor ;
-    this.end_anchor.doBinding(this.curve.endXProperty(), this.curve.endYProperty(), false);
+      
+      
+      this.startX = (int) output_marker.getX( );
+      this.startY = (int) output_marker.getY( );
+      this.endX = (int) input_marker.getX( );
+      this.endY = (int) input_marker.getY( );
+      
+      this.curve = this.createStartingCurve() ;
+      this.starting_anchor = output_marker ;
+      this.end_anchor = input_marker ;
+      
+      anchor_pane.getChildren().add(curve) ;
+      
+      this.starting_anchor.doBinding(this.curve.startXProperty(), this.curve.startYProperty(), false);
+      this.end_anchor.doBinding(this.curve.endXProperty(), this.curve.endYProperty(), false);
   }
-    
+  
+  public Beziercurve(AnchorPane anchor_pane, MainInputMarker output_marker, Inputmarker input_marker){
+      
+      this.startX = (int) output_marker.getX( );
+      this.startY = (int) output_marker.getY( );
+      this.endX = (int) input_marker.getX( );
+      this.endY = (int) input_marker.getY( );
+      
+      this.curve = this.createStartingCurve() ;
+      this.main_input = output_marker ;
+      this.end_anchor = input_marker ;
+      
+      anchor_pane.getChildren().add(curve) ;
+      
+      this.main_input.doBinding(this.curve.startXProperty(), this.curve.startYProperty(), false);
+      this.end_anchor.doBinding(this.curve.endXProperty(), this.curve.endYProperty(), false);
+  }
+  
+  public Beziercurve(AnchorPane anchor_pane, Outputmarker output_marker, MainOutputMarker main_output){
+      
+      this.startX = (int) output_marker.getX( );
+      this.startY = (int) output_marker.getY( );
+      this.endX = (int) main_output.getX( );
+      this.endY = (int) main_output.getY( );
+      
+      this.curve = this.createStartingCurve() ;
+      this.starting_anchor = output_marker ;
+      this.main_output = main_output ;
+      
+      anchor_pane.getChildren().add(curve) ;
+      
+      this.starting_anchor.doBinding(this.curve.startXProperty(), this.curve.startYProperty(), false);
+      this.main_output.doBinding(this.curve.endXProperty(), this.curve.endYProperty(), false);
+  }
+  
   private CubicCurve createStartingCurve() {
+    
+      
     CubicCurve curve = new CubicCurve();
     curve.setStartX(this.startX );
     curve.setStartY(this.startY);
-    /*curve.setControlX1(150);
-    curve.setControlY1(50);
-    curve.setControlX2(250);
-    curve.setControlY2(150);*/
+    
     
     curve.setControlX1(this.startX);
     curve.setControlY1(this.startY);
     curve.setControlX2(this.endX);
     curve.setControlY2(this.endY);
     
-    /*curve.setControlX1(this.startX + ((this.endX - this.startX) / 4));
-    curve.setControlY1(this.startY);
-    curve.setControlX2(this.startX + 3 * ((this.endX - this.startX) / 4));
-    curve.setControlY2(this.endY);
-    */
-    
     curve.setEndX(this.endX);
     curve.setEndY(this.endY);
     curve.setStroke(Color.DARKGREY);
-    curve.setStrokeWidth(4);
+    curve.setStrokeWidth(2);
     curve.setStrokeLineCap(StrokeLineCap.ROUND);
     curve.setFill(Color.TRANSPARENT);
+    
+    curve.setStroke(Color.BLACK);
+    curve.toFront();
+    
     return curve;
   }
   
@@ -117,11 +155,11 @@ public class Beziercurve {
       return this.curve ;
   }
   
-  public Moduleanchor getStartingAnchor(){
+  public Outputmarker getStartingAnchor(){
       return this.starting_anchor ;
   }
   
-  public Moduleanchor getEndingAnchor(){
+  public Inputmarker getEndingAnchor(){
       return this.end_anchor;
   }
   
