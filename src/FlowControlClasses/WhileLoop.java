@@ -14,15 +14,11 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author shehrozebhatti
  */
-public class Loop extends Module {
+public class WhileLoop extends Module {
 
-    private int start = 0 ;
+   
     
-    private int end = 16 ;
-    
-    private boolean increment = true ;
-    
-    public Loop(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch) {
+    public WhileLoop(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch) {
         super(new Image("graphics/draggables/loop.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch ) ;
         
     }
@@ -30,7 +26,7 @@ public class Loop extends Module {
     @Override
     public String getModuleCode(){
         
-        return "for(int i = " + this.start + "; i < " + this.end + "; i++ ){" ;
+        return "while(" ;
         
     }
     

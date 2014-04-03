@@ -25,8 +25,6 @@ public abstract class Module {
     
     private Moduleanchor module_anchor ;
     
-    private Outputmarker output_marker ;
-    
     private Sketch sketch ;
     
     private String header = "" ;
@@ -68,6 +66,15 @@ public abstract class Module {
         return null ;
     }
     
+     public String getMainDataArrayCode(){
+        return "" ;
+    }
+     
+     public String getModuleType(){
+         
+        return this.module_type ;
+         
+     }
     
    
 }

@@ -23,8 +23,23 @@ public class TreeNode {
         this.node_module = node_module; 
     }
     
+    public TreeNode(){
+        
+    }
+    
     public Module getNodeModule(){
         return this.node_module ;
+    }
+    
+    public void setNodeModule(Module module){
+        this.node_module = module ;
+    }
+    
+    public TreeNode createChild(Module node){
+        TreeNode child_node = new TreeNode(node) ;
+        this.children_nodes.add(child_node) ;
+        
+        return child_node ;
     }
     
     public boolean hasChildNode(){
@@ -37,6 +52,33 @@ public class TreeNode {
             return true ;
         }
         
+    }
+    
+    public int getTotalChildren(){
+        return this.children_nodes.size() ;
+    }
+    
+    public boolean containsModule(Module module){
+        
+        boolean output = false ;
+        
+        for(int i = 0; i < this.children_nodes.size(); i++){
+            
+            
+            
+        }
+        
+        return output ;
+    }
+    
+    public TreeNode getChild(int num){
+        
+        return this.children_nodes.get(num) ;
+        
+    }
+    
+    public void addChild(TreeNode child){
+        this.children_nodes.add(child) ;
     }
     
 }

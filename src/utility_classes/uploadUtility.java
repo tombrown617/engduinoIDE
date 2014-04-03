@@ -26,7 +26,7 @@ public class uploadUtility extends Utility {
         
         super("Verify", doc_controller, sketch_controller) ;
         
-        doc_controller.getCodeVerifyButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+        doc_controller.getUploadButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
        
             public void handle(MouseEvent mouseEvent) {
                     if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){

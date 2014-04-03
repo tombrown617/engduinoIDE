@@ -136,7 +136,7 @@ public class MainOutputMarker extends ImageView {
                 
                 Beziercurve new_final_curve = new Beziercurve(main_sketch.getSketchAnchorPane(), output_marker,main_output_marker) ;
              
-                main_sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), main_output_marker);
+                main_sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), main_output_marker,output_marker.getPort());
                   
              
              }
@@ -155,10 +155,6 @@ public class MainOutputMarker extends ImageView {
           }
         }
       });
-      
-       
-      
-      
       
     }
     

@@ -198,4 +198,8 @@ public class Outputmarker extends ImageView {
     public Moduleanchor getModuleAnchor(){
         return this.module_anchor ;
     }
+    
+    public int getPort(){
+        return this.number ;
+    }
 }

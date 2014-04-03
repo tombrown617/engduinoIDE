@@ -21,8 +21,8 @@ public class LightSensor extends Module{
         
     }
     
-    public String getLightLevelCode(){
-        return "EngduinoLight.lightLevel()" ;
+    public String getModuleCode(){
+        return "    EngduinoLight.lightLevel();" ;
     }
     
 }

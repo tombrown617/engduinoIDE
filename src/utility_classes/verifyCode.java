@@ -27,7 +27,7 @@ public class verifyCode extends Utility {
         
         super("Upload", doc_controller, sketch_controller) ;
         
-        doc_controller.getUploadButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+        doc_controller.getCodeVerifyButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
        
             public void handle(MouseEvent mouseEvent) {
                     if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
@@ -44,7 +44,7 @@ public class verifyCode extends Utility {
                                    
                                    //sketch.getCodeViewController().getChildNodeCode() ;
                                    doc_controller.getCodeViewTextArea().setText(sketch.getCodeViewController().getCode(true));
-                                   System.out.println("Uploading.....") ;
+                                  
                                    break ;
                                }
                            }

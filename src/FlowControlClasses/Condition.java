@@ -18,7 +18,7 @@ public class Condition extends Module {
    
     private final Image img = new Image("graphics/condition.png") ;
     
-    
+    private String boolean_expression = "" ;
     
     public Condition(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch){
         
@@ -27,8 +27,13 @@ public class Condition extends Module {
         
     }
     
+    public String getModuleCode(){
+        return "if(" + this.boolean_expression  ;
+    }
     
-    
+    public void setExpression(String boolean_expression){
+        this.boolean_expression = boolean_expression ;
+    }
             
     
 }

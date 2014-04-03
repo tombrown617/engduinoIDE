@@ -47,10 +47,10 @@ public class LED extends Module {
     public String getModuleCode(){
         
         if(this.LED_number == 0){
-            return "EngduinoLEDs.setAll(" + this.color + ", 20)" ;
+            return "    EngduinoLEDs.setAll(" + this.color + ", 20);" ;
         }
         else{
-            return "EngduinoLEDs.setLED("+ this.LED_number +"," + this.color + ", 20)" ;
+            return "    EngduinoLEDs.setLED("+ this.LED_number +"," + this.color + ", 20);" ;
         }
         
     }

@@ -33,7 +33,7 @@ public class Wait extends Module {
     @Override
     public String getModuleCode(){
         
-        String output = "delay(" + this.getWaitingTime() + ") " ;
+        String output = "   delay(" + this.getWaitingTime() + ") ;" ;
         return output ;
     }
     

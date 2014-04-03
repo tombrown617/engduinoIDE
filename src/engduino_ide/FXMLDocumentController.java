@@ -246,6 +246,13 @@ public class FXMLDocumentController implements Initializable {
                             Module mod = sketchController.getSketch(sketch_name).getModuleController().createModule(db.getString(), image_views.size() + 1,x,y, sketch) ;
                             mod.getAnchor() ;
                             
+                            if(mod.getModuleID().indexOf("accl") != -1 ){
+                                sketchController.getSketch(sketch_name).getCodeViewController().setOutputArrayCode("accelerometer", mod);
+                            }
+                            else if( mod.getModuleID().indexOf("magn") != -1){
+                                sketchController.getSketch(sketch_name).getCodeViewController().setOutputArrayCode("magnetometer", mod);
+                            }
+                            
                             image_views.add(mod.getAnchor() ) ;
                             sketch.getChildren().add(mod.getAnchor() ) ;
                             anchors_list.add(mod.getAnchor()) ;
@@ -290,8 +297,8 @@ public class FXMLDocumentController implements Initializable {
         
         flowControlList.add("   IF..ELSE..") ;
         flowControlList.add("   For Loop") ;
-        flowControlList.add("   Repeat Forever") ;
-        flowControlList.add("   Repeat Once") ;
+       
+        flowControlList.add("   While Loop") ;
         flowControlList.add("   Wait") ;
         flowControlList.add("   AND") ;
         flowControlList.add("   OR") ;
@@ -312,17 +319,20 @@ public class FXMLDocumentController implements Initializable {
     
         ArrayList<String> sensorList = new ArrayList<String>() ;
         
-        sensorList.add("    Magnetometer X Value") ;
-        sensorList.add("    Magnetometer Y Value") ;
-        sensorList.add("    Magnetometer Z Value") ;
+        sensorList.add("    Magnetometer Value X") ;
+        sensorList.add("    Magnetometer Value Y") ;
+        sensorList.add("    Magnetometer Value Z") ;
         sensorList.add("    Infrared") ;
-        sensorList.add("    Accelerometer X Value") ;
-        sensorList.add("    Accelerometer Y Value") ;
-        sensorList.add("    Accelerometer Z Value") ;
+        sensorList.add("    Accelerometer Value X") ;
+        sensorList.add("    Accelerometer Value Y") ;
+        sensorList.add("    Accelerometer Value Z") ;
         
         sensorList.add("    Light Sensor Value") ;
-        sensorList.add("    Thermistor Value") ;
-        sensorList.add("    Button") ;
+        sensorList.add("    Temperature Value in CELSIUS") ;
+        sensorList.add("    Temperature Value in KELVIN") ;
+        sensorList.add("    Temperature Value in FAHRENHEIT") ;
+        sensorList.add("    Wait for Button Press") ;
+        sensorList.add("    Check if Button Pressed") ;
         
         return sensorList ;
     }

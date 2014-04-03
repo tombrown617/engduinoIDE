@@ -282,4 +282,12 @@ public class Moduleanchor extends ImageView  {
         
         
     }
+    
+    public int getTotalInputMarkers(){
+        return this.input_markers.size() ;
+    }
+    
+    public int getTotalOutputMarkers(){
+        return this.output_markers.size() ;
+    }
 }

@@ -23,6 +23,7 @@ import FlowControlClasses.Thermistor;
 import FlowControlClasses.Constant;
 import FlowControlClasses.EqualityOperator;
 import FlowControlClasses.Wait;
+import FlowControlClasses.WhileLoop;
 import FlowControlClasses.XOROperator;
 import SketchClasses.Sketch;
 import static com.sun.javafx.fxml.expression.Expression.NOT;
@@ -71,7 +72,13 @@ public class ModuleController {
            
        }else if(type.indexOf("Wait") != -1){
            
-           new_module = new Wait("wait_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+           if(type.indexOf("Wait for Button") != -1){
+                 new_module = new EngButton("butt_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,false) ;
+           }
+           else{
+               new_module = new Wait("wait_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+           }
+           
            
        }
        else if(type.indexOf("Infrared") != -1){
@@ -79,22 +86,22 @@ public class ModuleController {
            new_module = new Infrared("infr_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
            new_module.setHeader(header_list.get("Infrared"));
        }
-       else if(type.indexOf("Loop") != -1){
+       else if(type.indexOf("For Loop") != -1){
            
            new_module = new Loop("forl_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
        }
-       else if(type.indexOf("Repeat Forever") != -1){
-           
-           new_module = new InfinityLoop("inft_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
-       }
        else if(type.indexOf("Magnetometer") != -1){
            
-           new_module = new Magnetometer("magn_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+           String value = type.substring(23) ;
+           
+           new_module = new Magnetometer("magn_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,value) ;
            new_module.setHeader(header_list.get("Magnetometer"));
        }
        else if(type.indexOf("Accelerometer") != -1){
            
-           new_module = new Accelerometer("accl_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+           String value = type.substring(24) ;
+          
+           new_module = new Accelerometer("accl_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, value) ;
            new_module.setHeader(header_list.get("Accelerometer"));
        }
        else if(type.indexOf("Light Sensor") != -1){
@@ -102,28 +109,32 @@ public class ModuleController {
            new_module = new LightSensor("lsen_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
            new_module.setHeader(header_list.get("Light Sensor"));
        }
-       else if(type.indexOf("Thermistor") != -1){
-           new_module = new Thermistor("ther_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+       else if(type.indexOf("Temperature") != -1){
+           
+           String value = type.substring(25) ;
+           
+           new_module = new Thermistor("ther_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, value) ;
            new_module.setHeader(header_list.get("Thermistor"));
        }
        else if(type.indexOf("Button") != -1){
-           new_module = new EngButton("butt_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+           new_module = new EngButton("butt_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,false) ;
            new_module.setHeader(header_list.get("Button"));
        }
        else if(type.indexOf("Turn All LEDs") != -1){
            
-           String color = type.substring(0, 17) ;
-           System.out.println("Color = " + color);
-           new_module = new LED("leds_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+           String color = type.substring(18) ;
+           
+           new_module = new LED("leds_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, color) ;
            new_module.setHeader(header_list.get("LED"));
        }
        else if(type.indexOf("Blink LED") != -1){
+           
            new_module = new LED("leds_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
            new_module.setHeader(header_list.get("LED"));
        }
-       else if(type.indexOf("Repeat Once") != -1){
+       else if(type.indexOf("While Loop") != -1){
            
-           new_module = new Loop("once_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+           new_module = new WhileLoop("whil_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
        }
        else if(type.indexOf("NOT") != -1){
            
@@ -147,15 +158,15 @@ public class ModuleController {
        }
        else if(type.indexOf("Greater Than") != -1){
            
-           new_module = new EqualityOperator(new Image("graphics/draggables/greater_than.png"), "grea_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+           new_module = new EqualityOperator(new Image("graphics/draggables/greater_than.png"), "equa_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, ">") ;
        }
        else if(type.indexOf("Less Than") != -1){
            
-           new_module = new EqualityOperator(new Image("graphics/draggables/less_than.png"), "less_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+           new_module = new EqualityOperator(new Image("graphics/draggables/less_than.png"), "equa_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, "<") ;
        }
        else if(type.indexOf("Equals") != -1){
            
-           new_module = new EqualityOperator(new Image("graphics/draggables/equals.png"), "equa_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
+           new_module = new EqualityOperator(new Image("graphics/draggables/equals.png"), "equa_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, "==") ;
        }
        else{
            new_module = new Condition("mode_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch) ;
@@ -197,7 +208,7 @@ public class ModuleController {
         this.header_list.put("Accelerometer", "#include <EngduinoAccelerometer.h>") ;
         this.header_list.put("Infrared", "#include <EngduinoIR.h>") ;
         this.header_list.put("Light Sensor", "#include <EngduinoLight.h>") ;
-        this.header_list.put("Magnetometer", "#include <EngduinoMagnetometer.h>") ;
+        this.header_list.put("Magnetometer", "#include <EngduinoMagnetometer.h>\n#include <Wire.h> ") ;
         this.header_list.put("Thermistor", "#include <EngduinoThermistor.h>") ;
         
     } 

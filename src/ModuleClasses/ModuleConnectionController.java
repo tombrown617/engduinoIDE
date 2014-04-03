@@ -22,21 +22,21 @@ public class ModuleConnectionController {
         
     }
     
-    public void createNewConnection(Module from_module, Module to_module){
+    public void createNewConnection(Module from_module, Module to_module,int from_port, int to_port){
         
-        ModuleConnection new_con = new ModuleConnection(from_module,to_module) ;
+        ModuleConnection new_con = new ModuleConnection(from_module,to_module,from_port, to_port) ;
         this.module_connection_list.add(new_con) ;
     }
     
-    public void createNewConnection(MainInputMarker from_module, Module to_module){
+    public void createNewConnection(MainInputMarker from_module, Module to_module, int to_port){
         
-        ModuleConnection new_con = new ModuleConnection(from_module,to_module) ;
+        ModuleConnection new_con = new ModuleConnection(from_module,to_module, to_port) ;
         this.module_connection_list.add(new_con) ;
     }
     
-    public void createNewConnection(Module from_module, MainOutputMarker to_module){
+    public void createNewConnection(Module from_module, MainOutputMarker to_module, int from_port){
         
-        ModuleConnection new_con = new ModuleConnection(from_module,to_module) ;
+        ModuleConnection new_con = new ModuleConnection(from_module,to_module,from_port) ;
         this.module_connection_list.add(new_con) ;
     }
     
@@ -45,7 +45,110 @@ public class ModuleConnectionController {
     }
     
     
+    
+    
+    
+    
+    private boolean isModuleConnectedToModule(Module module){
+        
+        for(int i = 0; i < this.module_connection_list.size(); i++){
+            
+           // if(module_connection_list.get(i).getFrom().equals(module) && module_connection_list.get(i).getType() != 3){
+             //   return true ;
+            //}
+        }
+        
+        return false ;
+    }
+    
+    public ArrayList<Module> getBranch(ArrayList<Module> branch, Module from_module, int port){
+        
+        Module connected_module = this.getConnectedModule(from_module, port) ;
+        
+        if(connected_module == null){
+            return branch ;
+            
+        }
+        else{
+            
+            branch.add(connected_module) ;
+            getBranch(branch,connected_module,1) ;
+            return branch ;
+        }
+        
+    }
+    
+    public int calculateModulesInBranch(Module from_module , int port){
+        
+        Module connected_module = this.getConnectedModule(from_module, port) ;
+        
+        if(connected_module == null){
+            return 0 ;
+        }
+        else{
+            
+            //Module mod = getConnectedModule(from_module, port) ;
+            return 1 + calculateModulesInBranch(connected_module, 1) ;
+        }
+        
+    }
+    
+    public Module getConnectedModule(Module module_from, int port){
+        
+       // try{
+            
+            for(int i = 0; i < this.module_connection_list.size(); i++){
+               
+                if(this.module_connection_list.get(i).getType() == 2){
+                    
+                    if(this.module_connection_list.get(i).getFrom().equals(module_from) && this.module_connection_list.get(i).getFromPort() == port ){
+                        //System.out.println("Returning "+ this.module_connection_list.get(i).getTo().getModuleID() + " connected to " + module_from.getModuleID() + "at port " + port) ;
+                        return this.module_connection_list.get(i).getTo() ;
+                     }
+                    
+                }
+            }
+            
+       /* }
+        catch(NullPointerException e){
+            System.out.println("null");
+        }
+        */
+        
+        
+        return null;
+    }
+    
+    public ArrayList<ModuleConnection> getMainConnection(){
+        
+        
+        ArrayList<ModuleConnection> output_connections = new ArrayList<ModuleConnection>();
+        for(int i = 0; i < this.module_connection_list.size(); i++){
+            
+            if(this.module_connection_list.get(i).getType() == 1){
+                output_connections.add( this.module_connection_list.get(i)) ;
+            }
+        }
+        
+        return output_connections ;
+        
+    }
+    
+    public ModuleConnection getMainConnectionAtPort(int to_port){
+        
+        for(int i = 0; i < this.module_connection_list.size(); i++){
+            
+            if(this.module_connection_list.get(i).getType() == 1 && this.module_connection_list.get(i).getToPort() == to_port){
+               return this.module_connection_list.get(i) ;
+            }
+        }
+        
+        return null ;
+    }
+    
     public ArrayList<ModuleConnection> getModuleConnectionList(){
         return this.module_connection_list ;
     }
+
+   
 }

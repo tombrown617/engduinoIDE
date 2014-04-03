@@ -116,7 +116,7 @@ public class Inputmarker extends ImageView {
          }
       });
       
-      setOnMouseEntered(new EventHandler<MouseEvent>() {
+      /*setOnMouseEntered(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent mouseEvent) {
           
             mouseEvent.setDragDetect(true);
@@ -126,7 +126,7 @@ public class Inputmarker extends ImageView {
             
           }
         }
-      });
+      });*/
       
      setOnMouseDragReleased(new EventHandler<MouseDragEvent>(){
          @Override
@@ -144,7 +144,7 @@ public class Inputmarker extends ImageView {
                  
                  Beziercurve new_final_curve = new Beziercurve(main_sketch.getSketchAnchorPane(), main_input,input_marker) ;
                  
-                 main_sketch.getModuleConnectionController().createNewConnection(main_input, getModuleAnchor().getModule());
+                 main_sketch.getModuleConnectionController().createNewConnection(main_input, getModuleAnchor().getModule(), input_marker.getPort());
                   
                  
                  
@@ -154,7 +154,7 @@ public class Inputmarker extends ImageView {
                   Outputmarker output_marker = main_sketch.getModuleController().getModule(db.getString().substring(0,db.getString().length() - 9)).getAnchor().getMarker(output_marker_number) ;
                   Beziercurve new_final_curve = new Beziercurve(main_sketch.getSketchAnchorPane(), output_marker,input_marker) ;
                   
-                  main_sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), getModuleAnchor().getModule());
+                  main_sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), getModuleAnchor().getModule(), output_marker.getPort(), getPort());
                   
                   
              }
@@ -198,5 +198,9 @@ public class Inputmarker extends ImageView {
      public Moduleanchor getModuleAnchor(){
         return this.mod_anchor ;
     }
+     
+     public int getPort(){
+         return this.input_number ;
+     }
             
 }
