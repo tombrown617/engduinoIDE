@@ -52,10 +52,11 @@ public class ModuleConnectionController {
     private boolean isModuleConnectedToModule(Module module){
         
         for(int i = 0; i < this.module_connection_list.size(); i++){
-            
-           // if(module_connection_list.get(i).getFrom().equals(module) && module_connection_list.get(i).getType() != 3){
-             //   return true ;
-            //}
+          
+            if(this.module_connection_list.get(i).getFrom() == module || this.module_connection_list.get(i).getType() == 2){
+                return true ;
+            }
+          
         }
         
         return false ;
@@ -148,6 +149,74 @@ public class ModuleConnectionController {
     
     public ArrayList<ModuleConnection> getModuleConnectionList(){
         return this.module_connection_list ;
+    }
+    
+    public boolean isModuleConnectedFrom(Module module, String fromModuleID){
+        
+        boolean output = false ;
+        
+         for(int i = 0; i < this.module_connection_list.size(); i++){
+               
+                if(this.module_connection_list.get(i).getType() == 2){
+                    
+                    if(this.module_connection_list.get(i).getTo() == module && this.module_connection_list.get(i).getFrom().getModuleID().indexOf(fromModuleID) != -1){
+                        return true ;
+                    }
+                }
+         }
+        
+        
+        return output ;
+    }
+    
+    public Module getConnectedFromModule(Module module){
+        
+        for(int i = 0; i < this.module_connection_list.size(); i++){
+               
+                if(this.module_connection_list.get(i).getType() == 2){
+                    
+                    if(this.module_connection_list.get(i).getTo() == module ){
+                        return this.module_connection_list.get(i).getFrom() ;
+                     }
+                    
+                }
+            }
+            
+       return null;
+        
+    }
+    
+    public int getTotalModulesConnectedWithMain(){
+        
+        int output = 0 ;
+        
+        for(int i = 0; i < this.module_connection_list.size(); i++){
+               
+                if(this.module_connection_list.get(i).getType() == 1){
+                    
+                   output += 1;
+                    
+                }
+            }
+        
+        
+        return output ;
+    }
+    
+    public ArrayList<Module> getModulesConnectedWithMain(){
+        
+        ArrayList<Module> output = new ArrayList<Module>() ;
+        
+        for(int i = 0; i < this.module_connection_list.size(); i++){
+               
+                if(this.module_connection_list.get(i).getType() == 1){
+                    
+                   output.add(this.module_connection_list.get(i).getTo()) ;
+                    
+                }
+            }
+        
+        return output ;
     }
 
    

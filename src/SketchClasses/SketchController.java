@@ -6,6 +6,7 @@
 
 package SketchClasses;
 
+import FlowControlClasses.Module;
 import engduino_ide.FXMLDocumentController;
 import java.util.HashMap;
 
@@ -20,6 +21,8 @@ public class SketchController {
     
     private HashMap<String,Sketch> sketches = new HashMap<String,Sketch>() ;
     
+    private Module selectedModule = null ;
+    
     public SketchController(FXMLDocumentController doc_controller){
      
            this.main_document_controller = doc_controller ;
@@ -28,7 +31,7 @@ public class SketchController {
     
     public Sketch createSketch(String name){
         
-        Sketch new_sketch = new Sketch(name) ;
+        Sketch new_sketch = new Sketch(name,main_document_controller) ;
         return new_sketch ;
         
     }
@@ -41,6 +44,18 @@ public class SketchController {
     public Sketch getSketch(String name){
         
         return this.sketches.get(name) ;
+    }
+    
+    public void setSelectedModule(Module module){
+        this.selectedModule = module ;
+    }
+    
+    public Module getSelectedModule(){
+        return this.selectedModule ;
+    }
+    
+    public int getTotalSketches(){
+        return this.sketches.size() ;
     }
     
 }

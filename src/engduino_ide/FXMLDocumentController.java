@@ -8,7 +8,11 @@ package engduino_ide;
 
 import ModuleClasses.Moduleanchor;
 import FlowControlClasses.Condition;
+import FlowControlClasses.Constant;
+import FlowControlClasses.LED;
+import FlowControlClasses.Loop;
 import FlowControlClasses.Module;
+import FlowControlClasses.Wait;
 import ModuleClasses.MainInputMarker;
 import ModuleClasses.MainOutputMarker;
 import ModuleClasses.MainOutputMarker;
@@ -20,20 +24,26 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Dialogs;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
@@ -44,12 +54,14 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import sun.plugin.javascript.navig.Anchor;
 import javafx.scene.shape.*;
+import javafx.stage.Stage;
 /**
  *
  * @author shehrozebhatti
@@ -86,6 +98,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private AnchorPane sketch_2 ;
     
+    @FXML
+    private Stage stage ;
+    
     @FXML 
     private TabPane sketches_tab_pane ;
     
@@ -97,6 +112,13 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private AnchorPane controls_tab_paneanchor_pane_for_controls_tab ;
+    
+    @FXML
+    private GridPane variables_grid_pane ;
+   
+    
+    @FXML
+    private Button update_variables ;
     
     @FXML
     private TextArea code_view_text_area ;
@@ -115,6 +137,9 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private AnchorPane main_sketch_anchor_pane ;
+    
+    @FXML
+    private Button save_project_button ;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -184,6 +209,11 @@ public class FXMLDocumentController implements Initializable {
       hardware_list_container.setItems(FXCollections.observableList(hardware_control_labels));
       this.led_list_container.setItems(FXCollections.observableList(led_control_labels)) ;
       
+      
+      
+     
+      
+      
     } 
     
    
@@ -242,9 +272,22 @@ public class FXMLDocumentController implements Initializable {
                             
                             int x = (int) ((int) event.getSceneX() - sketch.getWidth()/2.0)  ; 
                             int y = (int) ((int) event.getSceneY() - 150)  ;
-
+                            
+                            
                             Module mod = sketchController.getSketch(sketch_name).getModuleController().createModule(db.getString(), image_views.size() + 1,x,y, sketch) ;
                             mod.getAnchor() ;
+                            
+                            if(sketchController.getSketch(sketch_name).getModuleController().getTotalModuleOfType(mod.getModuleType()) > 1 && mod.getModuleType().equals("For Loop")){
+                                Loop loop  = (Loop) mod ;
+                                
+                                Loop last_loop = (Loop) sketchController.getSketch(sketch_name).getModuleController().getLastModuleOfType(mod.getModuleType()) ;
+                                
+                                String value = last_loop.getLoopSymbol();
+                                int charValue = value.charAt(0);
+                                String next = String.valueOf( (char) (charValue + 1));
+                                 
+                                loop.setLoopSymbol(next);
+                            }
                             
                             if(mod.getModuleID().indexOf("accl") != -1 ){
                                 sketchController.getSketch(sketch_name).getCodeViewController().setOutputArrayCode("accelerometer", mod);
@@ -291,6 +334,44 @@ public class FXMLDocumentController implements Initializable {
             
     }
     
+    public Module addModuleToSketch(String sketch_name,int x, int y, AnchorPane sketch, String module_type){
+        
+         Module mod = sketch_controller.getSketch(sketch_name).getModuleController().createModule(module_type, image_view.size() + 1,x,y, sketch) ;
+         mod.getAnchor() ;
+                            
+         if(mod.getModuleID().indexOf("accl") != -1 ){
+                sketch_controller.getSketch(sketch_name).getCodeViewController().setOutputArrayCode("accelerometer", mod);
+          }
+          else if( mod.getModuleID().indexOf("magn") != -1){
+               sketch_controller.getSketch(sketch_name).getCodeViewController().setOutputArrayCode("magnetometer", mod);
+          }
+                            
+          image_view.add(mod.getAnchor() ) ;
+          sketch.getChildren().add(mod.getAnchor() ) ;
+          anchors.add(mod.getAnchor()) ;
+                            
+          sketch.getChildren().add(mod.getAnchor().getMarker(1)) ;
+          sketch.getChildren().add(mod.getAnchor().getInputMarker(1)) ;
+                            
+                           
+          sketch_controller.getSketch(sketch_name).getCodeViewController().addHeader(mod.getHeader());
+          code_view_text_area.setText(sketch_controller.getSketch(sketch_name).getCodeViewController().getCode(false));
+                            
+                            sketch.addEventHandler(MouseEvent.MOUSE_CLICKED,
+                                new EventHandler<MouseEvent>() {
+                                    @Override public void handle(MouseEvent e) {
+                                        if (MouseButton.PRIMARY.equals(e.getButton()) ){
+                                           for(int i = 0; i < image_view.size(); i++){
+                                               anchors.get(i).hideContextMenu();
+                                           }  
+                                        }  
+
+                                    }
+                            });
+        
+        return mod ;
+    }
+    
     private ArrayList<String> fillFlowControlList(){
         
         ArrayList<String> flowControlList = new ArrayList<String>() ;
@@ -307,6 +388,10 @@ public class FXMLDocumentController implements Initializable {
         
         flowControlList.add("   Greater Than") ;
         flowControlList.add("   Less Than") ;
+        
+        flowControlList.add("   Greater Than Equals") ;
+        flowControlList.add("   Less Than Equals") ;
+        
         flowControlList.add("   Equals") ;
         
         flowControlList.add("   Constant") ;
@@ -429,6 +514,371 @@ public class FXMLDocumentController implements Initializable {
     
     public Button getUploadButton(){
         return this.upload_button ;
+    }
+    
+    
+    public void setVariablesForModule(final Module module){
+        
+        this.clearVariableGridPane(); 
+        this.sketch_controller.setSelectedModule(module);
+        
+        if(module.getModuleID().indexOf("forl") != -1){
+            
+            final Loop loop_object = (Loop) module ;
+            
+            Label first_label = new Label("Increment/Decrement : ") ;
+            first_label.setId("first_label");
+            
+            ChoiceBox first_input = new ChoiceBox() ;
+            first_input.setId("first_input");
+            first_input.setItems(FXCollections.observableArrayList(
+                "Increment", "Decrement")
+            );
+            
+            first_input.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>(){
+            
+                public void changed(ObservableValue ov, Number value, Number new_value){
+                   
+                    if(value.intValue() != new_value.intValue()){
+                        if(new_value.intValue() == 1){
+                            loop_object.setIncrement(false);
+                        }
+                        else if(new_value.intValue() == 0){
+                            loop_object.setIncrement(true);
+                        }
+                    }
+                }
+            
+            });
+            first_input.getSelectionModel().select(module.getContent());
+            
+           
+            Label second_label = new Label("Lower Bound : ") ;
+            second_label.setId("second_label");
+            
+            Label third_label = new Label("Upper Bound : ") ;
+            third_label.setId("third_label");
+            
+            
+            TextField second_input = new TextField(module.getStart());
+            second_input.setId("second_input");
+            
+            TextField third_input = new TextField(module.getEnd());
+            third_input.setId("third_input");
+            
+            
+            this.variables_grid_pane.add(first_label, 0,1) ;
+            this.variables_grid_pane.add(first_input, 1,1) ;
+            
+            this.variables_grid_pane.add(second_label, 0,2) ;
+            this.variables_grid_pane.add(second_input, 1,2) ;
+            
+            this.variables_grid_pane.add(third_label, 0,3) ;
+            this.variables_grid_pane.add(third_input, 1,3) ;
+            
+            
+            
+        }
+        else if(module.getModuleID().indexOf("ledi_module") != -1){
+            
+            
+            boolean isConnected = false ;
+            
+            final LED led_ob = (LED) module ;
+            
+            Label first_label = new Label("LED Number : ") ;
+            first_label.setId("first_label");
+            
+           
+            
+            ChoiceBox first_input = new ChoiceBox() ;
+            first_input.setId("first_input");
+            
+            final String[] LEDNumbers  ;
+            
+            
+            try{
+               
+                if(this.getActiveSketch().getModuleConnectionController().isModuleConnectedFrom(module, "forl_module") == true){
+                    isConnected = true ;
+                }
+                
+            }
+            catch(NullPointerException e){
+                System.out.println("Null exception caugfht" ) ;
+            }
+            
+            
+             if(isConnected == true){
+                
+                   Loop mod = (Loop) this.getActiveSketch().getModuleConnectionController().getConnectedFromModule(module) ;
+                    LEDNumbers = new String[]{mod.getLoopSymbol(), "0", "1", "2","3", "4","5", "6","7", "8","9", "10","11", "12","13", "14","15"} ;
+
+                    first_input.setItems(FXCollections.observableArrayList(
+                        mod.getLoopSymbol(), "0", "1", "2","3", "4","5", "6","7", "8","9", "10","11", "12","13", "14","15" )
+                    );
+                }
+                else{
+
+                    LEDNumbers = new String[]{ "0", "1", "2","3", "4","5", "6","7", "8","9", "10","11", "12","13", "14","15"} ;
+
+                    first_input.setItems(FXCollections.observableArrayList(
+                        "0", "1", "2","3", "4","5", "6","7", "8","9", "10","11", "12","13", "14","15" )
+                    );
+
+                }
+                
+                
+                first_input.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>(){
+            
+                    public void changed(ObservableValue ov, Number value, Number new_value){
+
+                        if(value.intValue() != new_value.intValue()){
+                            led_ob.setLEDNumber(LEDNumbers[new_value.intValue()]);
+                        }
+                    }
+
+                });
+                
+            first_input.getSelectionModel().select(module.getContent());
+            
+            Label second_label = new Label("Color : ") ;
+            second_label.setId("second_label");
+            
+            final String colors[] = new String[]{"BLUE" , "WHITE", "YELLOW", "GREEN","OFF","RED"} ;
+            
+            ChoiceBox second_input = new ChoiceBox() ;
+            second_input.setId("second_input");
+            second_input.setItems(FXCollections.observableArrayList(
+                "BLUE" , "WHITE", "YELLOW", "GREEN","OFF","RED")
+            );
+            
+             second_input.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>(){
+            
+                public void changed(ObservableValue ov, Number value, Number new_value){
+                   
+                    if(value.intValue() != new_value.intValue()){
+                        led_ob.setLEDColor(colors[new_value.intValue()]);
+                    }
+                }
+            
+            });
+            
+            
+            second_input.getSelectionModel().select(module.getLEDColor());
+            
+            
+            this.variables_grid_pane.add(first_label, 0,1) ;
+            this.variables_grid_pane.add(first_input, 1,1) ;
+            
+            this.variables_grid_pane.add(second_label, 0,2) ;
+            this.variables_grid_pane.add(second_input, 1,2) ;
+            
+            
+        }
+        else if(module.getModuleID().indexOf("wait_module") != -1){
+            
+            
+            Label first_label = new Label("Time to Wait : ") ;
+            first_label.setId("first_label");
+            
+            
+            TextField first_input = new TextField(module.getContent());
+            first_input.setId("first_input");
+            
+            
+            this.variables_grid_pane.add(first_label, 0,1) ;
+            this.variables_grid_pane.add(first_input, 1,1) ;
+            
+        }
+        else if(module.getModuleID().indexOf("cons_module") != -1){
+            
+            Label first_label = new Label("Value : ") ;
+            first_label.setId("first_label");
+            
+            
+            TextField first_input = new TextField(module.getContent());
+            first_input.setId("first_input");
+            
+            this.variables_grid_pane.add(first_label, 0,1) ;
+            this.variables_grid_pane.add(first_input, 1,1) ;
+            
+        }
+        
+        
+    }
+    
+    private void clearVariableGridPane(){
+        
+       this.variables_grid_pane.getChildren().clear();
+        
+    }
+    
+    public void setStage(final Stage stage){
+        this.stage = stage ;
+        this.setButtonEventHandlers();
+        
+        
+    }
+    
+    private void setButtonEventHandlers(){
+        
+        final String regex = "[0-9]+";
+        
+        update_variables.setOnMouseClicked(new EventHandler<MouseEvent>() {
+       
+            public void handle(MouseEvent mouseEvent) {
+                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                        if(mouseEvent.getClickCount() == 1){
+                           
+                          if(sketch_controller.getSelectedModule() != null){
+                              
+                              String module_id = sketch_controller.getSelectedModule().getModuleID() ;
+                              
+                              if(module_id.indexOf("forl") != -1 ){
+                                  
+                                  
+                                  
+                                  TextField second_input = (TextField) getNodeByRowColumnIndex(2,1,variables_grid_pane) ;
+                                  TextField third_input = (TextField) getNodeByRowColumnIndex(3,1,variables_grid_pane) ;
+                                  
+                                  Loop loop_ob = (Loop) sketch_controller.getSelectedModule() ;
+                                          
+                                  String second_value = second_input.getText();
+                                  String third_value  = third_input.getText() ;
+                                  
+                                  if(second_value.matches(regex) == true){
+                                      loop_ob.setLowerBound(Integer.parseInt(second_value));
+                                  }
+                                  else{
+                                      Dialogs.showErrorDialog(stage, "Please  enter an integer value for the lower bound of the loop", "Incorrect lower bound type !", "Error !") ;
+                                      return  ;
+                                  }
+                                   
+                                  String loop_value = "" ;
+                                  
+                                  if(getActiveSketch().getModuleConnectionController().isModuleConnectedFrom(sketch_controller.getSelectedModule(), "forl_module") == true){
+                                      
+                                     Loop loop = (Loop) getActiveSketch().getModuleConnectionController().getConnectedFromModule(sketch_controller.getSelectedModule()) ;
+                                     loop_value = loop.getLoopSymbol() ;
+                                  }
+                                  
+                                  if(third_value.matches(regex) == true || third_value.equals(loop_value)){
+                                      loop_ob.setUpperBound(third_value);
+                                  }
+                                  else{
+                                      Dialogs.showErrorDialog(stage, "Please  enter an valid value for the upper bound of the loop", "Incorrect lower bound type !", "Error !") ;
+                                      return  ;
+                                  }
+                                  
+                              }
+                              else if(module_id.indexOf("cons_module") != -1 ){
+                              
+                                  TextField first_input = (TextField) getNodeByRowColumnIndex(1,1,variables_grid_pane) ;
+                                  
+                                  Constant constant_ob = (Constant) sketch_controller.getSelectedModule() ;
+                                          
+                                  String second_value = first_input.getText();
+                                  
+                                  if(second_value.matches(regex) == true){
+                                      constant_ob.setValue(Integer.parseInt(second_value));
+                                  }
+                                  else{
+                                      Dialogs.showErrorDialog(stage, "Please  enter an integer value for the constant value", "Incorrect lower bound type !", "Error !") ;
+                                      return  ;
+                                  }
+                                  
+                                  
+                              }
+                              else if(module_id.indexOf("wait_module") != -1){
+                              
+                                  TextField first_input = (TextField) getNodeByRowColumnIndex(1,1,variables_grid_pane) ;
+                                  
+                                  Wait wait_ob = (Wait) sketch_controller.getSelectedModule() ;
+                                          
+                                  String second_value = first_input.getText();
+                                  
+                                  if(second_value.matches(regex) == true){
+                                     wait_ob.setWaitingTime(Integer.parseInt(second_value));
+                                  }
+                                  else{
+                                      Dialogs.showErrorDialog(stage, "Please  enter an integer value for the waiting time", "Incorrect lower bound type !", "Error !") ;
+                                      return  ;
+                                  }
+                                  
+                                  
+                              }
+                             
+                              Dialogs.showInformationDialog(stage,"", "Module variables have been updated",  "Hurray !");
+                              
+                          }
+                          else{
+                              Dialogs.showErrorDialog(stage, "Please select a module for changing the variables", "No Module Selected !", "Error !") ;
+                          }
+                             
+                             
+                       }
+                    }
+                }
+        });
+        
+        
+    }
+    
+    
+    public Sketch getActiveSketch(){
+        
+        Sketch sketch = null ;
+        
+        for(int i = 0; i < this.getAllTabs().size(); i++){
+                               
+            if(this.getAllTabs().get(i).isSelected()){
+                                   
+                sketch = sketch_controller.getSketch(this.getAllTabs().get(i).getId()) ;
+                break ;
+                
+            }
+            
+        }
+        
+        return sketch ;
+    }
+    
+    public Tab getActiveSketchTab(){
+        
+        
+        for(int i = 0; i < this.getAllTabs().size(); i++){
+                               
+            if(this.getAllTabs().get(i).isSelected()){
+                                   
+               return this.getAllTabs().get(i) ;
+            }
+            
+        }
+        
+        return null ;
+    }
+    
+    
+    
+     public Node getNodeByRowColumnIndex(final int row,final int column,GridPane gridPane) {
+        Node result = null;
+        ObservableList<Node> childrens = gridPane.getChildren();
+        for(Node node : childrens) {
+            if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
+        }
+        return result;
+    }
+     
+    public Button getSketchSaveButton(){
+        return this.save_project_button ;
+    } 
+    
+    public Button getOpenProjectButton(){
+        return this.open_project_button ;
     }
     
     

@@ -18,8 +18,8 @@ public class Constant extends Module {
     
     private int value  = 10 ;
     
-    public Constant(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch) {
-        super(new Image("graphics/draggables/variable.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch ) ;
+    public Constant(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch,String type) {
+        super(new Image("graphics/draggables/variable.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch ,type) ;
         
     }
     
@@ -31,4 +31,12 @@ public class Constant extends Module {
     public void setValue(int value){
         this.value = value ;
     }
+    
+    @Override
+    public String getContent(){
+        return Integer.toString(this.value) ;
+    }
+    
+    
+    
 }

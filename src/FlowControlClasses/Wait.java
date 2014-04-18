@@ -18,8 +18,8 @@ public class Wait extends Module {
 
     private int waiting_time = 500 ;
     
-    public Wait(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch) {
-        super(new Image("graphics/draggables/waiting.png"), mod_id, x_coordinate, y_coordinate, sketch, main_sketch);
+    public Wait(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch,String type) {
+        super(new Image("graphics/draggables/waiting.png"), mod_id, x_coordinate, y_coordinate, sketch, main_sketch,type);
     }
     
     public void setWaitingTime(int time){
@@ -35,6 +35,11 @@ public class Wait extends Module {
         
         String output = "   delay(" + this.getWaitingTime() + ") ;" ;
         return output ;
+    }
+    
+    @Override
+    public String getContent(){
+        return Integer.toString(this.waiting_time) ;
     }
     
     

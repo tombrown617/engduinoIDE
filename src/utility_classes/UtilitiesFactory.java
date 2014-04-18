@@ -14,7 +14,6 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utility_classes.Utility;
-import utility_classes.newUtility;
 
 /**
  *
@@ -31,7 +30,6 @@ public class UtilitiesFactory {
     private  FXMLDocumentController main_document_controller ;
     
     public UtilitiesFactory(FXMLDocumentController doc_controller, Stage stage, SketchController sketch_controller) {
-        //throw new UnsupportedOperationException("Not supported yet.");
         
         try{
             this.main_document_controller = doc_controller ;
@@ -47,6 +45,12 @@ public class UtilitiesFactory {
             
             Utility upload_code = new uploadUtility(doc_controller, stage,this.sketch_controller) ;
             this.utilityList.put("upload", upload_code) ;
+            
+            Utility save_utility = new saveUtility(doc_controller, stage,this.sketch_controller) ;
+            this.utilityList.put("save", save_utility) ;
+            
+            Utility open_utility = new OpenUtility(doc_controller, stage,this.sketch_controller) ;
+            this.utilityList.put("open", open_utility) ;
             
             
                         

@@ -43,6 +43,7 @@ public class verifyCode extends Utility {
                                    sketch = sketch_controller.getSketch(doc_controller.getAllTabs().get(i).getId()) ;
                                    
                                    //sketch.getCodeViewController().getChildNodeCode() ;
+                                   doc_controller.getCodeViewTextArea().setText("");
                                    doc_controller.getCodeViewTextArea().setText(sketch.getCodeViewController().getCode(true));
                                   
                                    break ;

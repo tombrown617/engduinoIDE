@@ -16,9 +16,9 @@ import javafx.scene.layout.AnchorPane;
  */
 public class ANDOperator extends Module {
     
-     public ANDOperator(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch){
+     public ANDOperator(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch,String type){
         
-        super(new Image("graphics/draggables/and.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch ) ;
+        super(new Image("graphics/draggables/and.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch,type ) ;
         
         
     }

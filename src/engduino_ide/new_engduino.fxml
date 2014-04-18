@@ -463,7 +463,49 @@
           
            <Tab text="Variables">
             <content>
-              <AnchorPane fx:id = "varibales_tab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane fx:id = "varibales_tab" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" >
+              
+                  <Button fx:id = "update_variables" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="10"   text="Update Values"     style = ""  mnemonicParsing="false" prefHeight="30.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+                           </Button>
+                  
+                  
+                   <GridPane fx:id = "variables_grid_pane" hgap="7.0" layoutY="7.0"  prefWidth="1000.0" vgap="7.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" xmlns:fx="http://javafx.com/fxml">
+                            <padding>
+                                <Insets bottom="10.0" left="10.0" right="10.0" top="0.0" />
+                            </padding>
+                            
+                       <columnConstraints>
+                         
+                         <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="40.0" prefWidth="100.0" />
+                         <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
+                         <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
+
+                         <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" percentWidth="20.0" prefWidth="100.0" />
+
+                       </columnConstraints>
+                       
+                       
+                       <rowConstraints>
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         
+                       </rowConstraints>
+                       
+                       
+                        <children>
+                            
+                           
+                           
+                           
+                        </children>
+                     
+                     </GridPane> 
+              
+                   <!--end of variables anchor pane -->
+              </AnchorPane>
             </content>
           </Tab>
           

@@ -41,7 +41,7 @@ public class MainOutputMarker extends ImageView {
     public MainOutputMarker(double x, double y, AnchorPane sketch, Sketch main_sketch){
         
         this.main_sketch = main_sketch ;
-        setImage(new Image("graphics/main_output_marker.png")) ;
+        //setImage(new Image("graphics/main_output_marker.png")) ;
         
         double new_x = x ;
         double new_y = y  ;

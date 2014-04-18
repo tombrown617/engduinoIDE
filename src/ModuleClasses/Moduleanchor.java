@@ -170,6 +170,14 @@ public class Moduleanchor extends ImageView  {
       });
       
       
+      setOnMouseClicked(new EventHandler<MouseEvent>(){
+      
+           @Override
+           public void handle(MouseEvent mouseEvent){
+               sketch.getMainGUIController().setVariablesForModule(module);
+           }
+      });
+      
       setOnMouseDragged(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent mouseEvent) {
           double newX = mouseEvent.getX() + dragDelta.x;

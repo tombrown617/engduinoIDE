@@ -18,8 +18,8 @@ public class Accelerometer extends Module {
  
    private String direction ;
     
-    public Accelerometer(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch, String direction) {
-        super(new Image("graphics/draggables/accel.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch ) ;
+    public Accelerometer(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch, String direction,String type) {
+        super(new Image("graphics/draggables/accel.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch,type ) ;
         this.direction = direction ;
     }
     

@@ -18,8 +18,8 @@ public class Thermistor extends Module {
     
     private String valueIn ;
     
-    public Thermistor(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch, String valueIn) {
-        super(new Image("graphics/draggables/thermistor.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch ) ;
+    public Thermistor(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch, String valueIn,String type) {
+        super(new Image("graphics/draggables/thermistor.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch,type ) ;
         
         this.valueIn = valueIn ;
     }

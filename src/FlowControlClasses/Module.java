@@ -32,11 +32,12 @@ public abstract class Module {
     private String module_id ;
     
     
-    public Module(Image img,String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch){
+    public Module(Image img,String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch,String type){
         
         this.module_anchor = new Moduleanchor(img,mod_id,x_coordinate,y_coordinate,sketch,main_sketch,this ) ;
         this.sketch = main_sketch ;
         this.module_id = mod_id ;
+        this.module_type = type ;
     }
     
     public Moduleanchor getAnchor(){
@@ -75,6 +76,25 @@ public abstract class Module {
         return this.module_type ;
          
      }
+     
+     public String getStart(){
+         return null ;
+     }
+     
+     public String getEnd(){
+         return null ;
+     }
+     
+     public String getContent(){
+         return null ;
+     }
     
+     public String getLEDColor(){
+         return null ;
+     }
+     
+     public void setContent(String value){
+         
+     }
    
 }

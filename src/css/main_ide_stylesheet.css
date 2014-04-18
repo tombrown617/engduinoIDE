@@ -366,7 +366,8 @@
 
 .text_area_general{
 
-	-fx-border-color: transparent; -fx-border-width: 0; 
+	-fx-border-color: transparent; 
+        -fx-width: 0; 
             -fx-border-radius: 0; -fx-focus-color: transparent ;
 			-fx-background-color:transparent ;
 }

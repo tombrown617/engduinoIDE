@@ -138,16 +138,68 @@ public class CodeViewController {
     public String getChildNodeCode(){
         
         String output = "" ;
+        this.code = "" ;
+        this.tree_root = new TreeNode() ;
         
         this.makeTree(this.tree_root, sketch.getModuleConnectionController().getModuleConnectionList()); 
         this.traverseTree(this.tree_root,true) ;
         
         output = this.code ;
-        System.out.println("The code is \n" + output);
+        
         
         return output ;
         
     }
+    
+    private String traverseTree2(TreeNode node ,boolean line_break){
+        
+        if(!node.hasChildNode()){
+            
+            if(line_break == true){        
+                return node.getNodeModule().getModuleCode() + "\n" ;
+            }
+            else{
+                return node.getNodeModule().getModuleCode()  ;
+            }
+            
+            
+        }
+        else{
+            
+            String end = "" ;
+                
+            if(node.getNodeModule() != null ){
+                   
+               if(node.getTotalChildren() == 1){
+                   return null ;
+               }
+               else if(node.getTotalChildren() == 2){
+                   
+                   if(node.getNodeModule().getModuleID().indexOf("forl") != -1){
+                        return node.getNodeModule().getModuleCode() + traverseTree2(node.getChild(0), true) + "\n}" +  traverseTree2(node.getChild(1),true);
+                    }
+                   
+                   
+               }
+               
+                    
+                    
+            }
+            else{
+                
+                for(int i = 0; i < node.getTotalChildren();i++){
+                   return traverseTree2(node.getChild(i),true) ;
+                }
+                
+            }
+            
+            
+        }
+        
+        return null ;
+        
+    }
+    
     
     private void traverseTree(TreeNode node ,boolean line_break){
         
@@ -161,12 +213,22 @@ public class CodeViewController {
         }
         else{
             
-            String end = "" ;
+            
                 
             if(node.getNodeModule() != null ){
                    
                     if(node.getNodeModule().getModuleID().indexOf("forl") != -1){
-                         end = "\n}\n" ;
+                         
+                        this.code += node.getNodeModule().getModuleCode() + "\n" ;
+                        
+                        for(int i = 0; i < node.getTotalChildren();i++){
+                            traverseTree(node.getChild(i), true) ;
+                        }
+                        
+                        this.code += "}\n "  ;
+                        
+                        return ;
+                        
                     }
                     else if(node.getNodeModule().getModuleID().indexOf("cond") != -1){
                         
@@ -213,22 +275,17 @@ public class CodeViewController {
             }
             
             
-            if(node.getTotalChildren() == 1){
-                 
-                traverseTree(node.getChild(0),true) ;
-                //this.code += "}\n" ;
-            }
-            else{
-                
-                for(int i = 0; i < node.getTotalChildren();i++){
-                    traverseTree(node.getChild(i),true) ;
-                }
-                this.code += end ;
-            }
+           for(int i = 0; i < node.getTotalChildren();i++){
+                traverseTree(node.getChild(i),true) ;
+           }
+           //this.code += end ;
+            
             
         }
         
     }
+    
+    
     
     private void makeTree(TreeNode node, ArrayList<ModuleConnection> branch){
         

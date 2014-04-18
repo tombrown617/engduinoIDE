@@ -139,7 +139,6 @@ public class Inputmarker extends ImageView {
              
              if(db.getString().equals("main")){
                  
-                 System.out.println("From main to module");
                  MainInputMarker main_input = main_sketch.getModuleController().getMainInputMarker() ;
                  
                  Beziercurve new_final_curve = new Beziercurve(main_sketch.getSketchAnchorPane(), main_input,input_marker) ;

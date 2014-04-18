@@ -22,8 +22,8 @@ public class Infrared extends Module {
     
     private int send_buffer_size = 12 ;
     
-    public Infrared(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch) {
-        super(new Image("graphics/draggables/infrared_drag.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch ) ;
+    public Infrared(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch,String type) {
+        super(new Image("graphics/draggables/infrared_drag.png"), mod_id,x_coordinate,y_coordinate,sketch,main_sketch ,type) ;
         
     }
     

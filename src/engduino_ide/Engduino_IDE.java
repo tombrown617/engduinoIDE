@@ -65,6 +65,7 @@ public class Engduino_IDE extends Application {
         
         SketchController sketchController = new SketchController(main_doc_controller) ;
         main_doc_controller.setSketchController(sketchController);
+        main_doc_controller.setStage(primaryStage) ;
         UtilitiesFactory utilityFactory = new UtilitiesFactory(main_doc_controller, primaryStage, sketchController) ;
         
     }
