@@ -59,7 +59,7 @@ public class uploadUtility extends Utility {
                                        
                                        // this get all the code for the current open sketch so add stuff to this
                                        String code = sketch.getCodeViewController().getCode(true) ;
-                                       List headerList = sketch.getCodeViewController().getHeadersList();
+                                       //List headerList = sketch.getCodeViewController().getHeadersList();
                                        
                                        
                                        

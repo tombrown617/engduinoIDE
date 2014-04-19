@@ -219,5 +219,20 @@ public class ModuleConnectionController {
         return output ;
     }
 
+    
+    public int getInputPort(Module module_from,Module module_to){
+        
+        for(int i = 0; i < this.module_connection_list.size(); i++){
+            
+            if(this.module_connection_list.get(i).getType() == 2){
+                
+                if(this.module_connection_list.get(i).getFrom() == module_from && this.module_connection_list.get(i).getTo() == module_to){
+                    return this.module_connection_list.get(i).getToPort() ;
+                }
+            }
+        }
+        
+        return -1;
+    }
    
 }

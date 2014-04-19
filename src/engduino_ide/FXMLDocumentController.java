@@ -395,6 +395,7 @@ public class FXMLDocumentController implements Initializable {
         flowControlList.add("   Equals") ;
         
         flowControlList.add("   Constant") ;
+        flowControlList.add("   Print") ;
         
         return flowControlList ;
         

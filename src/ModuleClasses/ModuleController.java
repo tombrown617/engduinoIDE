@@ -22,6 +22,7 @@ import FlowControlClasses.OROperator;
 import FlowControlClasses.Thermistor;
 import FlowControlClasses.Constant;
 import FlowControlClasses.EqualityOperator;
+import FlowControlClasses.Print;
 import FlowControlClasses.Wait;
 import FlowControlClasses.WhileLoop;
 import FlowControlClasses.XOROperator;
@@ -94,15 +95,17 @@ public class ModuleController {
        }
        else if(type.indexOf("Magnetometer") != -1){
            
-           String value = type.substring(23) ;
+           String data = type.trim() ;
+           String value = data.substring(19) ;
+           System.out.println("Mag = " + value);
            
            new_module = new Magnetometer("magn_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,value,type.trim()) ;
            new_module.setHeader(header_list.get("Magnetometer"));
        }
        else if(type.indexOf("Accelerometer") != -1){
            
-           String value = type.substring(24) ;
-          
+           String data = type.trim() ;
+           String value = data.substring(20) ;
            new_module = new Accelerometer("accl_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, value,type.trim()) ;
            new_module.setHeader(header_list.get("Accelerometer"));
        }
@@ -113,8 +116,8 @@ public class ModuleController {
        }
        else if(type.indexOf("Temperature") != -1){
            
-           String value = type.substring(25) ;
-           
+           String data = type.trim() ;
+           String value = data.substring(21) ;
            new_module = new Thermistor("ther_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, value,type.trim()) ;
            new_module.setHeader(header_list.get("Thermistor"));
        }
@@ -159,9 +162,17 @@ public class ModuleController {
            
            new_module = new Constant("cons_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,type.trim()) ;
        }
+       else if(type.indexOf("Greater Than Equals") != -1){
+           
+           new_module = new EqualityOperator(new Image("graphics/draggables/greater_than_equals.png"), "equa_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, ">", type.trim()) ;
+       }
        else if(type.indexOf("Greater Than") != -1){
            
            new_module = new EqualityOperator(new Image("graphics/draggables/greater_than.png"), "equa_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, ">", type.trim()) ;
+       }
+       else if(type.indexOf("Less Than Equals") != -1){
+           
+           new_module = new EqualityOperator(new Image("graphics/draggables/less_than_equals.png"), "equa_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, "<",type.trim()) ;
        }
        else if(type.indexOf("Less Than") != -1){
            
@@ -170,6 +181,10 @@ public class ModuleController {
        else if(type.indexOf("Equals") != -1){
            
            new_module = new EqualityOperator(new Image("graphics/draggables/equals.png"), "equa_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch, "==",type.trim()) ;
+       }
+       else if(type.indexOf("Print") != -1){
+           
+           new_module = new Print( "equa_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,type.trim()) ;
        }
        else{
            new_module = new Condition("mode_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,type.trim()) ;

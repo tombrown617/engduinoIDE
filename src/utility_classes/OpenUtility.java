@@ -9,7 +9,6 @@ package utility_classes;
 import SketchClasses.Sketch;
 import SketchClasses.SketchController;
 import XMLFileHandling.ConvertToSketch;
-import com.thoughtworks.xstream.XStream;
 import engduino_ide.FXMLDocumentController;
 import java.io.File;
 import java.util.ArrayList;

@@ -9,7 +9,6 @@ package utility_classes;
 import SketchClasses.Sketch;
 import SketchClasses.SketchController;
 import XMLFileHandling.SketchToXML;
-import com.thoughtworks.xstream.XStream;
 import engduino_ide.FXMLDocumentController;
 import java.io.File;
 import javafx.embed.swing.SwingFXUtils;
@@ -50,13 +49,10 @@ public class saveUtility extends Utility {
                             }
                             else{
                                 
-                                //FileChooser fileChooser = new FileChooser();
                                 Sketch sketch_to_save = doc_controller.getActiveSketch() ;
                                 
                                 if(sketch_to_save.getSketchFile() != null){
-                                    
                                     saveDataToFile(sketch_to_save.getSketchFile(),sketch_to_save) ;
-                                    
                                 }
                                 else{
                                     
@@ -114,7 +110,7 @@ public class saveUtility extends Utility {
         Dialogs.showInformationDialog(stage, "Your sketch has been saved", "Sketch Saved !", ":-)");
         sketch.setSketchFile(file);
         
-      } catch (Exception e) { // catches ANY exception
+      } catch (Exception e) { 
         Dialogs.showErrorDialog(stage,
             "Could not save data to file:\n" + file.getPath(),
             "Could not save data", "Error", e);
