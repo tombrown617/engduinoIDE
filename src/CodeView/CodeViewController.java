@@ -6,6 +6,7 @@
 
 package CodeView;
 
+import FlowControlClasses.CustomSketchModule;
 import FlowControlClasses.Module;
 import ModuleClasses.ModuleConnection;
 import SketchClasses.Sketch;
@@ -51,6 +52,19 @@ public class CodeViewController {
         }
     }
     
+    
+    public void addHeader(ArrayList<String> header_list){
+        
+        for(int i = 0; i < header_list.size(); i++){
+             
+            if(!this.header_files.contains(header_list.get(i)) && !(header_list.get(i).equals(""))){
+                 this.header_files.add(header_list.get(i)) ;
+            }
+        }
+        
+       
+    }
+    
     public String getCode(boolean full){
         
         if(full == false){
@@ -91,6 +105,7 @@ public class CodeViewController {
     
     public void setOutputArrayCode(String type, Module module){
         
+        
         if(!this.array_code_types.contains(type)){
             array_code.add(module.getMainDataArrayCode()) ;
             array_code_types.add(type) ;
@@ -99,6 +114,30 @@ public class CodeViewController {
         
     }
     
+
+    public void setOutputArrayCode(ArrayList<String> output_array_code){
+        
+        for(int i = 0; i < output_array_code.size(); i++){
+            
+            if(output_array_code.get(i).equals("accelerometer") || output_array_code.get(i).equals("magnetometer")){
+                
+                if(!this.array_code_types.contains(output_array_code.get(i))){
+                    
+                    array_code_types.add(output_array_code.get(i)) ;
+                    
+                    if(output_array_code.get(i).equals("accelerometer")){
+                        this.array_code.add("    float accelerations[3]; \n" + "    EngduinoAccelerometer.xyz(accelerations); ") ;
+                    }
+                    else if(output_array_code.get(i).equals("magnetometer")){
+                        this.array_code.add("   float magneticField[3];\n" + "   EngduinoMagnetometer.xyz(magneticField); ") ;
+                    }
+                    
+                }
+            }
+            
+        }
+    }
+
     
     private String getSetupCode(){
         
@@ -157,71 +196,34 @@ public class CodeViewController {
         
     }
     
-    private String traverseTree2(TreeNode node ,boolean line_break){
+    
+    private void traverseTree(TreeNode node ,boolean line_break){
         
         if(!node.hasChildNode()){
             
-            if(line_break == true){        
-                return node.getNodeModule().getModuleCode() + "\n" ;
-            }
-            else{
-                return node.getNodeModule().getModuleCode()  ;
-            }
-            
-            
-        }
-        else{
-            
-            String end = "" ;
+            if(node.getNodeModule().getModuleType().equals("custom_module")){
                 
-            if(node.getNodeModule() != null ){
-                   
-               if(node.getTotalChildren() == 1){
-                   return null ;
-               }
-               else if(node.getTotalChildren() == 2){
-                   
-                   if(node.getNodeModule().getModuleID().indexOf("forl") != -1){
-                        return node.getNodeModule().getModuleCode() + traverseTree2(node.getChild(0), true) + "\n}" +  traverseTree2(node.getChild(1),true);
-                    }
-                   
-                   
-               }
-               
-                    
-                    
+                CustomSketchModule custom_module = (CustomSketchModule) node.getNodeModule() ;
+                
+                this.code += custom_module.getSketch().getCodeViewController().getChildNodeCode() ;
             }
             else{
                 
-                for(int i = 0; i < node.getTotalChildren();i++){
-                   return traverseTree2(node.getChild(i),true) ;
+                this.code +=  node.getNodeModule().getModuleCode() ;
+                if(line_break == true){        
+                    this.code += "\n" ;
                 }
                 
             }
             
             
-        }
-        
-        return null ;
-        
-    }
-    
-    
-    private void traverseTree(TreeNode node ,boolean line_break){
-        
-        if(!node.hasChildNode()){
-            this.code +=  node.getNodeModule().getModuleCode() ;
-            if(line_break == true){        
-                this.code += "\n" ;
-            }
-            
             return ;
         }
-        else{
+        else {
             
             
                 
-            if(node.getNodeModule() != null ){
+            if(node.getNodeModule() != null && !node.getNodeModule().getModuleType().equals("custom_module")){
                    
                     if(node.getNodeModule().getModuleID().indexOf("forl") != -1){
                          
@@ -279,13 +281,17 @@ public class CodeViewController {
                     
                     this.code += node.getNodeModule().getModuleCode() + "\n" ;
             }
+            else if(node.getNodeModule() != null && node.getNodeModule().getModuleType().equals("custom_module")){
+                
+                CustomSketchModule custom_module = (CustomSketchModule) node.getNodeModule() ;
+                this.code += custom_module.getSketch().getCodeViewController().getChildNodeCode() ;
+            }
+            
             
             
            for(int i = 0; i < node.getTotalChildren();i++){
                 traverseTree(node.getChild(i),true) ;
            }
-           //this.code += end ;
-            
             
         }
         
@@ -405,7 +411,16 @@ public class CodeViewController {
        
         
     }
+    
+    
+    public ArrayList<String> getHeaderList(){
+        return this.header_files ;
+    }
    
+    
+    public ArrayList<String> getCodeArrayTypes(){
+        return this.array_code_types ;
+    }
    
     
     
