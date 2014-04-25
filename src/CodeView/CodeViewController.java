@@ -11,6 +11,7 @@ import ModuleClasses.ModuleConnection;
 import SketchClasses.Sketch;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import javafx.scene.control.Dialogs;
 
@@ -73,6 +74,10 @@ public class CodeViewController {
         
     }
     
+    public List getHeadersList(){
+        return header_files;
+    }
+    
     public String getArrayCode(){
         String output = "" ;
        
@@ -93,6 +98,7 @@ public class CodeViewController {
         
         
     }
+    
     
     private String getSetupCode(){
         

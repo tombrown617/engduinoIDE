@@ -15,6 +15,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.ProcessBuilder.Redirect;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,6 +38,7 @@ import jssc.SerialPortList;
 public class uploadUtility extends Utility {
     
      //private final FXMLDocumentController doc_controller ;
+    private File hexOutput;
     
     public uploadUtility(final FXMLDocumentController doc_controller, final Stage stage, final SketchController sketch_controller){
         
@@ -58,15 +61,36 @@ public class uploadUtility extends Utility {
                                        sketch = sketch_controller.getSketch(doc_controller.getAllTabs().get(i).getId()) ;
                                        
                                        // this get all the code for the current open sketch so add stuff to this
+                                       Path buildDirectory = null;
+                                       try {
+                                            //Set<PosixFilePermission> perms = new HashSet<PosixFilePermission>();
+                                           //add owners permission                                           
+                                           buildDirectory = Files.createTempDirectory("engduinoBuild");
+                                           File dir = buildDirectory.toFile();
+                                           dir.setWritable(true, false);
+                                       } catch (IOException ex) {
+                                           Logger.getLogger(uploadUtility.class.getName()).log(Level.SEVERE, null, ex);
+                                       }
                                        String code = sketch.getCodeViewController().getCode(true) ;
-                                       //List headerList = sketch.getCodeViewController().getHeadersList();
-                                       
-                                       
-                                       
-                                       File codeFile = File.createTempFile("sketch", ".c");
+                                       code = "#include <Arduino.h>\n" + code + "\nint main(void) {\ninit();\nsetup();\nwhile(true){\nloop();\n}\n}";
+                                       List headerList = sketch.getCodeViewController().getHeadersList(); 
+                                       File codeFile = new File(buildDirectory.toString() + "/main.cpp");
                                        try (BufferedWriter codeWriter = new BufferedWriter (new FileWriter(codeFile))) {
                                            codeWriter.write(code);
                                        }
+                                       if(compile(headerList, codeFile, buildDirectory)){
+                                           List<String> serialList = Arrays.asList(SerialPortList.getPortNames());
+                                           for(String s : serialList){
+                                               System.out.println(s);
+                                               if(s.contains("/dev/tty.usbserial")||s.contains("/dev/ttyACM")||(s.contains("COM")&&isWindows())){
+                                                   
+                                                   uploadToEngduino(s,hexOutput);
+                                               }
+                                           }
+                                           
+                                           //uploadToEngduino("/dev/ttyACM0", hexOutput);
+                                       }
+                                       
                                        
                                        break;
                                    } catch (IOException ex) {
@@ -85,6 +109,204 @@ public class uploadUtility extends Utility {
         
     }
     
+    
+    
+    
+    public boolean compile (List<String> includes, File sketchCode, Path buildDirectory){
+        
+        String engduinoPath = "";
+        try {
+            engduinoPath = getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(uploadUtility.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(engduinoPath);
+        engduinoPath = engduinoPath.substring(0, engduinoPath.lastIndexOf("dist/"));
+        String compilerPath = engduinoPath + "utils/avrcompilers";
+        String osName = System.getProperty("os.name");
+        String gccPath = "";
+        String gppPath = "";
+        String objcopyPath = "";
+        String libraryPath = engduinoPath + "libraries/";
+        String headerPath = engduinoPath + "libraries/headers";
+        
+        
+        
+        if(osName.equals("Linux")){
+            compilerPath = compilerPath + "/linux";
+            String osArch = System.getProperty("os.arch");
+            if(osArch.equals("x86")||osArch.equals("i686")||osArch.equals("i386")){
+                compilerPath = compilerPath + "/x86";
+            } 
+            else if (osArch.equals("x86_64")||osArch.equals("amd64")){
+                compilerPath = compilerPath + "/x86_64";
+                
+            }
+            /*else if (osArch.equals("armhf")){
+                compilerPath = compilerPath + "/armhf";
+            }
+            else if (osArch.equals("armsf")){
+                compilerPath = compilerPath + "/armsf";
+            }*/
+            else {
+                //System.out.println("Linux OS Architecture not supported");
+                return false;
+            }            
+            gccPath = compilerPath + "/bin/avr-gcc";
+            gppPath = compilerPath + "/bin/avr-g++";
+            objcopyPath = compilerPath + "/bin/avr-objcopy";
+        }
+        else if (osName.equals("Mac OS X")){
+            compilerPath = compilerPath + "/osx";
+            gccPath = compilerPath + "/bin/avr-gcc";
+            gppPath = compilerPath + "/bin/avr-g++";
+            objcopyPath = compilerPath + "/bin/avr-objcopy";
+           
+            
+        }
+        else if(isWindows()){
+            compilerPath = compilerPath + "/windows";
+            gccPath = compilerPath + "/bin/avr-gcc.exe";
+            gppPath = compilerPath + "/bin/avr-g++.exe";
+            objcopyPath = compilerPath + "/bin/avr-objcopy.exe";
+       
+        }
+        else {
+                //System.out.println("OS not supported");
+                return false;
+            }
+        
+        //Compile user code to object file with g++
+        File gpp = new File(gppPath);
+        String[] gppCommands = new String[15];
+        gppCommands[0] = gpp.getAbsolutePath();
+        gppCommands[1] = "-c";
+        gppCommands[2] = "-g";
+        gppCommands[3] = "-Wall";
+        gppCommands[4] = "-fno-exceptions";
+        gppCommands[5] = "-ffunction-sections";
+        gppCommands[6] = "-fdata-sections";
+        gppCommands[7] = "-mmcu=atmega32u4";
+        gppCommands[8] = "-DF_CPU=8000000L";
+        gppCommands[9] = "-DUSB_VID=0x1B4F";
+        gppCommands[10] = "-DUSB_PID=0x9208";
+        gppCommands[11] = "-DARDUINO=105";
+        gppCommands[12] = "-I" + headerPath;
+        gppCommands[13] = sketchCode.getAbsolutePath();
+        gppCommands[14] = "-o" + buildDirectory.toString() + "/build.cpp.o";
+        Process gppProcess;
+        File sketchObject = null;
+        try {
+            ProcessBuilder gppBuilder = new ProcessBuilder(gppCommands);
+            gppBuilder.redirectOutput(Redirect.INHERIT);
+            gppBuilder.redirectError(Redirect.INHERIT);
+            System.out.println(gppBuilder.command().toString());
+            gppProcess = gppBuilder.start();            
+            gppProcess.waitFor();
+            sketchObject = new File(buildDirectory.toString() + "/build.cpp.o");
+        } catch (InterruptedException | IOException ex) {
+            Logger.getLogger(uploadUtility.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        if(!sketchObject.exists()){
+            return false;
+        }
+        
+        //Link objects together
+        File gcc = new File(gccPath);
+        
+        String irLib = libraryPath + "engduino/EngduinoIR.cpp.o";
+        String buttonLib = libraryPath + "engduino/EngduinoButton.cpp.o";
+        String accelerometerLib = libraryPath +"engduino/EngduinoAccelerometer.cpp.o";
+        String ledLib = libraryPath + "engduino/EngduinoLEDs.cpp.o";
+        String lightLib = libraryPath + "engduino/EngduinoLight.cpp.o";
+        String magLib = libraryPath + "engduino/EngduinoMagnetometer.cpp.o";
+        String thermistorLib = libraryPath + "engduino/EngduinoThermistor.cpp.o";
+        
+        ArrayList<String> gccCommandList = new ArrayList();
+        
+        gccCommandList.add(gcc.getAbsolutePath());
+        gccCommandList.add("-Os");
+        gccCommandList.add("-Wl,--gc-sections");
+        gccCommandList.add("-mmcu=atmega32u4");
+        gccCommandList.add("-o" + buildDirectory.toString() + "/build.cpp.elf");
+        gccCommandList.add(sketchObject.getAbsolutePath());
+        File arduinoFolder = new File(libraryPath + "arduino");
+        File[] arduinoLibraries = arduinoFolder.listFiles();
+        for(int i = 0; i<arduinoLibraries.length; i++){
+            gccCommandList.add(arduinoLibraries[i].getAbsolutePath());
+        }
+        for(String include : includes){
+            if(include.contains("EngduinoLEDs.h") && !gccCommandList.contains(ledLib)){
+                gccCommandList.add(ledLib);
+            }
+            if(include.contains("EngduinoAccelerometer.h") && !gccCommandList.contains(accelerometerLib)){
+                gccCommandList.add(buttonLib);
+            }
+            if(include.contains("EngduinoIR.h") && !gccCommandList.contains(irLib)){
+                gccCommandList.add(irLib);
+            }
+            if(include.contains("EngduinoLight.h") && !gccCommandList.contains(lightLib)){
+                gccCommandList.add(lightLib);
+            }
+            if(include.contains("EngduinoMagnetometer.h") && !gccCommandList.contains(magLib)){
+                gccCommandList.add(magLib);
+            }
+            if(include.contains("EngduinoThermistor.h") && !gccCommandList.contains(thermistorLib)){
+                gccCommandList.add(thermistorLib);
+            }
+        }
+        gccCommandList.add("-lm");
+        gccCommandList.add("-L" + engduinoPath);
+        Process gccProcess;
+        File elfFile = null;
+        ProcessBuilder gccBuilder = new ProcessBuilder(gccCommandList);
+        try {
+            gccBuilder.redirectOutput(Redirect.INHERIT);
+            gccBuilder.redirectError(Redirect.INHERIT);
+            System.out.println(gccBuilder.command().toString());
+            gccProcess = gccBuilder.start();            
+            gccProcess.waitFor();
+            elfFile = new File(buildDirectory.toString() + "/build.cpp.elf");
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(uploadUtility.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        if(!elfFile.exists()){
+            return false;
+        }
+        
+        //Build the hex file for the Engduino
+        File objcopy = new File (objcopyPath);
+        String[] objcopyCommands = new String[5];
+        objcopyCommands[0] = objcopy.getAbsolutePath();
+        objcopyCommands[1] = "-Oihex";
+        objcopyCommands[2] = "-R .eeprom";
+        objcopyCommands[3] = elfFile.getAbsolutePath();
+        objcopyCommands[4] = buildDirectory.toString() + "/build.hex";
+        Process objcopyProcess;
+        try {
+            ProcessBuilder objcopyBuilder = new ProcessBuilder(objcopyCommands);
+            objcopyBuilder.redirectOutput(Redirect.INHERIT);
+            objcopyBuilder.redirectError(Redirect.INHERIT);
+            System.out.println(objcopyBuilder.command().toString());
+            objcopyProcess = objcopyBuilder.start();            
+            objcopyProcess.waitFor();
+            File hexFile = new File(buildDirectory.toString() + "/build.hex");
+            hexOutput = hexFile;
+        } 
+        catch (IOException | InterruptedException ex) {
+            Logger.getLogger(uploadUtility.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }            
+              
+       
+        return true;
+    }
+    
+    public File getHexOutput(){
+        return hexOutput;
+    }
     
     
     public boolean uploadToEngduino (String portName, File hexFile){
@@ -110,7 +332,7 @@ public class uploadUtility extends Utility {
         } catch (URISyntaxException ex) {
             Logger.getLogger(uploadUtility.class.getName()).log(Level.SEVERE, null, ex);
         }
-        engduinoPath = engduinoPath.substring(0, engduinoPath.lastIndexOf("dist/engduino_IDE.jar"));
+        engduinoPath = engduinoPath.substring(0, engduinoPath.lastIndexOf("dist/"));
         String avrdudePath = engduinoPath + "utils/avrdude";
         String avrdudeBinaryPath;
         String osName = System.getProperty("os.name");
@@ -224,7 +446,7 @@ public class uploadUtility extends Utility {
             differentPorts.removeAll(initialPorts);
             
             if(differentPorts.size() > 0){
-                System.out.println("Port change: " + differentPorts.get(0));
+                //System.out.println("Port change: " + differentPorts.get(0));
                 return differentPorts.get(0);
             }
             
