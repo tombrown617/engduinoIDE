@@ -82,7 +82,7 @@ public class uploadUtility extends Utility {
                                            List<String> serialList = Arrays.asList(SerialPortList.getPortNames());
                                            for(String s : serialList){
                                                System.out.println(s);
-                                               if(s.contains("/dev/tty.usbserial")||s.contains("/dev/ttyACM")||(s.contains("COM")&&isWindows())){
+                                               if(s.contains("/dev/tty.usbmodem")||s.contains("/dev/ttyACM")||(s.contains("COM")&&isWindows())){
                                                    
                                                    uploadToEngduino(s,hexOutput);
                                                }
