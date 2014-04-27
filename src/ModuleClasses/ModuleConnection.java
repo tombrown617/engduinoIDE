@@ -29,30 +29,30 @@ public class ModuleConnection {
     
     private int to_port ;
     
+    private Beziercurve wire ;
     
-    public ModuleConnection(MainInputMarker main_input, Module module ,int to_port){
+    
+    public ModuleConnection(MainInputMarker main_input, Module module ,int to_port,Beziercurve wire){
         
         this.type = 1;
         this.main_input = main_input ;
         this.to_module = module ;
         this.to_port = to_port ;
+        this.wire = wire ;
         
-        //System.out.println("Conection created from main to " + module.getModuleID() );
-       
     }
     
-    public ModuleConnection(Module module , MainOutputMarker main_output, int from_port){
+    public ModuleConnection(Module module , MainOutputMarker main_output, int from_port,Beziercurve wire){
         
         this.from_module = module ;
         this.main_output = main_output;
         this.type = 3 ;
         this.from_port = from_port ;
+        this.wire  = wire ;
         
-        //System.out.println("Conection created from " + module.getModuleID() + " to main output and from port = " + from_port );
-         
     }
     
-    public ModuleConnection(Module from_module, Module to_module,int from_port, int to_port){
+    public ModuleConnection(Module from_module, Module to_module,int from_port, int to_port,Beziercurve wire){
         
         this.type = 2 ;
         this.from_module = from_module ;
@@ -60,8 +60,7 @@ public class ModuleConnection {
         
         this.from_port = from_port ;
         this.to_port = to_port ;
-         //System.out.println("Conection created from " + from_module.getModuleID() + " to " + to_module.getModuleID() + " from port = " + from_port + " and to port = " + to_port  );
-        
+        this.wire  = wire ;
     }
     
     public Module getTo(){
@@ -82,5 +81,9 @@ public class ModuleConnection {
     
     public int getToPort(){
         return this.to_port ;
+    }
+    
+    public Beziercurve getConnectionWire(){
+        return this.wire ;
     }
 }
