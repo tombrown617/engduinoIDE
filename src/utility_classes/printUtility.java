@@ -63,8 +63,7 @@ public class printUtility extends Utility implements Printable {
        
             public void handle(MouseEvent mouseEvent) {
                     if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-                        if(mouseEvent.getClickCount() == 1){                            
-                                    System.out.println("Hello");
+                        if(mouseEvent.getClickCount() == 1){
                                     checkSketchExistence() ;                     
                             }
                         }                        
@@ -77,7 +76,6 @@ public class printUtility extends Utility implements Printable {
             @Override public void handle(ActionEvent e) {
                 
                checkSketchExistence() ;
-               System.out.println("Hello");
             }
         });
     }
