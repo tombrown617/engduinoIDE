@@ -54,11 +54,45 @@ public class uploadUtility extends Utility {
                             //System.out.println("Double clicked");    Turn All LEDs OFF
                         }
                         else{
-                            
-                           Sketch sketch ;
-                           
-                           for(int i = 0; i < doc_controller.getAllTabs().size(); i++){
+                           compileAndUpload(doc_controller, stage, sketch_controller); 
+                        }
+                    }
+                }
+            });
+        
+        
+        
+        doc_controller.getMenuItem("compile_custom_code").setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+                String code = doc_controller.getCodeViewTextArea().getText() ;
+                compileAndUpload(doc_controller, stage, sketch_controller); 
+            }
+        });
+        
+        
+        doc_controller.getMenuItem("compile_connection_code").setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+                try {
+                    String code = doc_controller.getActiveSketch().getCodeViewController().getCode(true, false) ;
+                    compileAndUpload(doc_controller, stage, sketch_controller); 
+                    
+                    
+                } catch (IOException ex) {
+                   
+                }
+            }
+        });
+        
+        
+    }
+    
+    
+    public void compileAndUpload(final FXMLDocumentController doc_controller, final Stage stage, final SketchController sketch_controller) {
+        for(int i = 0; i < doc_controller.getAllTabs().size(); i++){
                                if(doc_controller.getAllTabs().get(i).isSelected()){
+                                   Sketch sketch;
                                    try {
                                        sketch = sketch_controller.getSketch(doc_controller.getAllTabs().get(i).getId()) ;
                                        
@@ -100,45 +134,8 @@ public class uploadUtility extends Utility {
                                        Logger.getLogger(uploadUtility.class.getName()).log(Level.SEVERE, null, ex);
                                    }
                                }
-                           }
-                           
-                           
-                            
-                        }
-                    }
                 }
-            });
-        
-        
-        
-        doc_controller.getMenuItem("compile_custom_code").setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                
-                String code = doc_controller.getCodeViewTextArea().getText() ;
-                
-            }
-        });
-        
-        
-        doc_controller.getMenuItem("compile_connection_code").setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                
-                try {
-                    String code = doc_controller.getActiveSketch().getCodeViewController().getCode(true, false) ;
-                    
-                    
-                    
-                } catch (IOException ex) {
-                   
-                }
-            }
-        });
-        
-        
     }
-    
-    
-    
     
     public boolean compile (List<String> includes, File sketchCode, Path buildDirectory){
         
