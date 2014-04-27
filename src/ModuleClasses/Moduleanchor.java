@@ -113,10 +113,6 @@ public class Moduleanchor extends ImageView  {
                         
                         if(obj.getModule().getModuleID().equals(getModule().getModuleID())){
                             
-                            
-                            //if(sketch_anchor_pane.getChildren().removeAll(main_sketch.getModuleConnectionController().getConnectionWires(getModule().getModuleID())) ;
-                        
-                            
                             sketch_anchor_pane.getChildren().remove(i) ;
                         
                             sketch_anchor_pane.getChildren().removeAll(obj.getInputMarkers() ) ;
