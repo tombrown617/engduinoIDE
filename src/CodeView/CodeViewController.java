@@ -6,11 +6,16 @@
 
 package CodeView;
 
+import FlowControlClasses.CustomSketchModule;
 import FlowControlClasses.Module;
 import ModuleClasses.ModuleConnection;
 import SketchClasses.Sketch;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import javafx.scene.control.Dialogs;
 
@@ -50,13 +55,58 @@ public class CodeViewController {
         }
     }
     
+    
+    public void addHeader(ArrayList<String> header_list){
+        
+        for(int i = 0; i < header_list.size(); i++){
+             
+            if(!this.header_files.contains(header_list.get(i)) && !(header_list.get(i).equals(""))){
+                 this.header_files.add(header_list.get(i)) ;
+            }
+        }
+        
+       
+    }
+    
+<<<<<<< HEAD
+    public String getCode(boolean full,boolean lineNumber) throws IOException{
+=======
     public String getCode(boolean full){
+>>>>>>> FETCH_HEAD
         
         if(full == false){
-            return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyCode() ;
+           
+            if(lineNumber == true){
+                try{
+                     return addLineNumber(this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyCode()) ;
+                }
+                catch(IOException e){
+                    return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyCode();
+                }
+            }
+            else{
+             return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyCode();   
+            }
+            
+            
         }
         else{
-            return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyFullCode() ;
+            
+            if(lineNumber == true){
+                try{
+                    return addLineNumber(this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyFullCode()) ;
+                }
+                catch(IOException e){
+                    return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyFullCode() ;
+                }
+            }
+            else{
+                return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyFullCode() ;
+            }
+            
+            
+            
+            
         }
         
     }
@@ -73,6 +123,10 @@ public class CodeViewController {
         
     }
     
+    public List getHeadersList(){
+        return header_files;
+    }
+    
     public String getArrayCode(){
         String output = "" ;
        
@@ -86,6 +140,7 @@ public class CodeViewController {
     
     public void setOutputArrayCode(String type, Module module){
         
+        
         if(!this.array_code_types.contains(type)){
             array_code.add(module.getMainDataArrayCode()) ;
             array_code_types.add(type) ;
@@ -93,6 +148,31 @@ public class CodeViewController {
         
         
     }
+    
+
+    public void setOutputArrayCode(ArrayList<String> output_array_code){
+        
+        for(int i = 0; i < output_array_code.size(); i++){
+            
+            if(output_array_code.get(i).equals("accelerometer") || output_array_code.get(i).equals("magnetometer")){
+                
+                if(!this.array_code_types.contains(output_array_code.get(i))){
+                    
+                    array_code_types.add(output_array_code.get(i)) ;
+                    
+                    if(output_array_code.get(i).equals("accelerometer")){
+                        this.array_code.add("    float accelerations[3]; \n" + "    EngduinoAccelerometer.xyz(accelerations); ") ;
+                    }
+                    else if(output_array_code.get(i).equals("magnetometer")){
+                        this.array_code.add("   float magneticField[3];\n" + "   EngduinoMagnetometer.xyz(magneticField); ") ;
+                    }
+                    
+                }
+            }
+            
+        }
+    }
+
     
     private String getSetupCode(){
         
@@ -151,71 +231,34 @@ public class CodeViewController {
         
     }
     
-    private String traverseTree2(TreeNode node ,boolean line_break){
+    
+    private void traverseTree(TreeNode node ,boolean line_break){
         
         if(!node.hasChildNode()){
             
-            if(line_break == true){        
-                return node.getNodeModule().getModuleCode() + "\n" ;
-            }
-            else{
-                return node.getNodeModule().getModuleCode()  ;
-            }
-            
-            
-        }
-        else{
-            
-            String end = "" ;
+            if(node.getNodeModule().getModuleType().equals("custom_module")){
                 
-            if(node.getNodeModule() != null ){
-                   
-               if(node.getTotalChildren() == 1){
-                   return null ;
-               }
-               else if(node.getTotalChildren() == 2){
-                   
-                   if(node.getNodeModule().getModuleID().indexOf("forl") != -1){
-                        return node.getNodeModule().getModuleCode() + traverseTree2(node.getChild(0), true) + "\n}" +  traverseTree2(node.getChild(1),true);
-                    }
-                   
-                   
-               }
-               
-                    
-                    
+                CustomSketchModule custom_module = (CustomSketchModule) node.getNodeModule() ;
+                
+                this.code += custom_module.getSketch().getCodeViewController().getChildNodeCode() ;
             }
             else{
                 
-                for(int i = 0; i < node.getTotalChildren();i++){
-                   return traverseTree2(node.getChild(i),true) ;
+                this.code +=  node.getNodeModule().getModuleCode() ;
+                if(line_break == true){        
+                    this.code += "\n" ;
                 }
                 
             }
             
             
-        }
-        
-        return null ;
-        
-    }
-    
-    
-    private void traverseTree(TreeNode node ,boolean line_break){
-        
-        if(!node.hasChildNode()){
-            this.code +=  node.getNodeModule().getModuleCode() ;
-            if(line_break == true){        
-                this.code += "\n" ;
-            }
-            
             return ;
         }
-        else{
+        else {
             
             
                 
-            if(node.getNodeModule() != null ){
+            if(node.getNodeModule() != null && !node.getNodeModule().getModuleType().equals("custom_module")){
                    
                     if(node.getNodeModule().getModuleID().indexOf("forl") != -1){
                          
@@ -273,13 +316,17 @@ public class CodeViewController {
                     
                     this.code += node.getNodeModule().getModuleCode() + "\n" ;
             }
+            else if(node.getNodeModule() != null && node.getNodeModule().getModuleType().equals("custom_module")){
+                
+                CustomSketchModule custom_module = (CustomSketchModule) node.getNodeModule() ;
+                this.code += custom_module.getSketch().getCodeViewController().getChildNodeCode() ;
+            }
+            
             
             
            for(int i = 0; i < node.getTotalChildren();i++){
                 traverseTree(node.getChild(i),true) ;
            }
-           //this.code += end ;
-            
             
         }
         
@@ -399,8 +446,33 @@ public class CodeViewController {
        
         
     }
+    
+    
+    public ArrayList<String> getHeaderList(){
+        return this.header_files ;
+    }
    
+    
+    public ArrayList<String> getCodeArrayTypes(){
+        return this.array_code_types ;
+    }
    
+    private String addLineNumber(String code) throws IOException{
+        
+        String output = "" ;
+        BufferedReader bufReader = new BufferedReader(new StringReader(code));
+    
+        String line=null;
+        int lineNumber = 1 ;
+        while( (line=bufReader.readLine()) != null )
+        {
+           output += lineNumber + "  :  " + line + "\n" ;
+           lineNumber++ ;
+        }
+        
+        
+        return output ;
+    }
     
     
     
