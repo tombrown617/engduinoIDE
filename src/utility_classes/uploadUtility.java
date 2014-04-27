@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Dialogs;
 import javafx.scene.input.MouseButton;
@@ -107,6 +108,31 @@ public class uploadUtility extends Utility {
                     }
                 }
             });
+        
+        
+        
+        doc_controller.getMenuItem("compile_custom_code").setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+                String code = doc_controller.getCodeViewTextArea().getText() ;
+                
+            }
+        });
+        
+        
+        doc_controller.getMenuItem("compile_connection_code").setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+                try {
+                    String code = doc_controller.getActiveSketch().getCodeViewController().getCode(true, false) ;
+                    
+                    
+                    
+                } catch (IOException ex) {
+                   
+                }
+            }
+        });
         
         
     }

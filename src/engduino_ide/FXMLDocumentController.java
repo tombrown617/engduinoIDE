@@ -800,7 +800,7 @@ public class FXMLDocumentController implements Initializable {
         this.getMenuItem("save_sketch").setAccelerator(new KeyCodeCombination( KeyCode.S,KeyCombination.META_DOWN));
         this.getMenuItem("print_code").setAccelerator(new KeyCodeCombination( KeyCode.P,KeyCombination.META_DOWN));
         
-        
+        //this.getMenuItem("print_code")
         
         
         final CheckMenuItem edit_code = (CheckMenuItem)this.getMenuItem("edit_code") ;
@@ -814,7 +814,7 @@ public class FXMLDocumentController implements Initializable {
                     getCodeViewTextArea().setEditable(true);
                     
                     try {
-                        getActiveSketch().getCodeViewController().getCode(true, false) ;
+                        getCodeViewTextArea().setText(getActiveSketch().getCodeViewController().getCode(true, false)) ;
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -823,7 +823,7 @@ public class FXMLDocumentController implements Initializable {
                     getCodeViewTextArea().setEditable(false);
                     
                     try {
-                        getActiveSketch().getCodeViewController().getCode(true, true) ;
+                        getCodeViewTextArea().setText(getActiveSketch().getCodeViewController().getCode(true, true)) ;
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -832,10 +832,6 @@ public class FXMLDocumentController implements Initializable {
                 
             }
         });
-        
-        //this.getMenuItem("new_sketch").setAccelerator(new KeyCodeCombination( KeyCode.N,KeyCombination.META_DOWN));
-        //this.getMenuItem("new_sketch").setAccelerator(new KeyCodeCombination( KeyCode.N,KeyCombination.META_DOWN));
-        //this.getMenuItem("new_sketch").setAccelerator(new KeyCodeCombination( KeyCode.N,KeyCombination.META_DOWN));
         
         
         this.getMenuItem("exit").setOnAction(new EventHandler<ActionEvent>() {
