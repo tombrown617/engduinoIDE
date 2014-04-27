@@ -68,12 +68,10 @@ public class CodeViewController {
        
     }
     
-<<<<<<< HEAD
+
     public String getCode(boolean full,boolean lineNumber) throws IOException{
-=======
-    public String getCode(boolean full){
->>>>>>> FETCH_HEAD
-        
+
+    
         if(full == false){
            
             if(lineNumber == true){
