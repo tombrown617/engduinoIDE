@@ -25,6 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -805,12 +807,27 @@ public class FXMLDocumentController implements Initializable {
         edit_code.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 
+                getCodeViewTextArea().setText("");
+                
                 if(edit_code.isSelected()){
                     
                     getCodeViewTextArea().setEditable(true);
+                    
+                    try {
+                        getActiveSketch().getCodeViewController().getCode(true, false) ;
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 else{
                     getCodeViewTextArea().setEditable(false);
+                    
+                    try {
+                        getActiveSketch().getCodeViewController().getCode(true, true) ;
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
                 }
                 
             }
@@ -1029,5 +1046,9 @@ public class FXMLDocumentController implements Initializable {
         return this.print_code_button ;
     }
     
+    
+    public TabPane getBottomTabPane(){
+        return this.bottom_tab_pane ;
+    }
     
 }

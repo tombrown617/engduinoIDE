@@ -68,6 +68,7 @@ public class verifyCode extends Utility {
          doc_controller.getMenuItem("verify_code").setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 
+                
                  Sketch sketch ;
                            
                            for(int i = 0; i < doc_controller.getAllTabs().size(); i++){

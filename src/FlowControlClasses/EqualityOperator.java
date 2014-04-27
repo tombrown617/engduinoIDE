@@ -30,8 +30,8 @@ public class EqualityOperator extends Module {
      
     public String getModuleCode(){
         
-        System.out.println("The operator is " + this.operator);
-        return this.operator ; 
+        
+        return "  " + this.operator + "  " ; 
                 
     }
     

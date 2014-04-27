@@ -8,6 +8,7 @@ package XMLFileHandling;
 
 import FlowControlClasses.Constant;
 import FlowControlClasses.CustomSketchModule;
+import FlowControlClasses.Loop;
 import FlowControlClasses.Module;
 import SketchClasses.Sketch;
 import java.util.ArrayList;
@@ -156,12 +157,20 @@ public class SketchToXML {
             Module mod1 = sketch.getModuleConnectionController().getConnectedModule(module, 1) ;
             Module mod2 = sketch.getModuleConnectionController().getConnectedModule(module, 2) ;
             
+            String properties = "" ;
+            
+            if(module.getModuleType().indexOf("For Loop") != -1){
+                
+                Loop loop = (Loop) module ;
+                properties += "symbol = '"+ loop.getLoopSymbol() +"'" ;
+            }
+            
             if(mod1 != null && mod2 != null && port == 0){
-                return "<module connection_from_port = '"+sketch.getModuleConnectionController().getInputPort(previous_module, module) +"' module_id = '"+module.getModuleID() +"' connection_from = 'main' x = '"+module.getAnchor().getX()+"' y = '"+ module.getAnchor().getY()+"' type = '"+module.getModuleType()+"'>"+  generateCodeForModule(sketch.getModuleConnectionController().getConnectedModule(module, 1),module,1) + generateCodeForModule(sketch.getModuleConnectionController().getConnectedModule(module, 2),module,2)  +"</module>" ;
+                return "<module " + properties+ " connection_from_port = '"+sketch.getModuleConnectionController().getInputPort(previous_module, module) +"' module_id = '"+module.getModuleID() +"' connection_from = 'main' x = '"+module.getAnchor().getX()+"' y = '"+ module.getAnchor().getY()+"' type = '"+module.getModuleType()+"'>"+  generateCodeForModule(sketch.getModuleConnectionController().getConnectedModule(module, 1),module,1) + generateCodeForModule(sketch.getModuleConnectionController().getConnectedModule(module, 2),module,2)  +"</module>" ;
             
             }
             else if(mod1 != null && mod2 != null && port != 0){
-                return "<port number = '"+ port+"'><module connection_from_port = '"+sketch.getModuleConnectionController().getInputPort(previous_module, module) +"' module_id = '"+module.getModuleID() +"' connection_from = '"+connection_from+"' x = '"+module.getAnchor().getX()+"' y = '"+ module.getAnchor().getY()+"' type = '"+module.getModuleType()+"'>"+  generateCodeForModule(sketch.getModuleConnectionController().getConnectedModule(module, 1),module,1) + generateCodeForModule(sketch.getModuleConnectionController().getConnectedModule(module, 2),module,2)  +"</module></port>" ;
+                return "<port number = '"+ port+"'><module  "+ properties +"  connection_from_port = '"+sketch.getModuleConnectionController().getInputPort(previous_module, module) +"' module_id = '"+module.getModuleID() +"' connection_from = '"+connection_from+"' x = '"+module.getAnchor().getX()+"' y = '"+ module.getAnchor().getY()+"' type = '"+module.getModuleType()+"'>"+  generateCodeForModule(sketch.getModuleConnectionController().getConnectedModule(module, 1),module,1) + generateCodeForModule(sketch.getModuleConnectionController().getConnectedModule(module, 2),module,2)  +"</module></port>" ;
             
             }
             
