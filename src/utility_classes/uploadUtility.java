@@ -74,7 +74,7 @@ public class uploadUtility extends Utility {
                                        }
                                        String code = sketch.getCodeViewController().getCode(true,false);
                                        code = "#include <Arduino.h>\n" + code + "\nint main(void) {\ninit();\nsetup();\nwhile(true){\nloop();\n}\n}";
-                                       List headerList = sketch.getCodeViewController().getHeadersList(); 
+                                       List headerList = sketch.getCodeViewController().getHeadersList();
                                        File codeFile = new File(buildDirectory.toString() + "/main.cpp");
                                        try (BufferedWriter codeWriter = new BufferedWriter (new FileWriter(codeFile))) {
                                            codeWriter.write(code);
@@ -86,7 +86,7 @@ public class uploadUtility extends Utility {
                                                if(s.contains("/dev/tty.usbmodem")||s.contains("/dev/ttyACM")||(s.contains("COM")&&isWindows())){                                                  
                                                    
                                                    if(!uploadToEngduino(s,hexOutput)){
-                                                       Dialogs.showErrorDialog(stage, "Upload to Engduino on port " + s + " failed.", "Upload error", "Error!");
+                                                       Dialogs.showErrorDialog(stage, "Upload error", "Upload to Engduino on port " + s + " failed.", "Error!");
                                                    }
                                                }
                                            }
@@ -243,6 +243,9 @@ public class uploadUtility extends Utility {
                 gccCommandList.add(ledLib);
             }
             if(include.contains("EngduinoAccelerometer.h") && !gccCommandList.contains(accelerometerLib)){
+                gccCommandList.add(accelerometerLib);
+            }
+            if(include.contains("EngduinoButton.h") && !gccCommandList.contains(accelerometerLib)){
                 gccCommandList.add(buttonLib);
             }
             if(include.contains("EngduinoIR.h") && !gccCommandList.contains(irLib)){
