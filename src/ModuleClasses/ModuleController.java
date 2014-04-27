@@ -21,6 +21,7 @@ import FlowControlClasses.NOTOperator;
 import FlowControlClasses.OROperator;
 import FlowControlClasses.Thermistor;
 import FlowControlClasses.Constant;
+import FlowControlClasses.CustomSketchModule;
 import FlowControlClasses.EqualityOperator;
 import FlowControlClasses.Print;
 import FlowControlClasses.Wait;
@@ -97,7 +98,7 @@ public class ModuleController {
            
            String data = type.trim() ;
            String value = data.substring(19) ;
-           System.out.println("Mag = " + value);
+           //System.out.println("Mag = " + value);
            
            new_module = new Magnetometer("magn_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,value,type.trim()) ;
            new_module.setHeader(header_list.get("Magnetometer"));
@@ -187,7 +188,9 @@ public class ModuleController {
            new_module = new Print( "equa_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,type.trim()) ;
        }
        else{
-           new_module = new Condition("mode_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,type.trim()) ;
+           
+           //System.out.println("The module type is " + type);
+           new_module = new CustomSketchModule("cust_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,type.trim()) ;
        }
        
        module_list.put(new_module.getModuleID(), new_module) ;
@@ -279,6 +282,18 @@ public class ModuleController {
         }
         
         return null ;
+        
+    }
+    
+    public void removeModule(String id){
+     
+         ArrayList<Module> modules = new ArrayList<Module>(this.module_list.values()) ;
+        
+        for(int i = 0 ; i < modules.size(); i++){
+            if(modules.get(i).getModuleID().equals(id)){
+                this.module_list.remove(modules.get(i).getModuleID()) ;
+            }
+        }
         
     }
     
