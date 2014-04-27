@@ -814,7 +814,7 @@ public class FXMLDocumentController implements Initializable {
                     getCodeViewTextArea().setEditable(true);
                     
                     try {
-                        getActiveSketch().getCodeViewController().getCode(true, false) ;
+                        getCodeViewTextArea().setText(getActiveSketch().getCodeViewController().getCode(true, false)) ;
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -823,7 +823,7 @@ public class FXMLDocumentController implements Initializable {
                     getCodeViewTextArea().setEditable(false);
                     
                     try {
-                        getActiveSketch().getCodeViewController().getCode(true, true) ;
+                        getCodeViewTextArea().setText(getActiveSketch().getCodeViewController().getCode(true, true)) ;
                     } catch (IOException ex) {
                         Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                     }
