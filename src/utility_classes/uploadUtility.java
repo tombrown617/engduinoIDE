@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.EventHandler;
+import javafx.scene.control.Dialogs;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -71,11 +72,7 @@ public class uploadUtility extends Utility {
                                        } catch (IOException ex) {
                                            Logger.getLogger(uploadUtility.class.getName()).log(Level.SEVERE, null, ex);
                                        }
-
-                                       String code = sketch.getCodeViewController().getCode(true,false) ;
-
-                                       
-
+                                       String code = sketch.getCodeViewController().getCode(true,false);
                                        code = "#include <Arduino.h>\n" + code + "\nint main(void) {\ninit();\nsetup();\nwhile(true){\nloop();\n}\n}";
                                        List headerList = sketch.getCodeViewController().getHeadersList(); 
                                        File codeFile = new File(buildDirectory.toString() + "/main.cpp");
@@ -86,16 +83,17 @@ public class uploadUtility extends Utility {
                                            List<String> serialList = Arrays.asList(SerialPortList.getPortNames());
                                            for(String s : serialList){
                                                System.out.println(s);
-                                               if(s.contains("/dev/tty.usbmodem")||s.contains("/dev/ttyACM")||(s.contains("COM")&&isWindows())){
+                                               if(s.contains("/dev/tty.usbmodem")||s.contains("/dev/ttyACM")||(s.contains("COM")&&isWindows())){                                                  
                                                    
-                                                   uploadToEngduino(s,hexOutput);
+                                                   if(!uploadToEngduino(s,hexOutput)){
+                                                       Dialogs.showErrorDialog(stage, "Upload to Engduino on port " + s + " failed.", "Upload error", "Error!");
+                                                   }
                                                }
                                            }
-                                           
-                                           //uploadToEngduino("/dev/ttyACM0", hexOutput);
                                        }
-                                       
-                                       
+                                       else{                                                                                   
+                                            Dialogs.showErrorDialog(stage, "Compilation failed.", "Compiler error", "Error!");                                       
+                                       }                                     
                                        break;
                                    } catch (IOException ex) {
                                        Logger.getLogger(uploadUtility.class.getName()).log(Level.SEVERE, null, ex);
