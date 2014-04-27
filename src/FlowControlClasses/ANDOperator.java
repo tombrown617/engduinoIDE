@@ -22,6 +22,10 @@ public class ANDOperator extends Module {
         
         
     }
+     
+     public String getCode(){
+       return " && " ;
+    }  
    
     
 }

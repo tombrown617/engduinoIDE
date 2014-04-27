@@ -12,6 +12,7 @@ import XMLFileHandling.ConvertToSketch;
 import engduino_ide.FXMLDocumentController;
 import java.io.File;
 import java.util.ArrayList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Dialogs;
 import javafx.scene.input.MouseButton;
@@ -65,6 +66,38 @@ public class OpenUtility extends Utility {
                 }
             });
         
+        
+        doc_controller.getMenuItem("open_sketch").setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+               getFileChooser() ;
+                
+            }
+        });
+        
+        doc_controller.getMenuItem("import_sketch").setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+               getFileChooser() ;
+                
+            }
+        });
+        
+    }
+    
+    private void getFileChooser(){
+        
+        FileChooser fileChooser = new FileChooser();
+
+                            // Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        fileChooser.getExtensionFilters().add(extFilter);
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null) {
+               loadDataFromFile(file);
+        }
+        
     }
     
      
@@ -80,7 +113,7 @@ public class OpenUtility extends Utility {
 	  Document doc = dBuilder.parse(file);
  
           doc.getDocumentElement().normalize();
-          Sketch sketch = this.xml_to_sketch_parser.parseXML(doc);
+          Sketch sketch = this.xml_to_sketch_parser.parseXML(doc,file);
           
           try{
               sketch.setSketchFile(file);

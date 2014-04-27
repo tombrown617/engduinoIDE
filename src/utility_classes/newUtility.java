@@ -9,8 +9,10 @@ package utility_classes;
 import SketchClasses.Sketch;
 import SketchClasses.SketchController;
 import engduino_ide.FXMLDocumentController;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Dialogs;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -50,6 +52,32 @@ public class newUtility extends Utility {
                     }
                 }
             });
+        
+        
+        MenuItem new_menu = this.doc_controller.getMenuItem("new_sketch_menu") ;
+        
+        
+        
+        
+        new_menu.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+              
+                            
+                            String newName = Dialogs.showInputDialog(stage, "Please enter a Sketch name :", "Create a New Sketch", "New Sketch");
+                            if(newName.equals("")){
+                                return ;
+                            }
+                            
+                            sketch_controller.addSketchToList(sketch_controller.createSketch(newName));
+                            
+                            sketch_controller.getSketch(newName).setSketchanchorPane(doc_controller.createNewSketchTab(newName));
+                            
+                        
+                    
+                
+            }
+        });
         
     }
     

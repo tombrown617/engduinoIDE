@@ -7,6 +7,7 @@
 package XMLFileHandling;
 
 import FlowControlClasses.Constant;
+import FlowControlClasses.CustomSketchModule;
 import FlowControlClasses.LED;
 import FlowControlClasses.Module;
 import FlowControlClasses.Wait;
@@ -16,6 +17,8 @@ import SketchClasses.Sketch;
 import SketchClasses.SketchController;
 import engduino_ide.Beziercurve;
 import engduino_ide.FXMLDocumentController;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.control.Dialogs;
@@ -40,6 +43,8 @@ public class ConvertToSketch {
     
     private SketchController sketch_controller ;
     
+    private CustomSketchHandler custom_sketch_controller ;
+    
     private Sketch sketch ;
     
     private HashMap<String,Module> modules_parsed = new HashMap<String,Module>() ;
@@ -50,13 +55,14 @@ public class ConvertToSketch {
         this.stage = stage ;
         this.doc_controller = doc_controller ;
         this.sketch_controller = sketch_controller ;
+        this.custom_sketch_controller = new CustomSketchHandler(doc_controller) ;
     }
     
     
-    public Sketch parseXML(Document doc){
+    public Sketch parseXML(Document doc, File file ){
         
         
-        if(doc.getDocumentElement().getNodeName().equals("sketch") || doc.getDocumentElement().getNodeName().equals("module")){
+        if(doc.getDocumentElement().getNodeName().equals("sketch") ){
            
            Sketch sketch =  sketch_controller.createSketch(doc.getDocumentElement().getAttribute("name")) ;
            this.sketch = sketch ;
@@ -120,11 +126,45 @@ public class ConvertToSketch {
            
            
            doc_controller.getCodeViewTextArea().setText("");
-           doc_controller.getCodeViewTextArea().setText(sketch.getCodeViewController().getCode(true));
+           
+           try{
+               doc_controller.getCodeViewTextArea().setText(sketch.getCodeViewController().getCode(true,true));
+           
+           }
+           catch(IOException e){
+               
+           }
            
            this.modules_parsed.clear();
            return sketch ;
            
+        }
+        else if(doc.getDocumentElement().getNodeName().equals("module")){
+            
+            if(this.sketch_controller.getTotalSketches() == 0){
+                Dialogs.showErrorDialog(stage, "Please create a new sketch or open a previously saved to to load this custom module into the sketch !", "No sketch to add the module", "Error !") ;
+            }
+            else{
+                
+                Sketch current_sketch = this.doc_controller.getActiveSketch() ;
+                CustomSketchModule mod  = (CustomSketchModule) current_sketch.getModuleController().createModule("custom_module", doc_controller.getTotalModules() + 1, 200, 200, current_sketch.getSketchAnchorPane()) ;
+                
+                doc_controller.addModuleAnchor(mod.getAnchor());
+                current_sketch.getSketchAnchorPane().getChildren().add(mod.getAnchor() ) ;
+                current_sketch.getSketchAnchorPane().getChildren().add(mod.getAnchor().getMarker(1)) ;
+                current_sketch.getSketchAnchorPane().getChildren().add(mod.getAnchor().getInputMarker(1)) ;
+                
+                
+                mod.setSketch(this.createCustomModuleSketch(doc)) ;
+                mod.getSketch().setSketchFile(file);
+                current_sketch.getCodeViewController().addHeader(mod.getSketch().getCodeViewController().getHeaderList());
+                current_sketch.getCodeViewController().setOutputArrayCode(mod.getSketch().getCodeViewController().getCodeArrayTypes());
+            }
+            
+            
+             
+            this.modules_parsed.clear();
+            return null ;
         }
         else{
             Dialogs.showErrorDialog(stage, "This is not a valid sketch File", "Inappropriate File Type", "Error !") ;
@@ -136,15 +176,80 @@ public class ConvertToSketch {
         
     }
     
+    public Sketch createCustomModuleSketch(Document doc){
+        
+        Sketch sketch =  sketch_controller.createSketch(doc.getDocumentElement().getAttribute("name")) ;
+           this.sketch = sketch ;
+           sketch_controller.addSketchToList(sketch);
+           
+           sketch.setSketchTab(doc_controller.createCustomTab(sketch, sketch.getName())) ;
+           sketch.setSketchType(true);
+           AnchorPane anchor_pane = sketch.getSketchAnchorPane() ;
+           sketch_controller.getSketch(doc.getDocumentElement().getAttribute("name")).setSketchanchorPane(anchor_pane);
+                             
+           if(doc.getDocumentElement().getAttribute("full").equals("true")){
+               stage.setFullScreen(true);
+           } 
+           
+           NodeList nList = doc.getElementsByTagName("connections");
+           
+           for(int i = 0; i < nList.getLength(); i++){
+               
+               Node nNode = nList.item(i);
+               
+              
+               if(nNode.hasChildNodes()){
+                   
+                   NodeList moduleList = nNode.getChildNodes() ;
+                   
+                   for(int j = 0; j < moduleList.getLength(); j++){
+                       Node temp_node = moduleList.item(j);
+                       
+                       if(temp_node.getNodeName().equals("module") ){
+                           parseTree(temp_node,null, doc,anchor_pane,0) ;
+                       }
+                       else if(temp_node.getNodeName().equals("port")){
+                           parseTree(temp_node,null, doc,anchor_pane,Integer.parseInt(temp_node.getAttributes().getNamedItem("number").getNodeValue())) ;
+                       }
+                   }
+                   
+               }
+               
+               
+           }
+           
+           
+           NodeList isolated_modules = doc.getElementsByTagName("isolated");
+           
+           for(int i = 0; i < isolated_modules.getLength(); i++){
+               
+               Node nNode = isolated_modules.item(i);
+               
+               if(nNode.hasChildNodes()){
+                   
+                   NodeList moduleList = nNode.getChildNodes() ;
+                   
+                   for(int j = 0; j < moduleList.getLength(); j++){
+                       Node temp_node = moduleList.item(j);
+                       outputModule(temp_node,sketch.getName(),anchor_pane) ;
+                       
+                   }
+               }
+           }
+           return sketch ;
+    }
+    
+    
     private Module outputModule(Node temp_node,String sketch_name,AnchorPane anchor_pane){
         
         NamedNodeMap attr_list = temp_node.getAttributes() ;
         
-        int x = (int) Double.parseDouble(attr_list.getNamedItem("x").getNodeValue());
+            int x = (int) Double.parseDouble(attr_list.getNamedItem("x").getNodeValue());
             int y = (int) Double.parseDouble(attr_list.getNamedItem("y").getNodeValue()) ;
             String module_type = attr_list.getNamedItem("type").getNodeValue() ;
             
             Module mod = doc_controller.addModuleToSketch(sketch_name, x,y, anchor_pane, module_type);
+            
             
             if(module_type.equals("Blink LED") ){
                 LED led = (LED) mod ;
@@ -158,6 +263,14 @@ public class ConvertToSketch {
             else if(module_type.equals("Constant")){
                 Constant cons = (Constant) mod ;
                 cons.setValue(Integer.parseInt(temp_node.getAttributes().getNamedItem("value").getNodeValue()));
+            }
+            else if(module_type.equals("custom_module")){
+                
+                CustomSketchModule custom_module = (CustomSketchModule) mod  ;
+                this.custom_sketch_controller.createCustomSketch(attr_list.getNamedItem("file_path").getNodeValue(), mod, new ConvertToSketch(this.stage, this.doc_controller, this.sketch_controller));
+                sketch.getCodeViewController().addHeader(custom_module.getSketch().getCodeViewController().getHeaderList());
+                sketch.getCodeViewController().setOutputArrayCode(custom_module.getSketch().getCodeViewController().getCodeArrayTypes());
+                
             }
         
         return mod ;
@@ -183,7 +296,7 @@ public class ConvertToSketch {
                 
                 MainInputMarker main_input = sketch.getModuleController().getMainInputMarker() ;
                 Beziercurve new_final_curve = new Beziercurve(anchor_pane, main_input,mod.getAnchor().getInputMarker(1)) ;
-                sketch.getModuleConnectionController().createNewConnection(main_input, mod, mod.getAnchor().getInputMarker(1).getPort());
+                sketch.getModuleConnectionController().createNewConnection(main_input, mod, mod.getAnchor().getInputMarker(1).getPort(),new_final_curve);
               
             }
             else{
@@ -198,7 +311,7 @@ public class ConvertToSketch {
                         mod = this.modules_parsed.get(temp_node.getAttributes().getNamedItem("module_id").getNodeValue()) ;
                         Beziercurve new_final_curve = new Beziercurve(anchor_pane, output_marker,this.modules_parsed.get(temp_node.getAttributes().getNamedItem("module_id").getNodeValue()).getAnchor().getInputMarker(Integer.parseInt(temp_node.getAttributes().getNamedItem("connection_from_port").getNodeValue()))) ;
 
-                        sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), mod, output_marker.getPort(), port);
+                        sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), mod, output_marker.getPort(), port,new_final_curve);
                   
                     }
                     
@@ -214,7 +327,7 @@ public class ConvertToSketch {
                     Outputmarker output_marker = previous_module.getAnchor().getMarker(port) ;
                     Beziercurve new_final_curve = new Beziercurve(anchor_pane, output_marker,mod.getAnchor().getInputMarker(1)) ;
 
-                    sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), mod, output_marker.getPort(), port);
+                    sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), mod, output_marker.getPort(), port,new_final_curve);
                   
                 }
                 
@@ -241,16 +354,12 @@ public class ConvertToSketch {
         }
         else if(!temp_node.hasChildNodes() && temp_node.getNodeName().equals("module")){
             
-            int x = (int) Double.parseDouble(attr_list.getNamedItem("x").getNodeValue());
-            int y = (int) Double.parseDouble(attr_list.getNamedItem("y").getNodeValue()) ;
-            
-            String module_type = attr_list.getNamedItem("type").getNodeValue() ;
-            
             Module mod  = null ;
             
             if(!this.modules_parsed.containsKey(temp_node.getAttributes().getNamedItem("module_id").getNodeValue())){
-                mod = doc_controller.addModuleToSketch(doc.getDocumentElement().getAttribute("name"),x, y, anchor_pane, attr_list.getNamedItem("type").getNodeValue());
-            
+                
+                mod = outputModule(temp_node,sketch_name,anchor_pane) ;
+                
                 this.modules_parsed.put(temp_node.getAttributes().getNamedItem("module_id").getNodeValue(),mod) ;
             
             }
@@ -262,24 +371,9 @@ public class ConvertToSketch {
             
             this.xml_connections.add(new XMLConnection(temp_node.getAttributes().getNamedItem("connection_from").getNodeValue(),temp_node.getAttributes().getNamedItem("module_id").getNodeValue())) ;
             
-            
-            if(module_type.equals("Blink LED") ){
-                LED led = (LED) mod ;
-                led.setLEDNumber(temp_node.getAttributes().getNamedItem("value").getNodeValue());
-            }
-            else if(module_type.equals("Wait") ){
-                Wait wait = (Wait) mod ;
-                wait.setWaitingTime(Integer.parseInt(temp_node.getAttributes().getNamedItem("value").getNodeValue()));
-                
-            }
-            else if(module_type.equals("Constant")){
-                Constant cons = (Constant) mod ;
-                cons.setValue(Integer.parseInt(temp_node.getAttributes().getNamedItem("value").getNodeValue()));
-            }
-            
              Outputmarker output_marker = previous_module.getAnchor().getMarker(port) ;
              Beziercurve new_final_curve = new Beziercurve(anchor_pane, output_marker,mod.getAnchor().getInputMarker(1)) ;
-             sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), mod, output_marker.getPort(), port);
+             sketch.getModuleConnectionController().createNewConnection(output_marker.getModuleAnchor().getModule(), mod, output_marker.getPort(), port,new_final_curve);
                   
             
             return  ;

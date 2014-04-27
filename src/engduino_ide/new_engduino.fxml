@@ -10,95 +10,69 @@
    <children>
        
        
-        <MenuBar id="modBar" prefWidth="1000" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"      styleClass="modBar">
+        <MenuBar fx:id="main_menu_bar" prefWidth="1000" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"      styleClass="modBar">
                     <menus>
-                      <Menu id="modItem" mnemonicParsing="false" styleClass="modItem" text="File" >
+                      <Menu fx:id="fileMenu" mnemonicParsing="false" styleClass="modItem" text="File" >
                           <items>
-                              <MenuItem text="New Sketch" fx:id="subMenu1" />
+                              <MenuItem text="New Sketch" fx:id="new_sketch_menu" />
                              
-                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
-                              <MenuItem text="Open Project" fx:id="subMenu2" />
+                              <SeparatorMenuItem  fx:id = "" ></SeparatorMenuItem>
+                              <MenuItem text="Open Project" fx:id="open_sketch_menu" />
                               
                               <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
                               
                               <MenuItem text="Import Sketch" fx:id="import_sketch" />
                               <MenuItem text="Export Sketch" fx:id="export_sketch" />
-                               <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
+                               <SeparatorMenuItem  fx:id = "" ></SeparatorMenuItem>
                                <MenuItem text="Save Sketch" fx:id="save_sketch" />
-                              <MenuItem text="Save As" fx:id="save_as" />
-                              <MenuItem text="Save All" fx:id="save_all" />
+                              <MenuItem text="Save As Module" fx:id="save_as_module" />
                               
-                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
+                              <SeparatorMenuItem  fx:id = "" ></SeparatorMenuItem>
                               
-                              <MenuItem text="Print Code" fx:id="save_as" />
-                              <MenuItem text="Exit" fx:id="save_all" />
+                              <MenuItem text="Print Code" fx:id="print_code" />
+                              <MenuItem text="Exit" fx:id="exit" />
                               
                           </items>
 
                 </Menu>
-                      <Menu id="modItem" mnemonicParsing="false" styleClass="modItem" text="Edit" >
-                            
-                          <items>
-                              <MenuItem text="Undo" fx:id="subMenu1" />
-                              <MenuItem text="Redo" fx:id="subMenu1" />
-                             
-                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
-                              <MenuItem text="Cut" fx:id="subMenu2" />
-                               <MenuItem text="Copy" fx:id="import_sketch" />
-                              <MenuItem text="Paste" fx:id="export_sketch" />
-                              
-                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
-                              
-                              <MenuItem text="Select" fx:id="save_sketch" />
-                              <MenuItem text="Select All" fx:id="save_as" />
-                              
-                              <MenuItem text="Delete" fx:id="import_sketch" />
-                              <MenuItem text="Delete All" fx:id="export_sketch" />
-                               
-                              
-                          </items>
                       
-                      </Menu>
-                      <Menu id="modItem" mnemonicParsing="false" styleClass="modItem" text="View" >
+                      <Menu id="edit_menu" mnemonicParsing="false" styleClass="modItem" text="Edit" >
                           
                           <items>
-                              <MenuItem text="Code" fx:id="subMenu1" />
-                              <CheckMenuItem text = "Debugging Window" ></CheckMenuItem>
+                              
+                              <CheckMenuItem fx:id = "edit_code" text = "Edit Code" ></CheckMenuItem>
                               
                              
-                              <SeparatorMenuItem  fx:id = "open_project" ></SeparatorMenuItem>
-                              <MenuItem text="IDE Logs" fx:id="subMenu2" />
-                               
-                               
                               
                           </items>
                       
                           
                       </Menu>
-                       <Menu id="modItem" mnemonicParsing="false" styleClass="modItem" text="Run" >
+                      
+                      
+                      <Menu id="view_menu" mnemonicParsing="false" styleClass="modItem" text="View" >
+                          
+                          <items>
+                              <MenuItem text="Code" fx:id="verify_code" />
+                          </items>
+                      
+                          
+                      </Menu>
+                       <Menu id="run_menu" mnemonicParsing="false" styleClass="modItem" text="Run" >
                            
                            <items>
-                              <MenuItem text="Compile" fx:id="subMenu1" />
-                              <MenuItem text="Compile and Upload" fx:id="subMenu1" />
-                              <MenuItem text="Upload" fx:id="subMenu1" />
-                              <CheckMenuItem text = "Connect to Engduino" ></CheckMenuItem>
-                              
+                              <MenuItem text="Compile and Upload Custom Code (Text Area)" fx:id="compile_custom_code" />
+                              <MenuItem text="Compile and Upload Sketch Connection Code" fx:id="compile_connection_code" />
                               
                           </items>
                            
                        </Menu>
-                       <Menu id="modItem" mnemonicParsing="false" styleClass="modItem" text="Help" >
+                       <Menu id="help_menu" mnemonicParsing="false" styleClass="modItem" text="Help" >
                        
                              <items>
-                              <MenuItem text="Help Contents" fx:id="subMenu1" />
-                              <MenuItem text="Online Documentation and Support" fx:id="subMenu1" />
-                              <MenuItem text="Keyboard Shortcuts" fx:id="subMenu1" />
-                              <CheckMenuItem text = "Report Issue" ></CheckMenuItem>
-                              
-                               
-                              
-                              
-                          </items>
+                              <MenuItem text="Online Documentation and Support" fx:id="documentation" />
+                              <MenuItem text = "Report Issue" ></MenuItem>
+                            </items>
                        
                        </Menu>
                     </menus>
@@ -228,7 +202,7 @@
 
                                         </AnchorPane>
                                         
-                                        <Separator  orientation="VERTICAL" prefHeight="40.0" GridPane.columnIndex="3" />
+                                        <!--<Separator  orientation="VERTICAL" prefHeight="40.0" GridPane.columnIndex="3" />
                                         
                                          <AnchorPane  styleClass=""  GridPane.columnIndex="4" >
                                             <padding>
@@ -261,10 +235,10 @@
                                             
 
                                         </AnchorPane>
-                                        
-                                         <Separator  orientation="VERTICAL" prefHeight="40.0" GridPane.columnIndex="6" />
+                                        -->
+                                         <Separator  orientation="VERTICAL" prefHeight="40.0" GridPane.columnIndex="3" />
 
-                                           <AnchorPane  styleClass=""  GridPane.columnIndex="7" >
+                                           <AnchorPane  styleClass=""  GridPane.columnIndex="4" >
                                             <padding>
                                                 <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
                                             </padding>
@@ -280,7 +254,7 @@
 
                                         </AnchorPane>
                                         
-                                        <AnchorPane  styleClass=""  GridPane.columnIndex="8" >
+                                        <AnchorPane  styleClass=""  GridPane.columnIndex="5" >
                                             <padding>
                                                 <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
                                             </padding>
@@ -296,9 +270,9 @@
 
                                         </AnchorPane>
                                         
-                                        <Separator  orientation="VERTICAL" prefHeight="35.0" GridPane.columnIndex="9" />
+                                        <Separator  orientation="VERTICAL" prefHeight="35.0" GridPane.columnIndex="6" />
                                     
-                                         <AnchorPane  styleClass=""  GridPane.columnIndex="10" >
+                                         <AnchorPane  styleClass=""  GridPane.columnIndex="7" >
                                             <padding>
                                                 <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
                                             </padding>
@@ -316,7 +290,7 @@
                                         
                                         
                                         
-                                         <AnchorPane  styleClass=""  GridPane.columnIndex="11" >
+                                         <AnchorPane  styleClass=""  GridPane.columnIndex="8" >
                                             <padding>
                                                 <Insets bottom="0.0" left="0.0" right="0.0" top="5.0" />
                                             </padding>
@@ -346,11 +320,7 @@
                             
                             <children>
                                 
-                                <TextField promptText="Search"  prefHeight="25" prefWidth="200" AnchorPane.topAnchor="7.5" AnchorPane.rightAnchor="3.0"      styleClass = "search_box" fx:id="search_box" >
-                                    
-                                    
-                                    
-                                </TextField>
+                                
                             </children>
 
                         </AnchorPane>
@@ -431,7 +401,10 @@
       
           <Tab text="All">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <ListView styleClass="control_scroll_pane" minHeight="466.0" minWidth="0.0" prefHeight="466.0" prefWidth="665.0" layoutX="-5.0" fx:id="all_list_container">
+
+                     
+                  </ListView>
             </content>
           </Tab>
       

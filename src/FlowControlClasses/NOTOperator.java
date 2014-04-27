@@ -23,5 +23,7 @@ public class NOTOperator extends Module {
         
     }
    
-    
+    public String getCode(){
+       return " ! " ;
+    }  
 }

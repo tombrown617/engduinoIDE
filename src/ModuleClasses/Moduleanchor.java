@@ -6,8 +6,11 @@
 
 package ModuleClasses;
 
+import FlowControlClasses.CustomSketchModule;
 import FlowControlClasses.Module;
 import SketchClasses.Sketch;
+import static com.sun.deploy.util.ReflectionUtil.instanceOf;
+import static com.sun.org.apache.bcel.internal.Repository.instanceOf;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.beans.property.DoubleProperty;
@@ -51,7 +54,7 @@ public class Moduleanchor extends ImageView  {
      
      private Module module ;
     
-    public Moduleanchor(Image img, String mod_id,double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch,Module module){
+    public Moduleanchor(Image img, String mod_id,double x_coordinate, double y_coordinate, AnchorPane sketch, final Sketch main_sketch,Module module){
     
        super(img) ;
        setId(mod_id + "_anchor");
@@ -94,44 +97,45 @@ public class Moduleanchor extends ImageView  {
        enableDrag(1,this.output_markers, this.input_markers); 
                
         cm = new ContextMenu();
-        final CheckMenuItem cmItem1 = new CheckMenuItem("Connect from ->");
-        cmItem1.setSelected(false);
+        final MenuItem cmItem1 = new MenuItem("Delete Module");
         
-        final CheckMenuItem cmItem2 = new CheckMenuItem("Connect to   <-");
-        cmItem2.setSelected(false);
+       
         
-        cmItem1.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue ov,
-            Boolean old_val, Boolean new_val) {
+        cmItem1.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent e) {
                 
-                
-                
-                if(new_val == true){
-                    cmItem2.setDisable(true) ;
+                for(int i = 0; i < sketch_anchor_pane.getChildren().size(); i++){
+                    
+                    
+                    if(sketch_anchor_pane.getChildren().get(i).getClass().getName().indexOf("ModuleClasses.Moduleanchor") != -1){
+                        
+                        Moduleanchor obj = (Moduleanchor) sketch_anchor_pane.getChildren().get(i) ;
+                        
+                        if(obj.getModule().getModuleID().equals(getModule().getModuleID())){
+                            
+                            
+                            //if(sketch_anchor_pane.getChildren().removeAll(main_sketch.getModuleConnectionController().getConnectionWires(getModule().getModuleID())) ;
+                        
+                            
+                            sketch_anchor_pane.getChildren().remove(i) ;
+                        
+                            sketch_anchor_pane.getChildren().removeAll(obj.getInputMarkers() ) ;
+                            sketch_anchor_pane.getChildren().removeAll(obj.getOutputMarkers()) ;
+                            
+                        }
+                    }
+                    
+                    
                 }
-                else{
-                    cmItem2.setDisable(false) ;
-                }
+                
                 
             }
         });
-        
-        cmItem2.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue ov,
-            Boolean old_val, Boolean new_val) {
-                //node.setVisible(new_val);
-                if(new_val == true){
-                    cmItem1.setDisable(true) ;
-                }
-                else{
-                    cmItem1.setDisable(false) ;
-                }   
-            }
-        });
+       
         
         
         cm.getItems().add(cmItem1);
-        cm.getItems().add(cmItem2);
+        
         this.addEventHandler(MouseEvent.MOUSE_CLICKED,
             new EventHandler<MouseEvent>() {
                 @Override public void handle(MouseEvent e) {
@@ -174,7 +178,15 @@ public class Moduleanchor extends ImageView  {
       
            @Override
            public void handle(MouseEvent mouseEvent){
-               sketch.getMainGUIController().setVariablesForModule(module);
+               
+               if(module.getModuleType().indexOf("custom_module") != -1 && mouseEvent.getClickCount() == 2){
+                   CustomSketchModule sketch_for_module = (CustomSketchModule) getModule();
+                   sketch.getMainGUIController().addTab(sketch_for_module.getSketch().getSketchTab());
+               }
+               else{
+                   sketch.getMainGUIController().setVariablesForModule(module);
+               }
+               
            }
       });
       
@@ -209,7 +221,14 @@ public class Moduleanchor extends ImageView  {
       setOnMouseExited(new EventHandler<MouseEvent>() {
         @Override public void handle(MouseEvent mouseEvent) {
           if (!mouseEvent.isPrimaryButtonDown()) {
-            getScene().setCursor(Cursor.DEFAULT);
+            
+              try{
+                  getScene().setCursor(Cursor.DEFAULT);
+              }
+              catch(NullPointerException e){
+                  
+              }
+              
           }
         }
       });
@@ -297,5 +316,14 @@ public class Moduleanchor extends ImageView  {
     
     public int getTotalOutputMarkers(){
         return this.output_markers.size() ;
+    }
+    
+    
+    public ArrayList<Inputmarker> getInputMarkers(){
+        return this.input_markers ;
+    }
+    
+    public ArrayList<Outputmarker> getOutputMarkers(){
+        return this.output_markers  ;
     }
 }

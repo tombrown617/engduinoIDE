@@ -13,6 +13,7 @@ import ModuleClasses.ModuleController;
 import engduino_ide.FXMLDocumentController;
 import java.io.File;
 import java.util.prefs.Preferences;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -37,6 +38,10 @@ public class Sketch {
     private Module selectedModule = null ;
     
     private File sketchFile = null ;
+    
+    private Tab sketch_tab ;
+    
+    private boolean isSketchCustom = false ;
     
     public Sketch(String name){
         
@@ -138,5 +143,23 @@ public class Sketch {
     public void setSketchFile(File file ){
         this.sketchFile = file ;
     }
+    
+    public void setSketchTab(Tab tab){
+        this.sketch_tab = tab ;
+    }
+    
+    public Tab getSketchTab(){
+        return this.sketch_tab ;
+    }
+    
+    public boolean isSketchForModule(){
+        return this.isSketchCustom ;
+    }
+    
+    public void setSketchType(boolean custom_sketch){
+        
+        this.isSketchCustom = custom_sketch ;
+    }
+    
     
 }

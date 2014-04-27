@@ -9,6 +9,10 @@ package utility_classes;
 import SketchClasses.Sketch;
 import SketchClasses.SketchController;
 import engduino_ide.FXMLDocumentController;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Dialogs;
 import javafx.scene.input.MouseButton;
@@ -44,7 +48,11 @@ public class verifyCode extends Utility {
                                    
                                    //sketch.getCodeViewController().getChildNodeCode() ;
                                    doc_controller.getCodeViewTextArea().setText("");
-                                   doc_controller.getCodeViewTextArea().setText(sketch.getCodeViewController().getCode(true));
+                                   try {
+                                       doc_controller.getCodeViewTextArea().setText(sketch.getCodeViewController().getCode(true,true));
+                                   } catch (IOException ex) {
+                                       
+                                   }
                                   
                                    break ;
                                }
@@ -56,6 +64,33 @@ public class verifyCode extends Utility {
                     }
                 }
             });
+        
+         doc_controller.getMenuItem("verify_code").setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+                 Sketch sketch ;
+                           
+                           for(int i = 0; i < doc_controller.getAllTabs().size(); i++){
+                               if(doc_controller.getAllTabs().get(i).isSelected()){
+                                   sketch = sketch_controller.getSketch(doc_controller.getAllTabs().get(i).getId()) ;
+                                   
+                                   //sketch.getCodeViewController().getChildNodeCode() ;
+                                   doc_controller.getCodeViewTextArea().setText("");
+                                   try {
+                                       doc_controller.getCodeViewTextArea().setText(sketch.getCodeViewController().getCode(true,true));
+                                   } catch (IOException ex) {
+                                       
+                                   }
+                                  
+                                   break ;
+                               }
+                           }
+                           
+                           
+               
+                
+            }
+        });
         
         
     }

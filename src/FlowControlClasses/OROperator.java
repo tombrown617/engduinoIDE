@@ -23,5 +23,9 @@ public class OROperator extends Module {
         
         
     }
+     
+   public String getCode(){
+       return " || " ;
+    }  
    
 }

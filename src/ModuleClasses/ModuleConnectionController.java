@@ -22,21 +22,21 @@ public class ModuleConnectionController {
         
     }
     
-    public void createNewConnection(Module from_module, Module to_module,int from_port, int to_port){
+    public void createNewConnection(Module from_module, Module to_module,int from_port, int to_port, Beziercurve wire){
         
-        ModuleConnection new_con = new ModuleConnection(from_module,to_module,from_port, to_port) ;
+        ModuleConnection new_con = new ModuleConnection(from_module,to_module,from_port, to_port,wire) ;
         this.module_connection_list.add(new_con) ;
     }
     
-    public void createNewConnection(MainInputMarker from_module, Module to_module, int to_port){
+    public void createNewConnection(MainInputMarker from_module, Module to_module, int to_port,Beziercurve wire){
         
-        ModuleConnection new_con = new ModuleConnection(from_module,to_module, to_port) ;
+        ModuleConnection new_con = new ModuleConnection(from_module,to_module, to_port,wire) ;
         this.module_connection_list.add(new_con) ;
     }
     
-    public void createNewConnection(Module from_module, MainOutputMarker to_module, int from_port){
+    public void createNewConnection(Module from_module, MainOutputMarker to_module, int from_port,Beziercurve wire){
         
-        ModuleConnection new_con = new ModuleConnection(from_module,to_module,from_port) ;
+        ModuleConnection new_con = new ModuleConnection(from_module,to_module,from_port,wire) ;
         this.module_connection_list.add(new_con) ;
     }
     
@@ -235,4 +235,36 @@ public class ModuleConnectionController {
         return -1;
     }
    
+    
+    public void removeAllConnectionsForModule(){
+        
+    }
+    
+    public ArrayList<Beziercurve> getConnectionWires(String module_id){
+        
+        System.out.println("id is " + module_id);
+        
+        ArrayList<Beziercurve> wires = new ArrayList<Beziercurve>() ;
+        
+        for(int i = 0; i < this.module_connection_list.size(); i++){
+            
+            if(this.module_connection_list.get(i).getType() == 1){
+                if(this.module_connection_list.get(i).getTo().getModuleID().equals(module_id)){
+                    wires.add(this.module_connection_list.get(i).getConnectionWire()) ;
+                }
+            }
+            else if(this.module_connection_list.get(i).getType() == 2){
+                
+                if(this.module_connection_list.get(i).getFrom().getModuleID().equals(module_id) || this.module_connection_list.get(i).getTo().getModuleID().equals(module_id)){
+                    wires.add(this.module_connection_list.get(i).getConnectionWire()) ;
+                }
+            }
+            
+        }
+        
+        System.out.println("total size = " + wires.size());
+        return wires ;
+        
+        
+    }
 }
