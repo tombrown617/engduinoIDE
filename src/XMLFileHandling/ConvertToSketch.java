@@ -9,6 +9,7 @@ package XMLFileHandling;
 import FlowControlClasses.Constant;
 import FlowControlClasses.CustomSketchModule;
 import FlowControlClasses.LED;
+import FlowControlClasses.Loop;
 import FlowControlClasses.Module;
 import FlowControlClasses.Wait;
 import ModuleClasses.MainInputMarker;
@@ -263,6 +264,10 @@ public class ConvertToSketch {
             else if(module_type.equals("Constant")){
                 Constant cons = (Constant) mod ;
                 cons.setValue(Integer.parseInt(temp_node.getAttributes().getNamedItem("value").getNodeValue()));
+            }
+            else if(module_type.equals("For Loop")){
+                Loop loop = (Loop) mod ;
+                loop.setLoopSymbol(temp_node.getAttributes().getNamedItem("symbol").getNodeValue());
             }
             else if(module_type.equals("custom_module")){
                 
