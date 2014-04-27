@@ -71,7 +71,11 @@ public class uploadUtility extends Utility {
                                        } catch (IOException ex) {
                                            Logger.getLogger(uploadUtility.class.getName()).log(Level.SEVERE, null, ex);
                                        }
-                                       String code = sketch.getCodeViewController().getCode(true) ;
+
+                                       String code = sketch.getCodeViewController().getCode(true,false) ;
+
+                                       
+
                                        code = "#include <Arduino.h>\n" + code + "\nint main(void) {\ninit();\nsetup();\nwhile(true){\nloop();\n}\n}";
                                        List headerList = sketch.getCodeViewController().getHeadersList(); 
                                        File codeFile = new File(buildDirectory.toString() + "/main.cpp");
