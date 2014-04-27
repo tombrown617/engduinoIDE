@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.text.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 
 /**
  *
@@ -43,30 +44,13 @@ public class printUtility extends Utility implements Printable {
         this.sketch_to_xml = new SketchToXML(stage) ;
         
         
-        doc_controller.getSketchSaveButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
+        doc_controller.getPrintButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
        
             public void handle(MouseEvent mouseEvent) {
                     if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
                         if(mouseEvent.getClickCount() == 1){                            
-                            if(sketch_controller.getTotalSketches() == 0){
-                                Dialogs.showErrorDialog(stage, "There are no sketches to print in the main sketch window!", "No Sketches found", "Error!") ;
-                            }
-                            else{
-                                
-                                Sketch sketch_to_print = doc_controller.getActiveSketch() ;
-                                
-                                if(sketch_to_print.getSketchFile() != null){
-                                    String code = " ";
-                                    try {
-                                        code = sketch_to_print.getCodeViewController().getCode(true,false);
-                                    } catch (IOException ex) {
-                                        Logger.getLogger(printUtility.class.getName()).log(Level.SEVERE, null, ex);
-                                        
-                                    }
-                                    myStyledText = new AttributedString(code); 
-                                    printToPrinter();           
-                                }                       
-                              }                                
+                            
+                                    checkSketchExistence() ;                     
                             }
                         }                        
                     }
@@ -74,11 +58,44 @@ public class printUtility extends Utility implements Printable {
             });
         
         
+        doc_controller.getMenuItem("print_code").setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+               checkSketchExistence() ;
+                
+            }
+        });
     }
 
+    
+    private void checkSketchExistence(){
+        
+        if(super.getSketchController().getTotalSketches() == 0){
+               Dialogs.showErrorDialog(stage, "There are no sketches to print in the main sketch window!", "No Sketches found", "Error!") ;
+         }
+         else{
+                                
+             Sketch sketch_to_print = super.getDocumentController().getActiveSketch() ;
+                                
+             if(sketch_to_print.getSketchFile() != null){
+                 String code = " ";
+                 try {
+                     code = sketch_to_print.getCodeViewController().getCode(true,false);
+                 } catch (IOException ex) {
+                     Logger.getLogger(printUtility.class.getName()).log(Level.SEVERE, null, ex);
+                                        
+                 }
+                 myStyledText = new AttributedString(code); 
+                 printToPrinter();           
+              }                       
+         }   
+        
+    }
 
     public void printToPrinter() {
 
+        
+        System.out.println("Printing ....") ;
         PrinterJob printerJob = PrinterJob.getPrinterJob(); 
         Book book = new Book();        
         book.append(this, new PageFormat());        

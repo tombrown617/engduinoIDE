@@ -82,6 +82,9 @@ public class FXMLDocumentController implements Initializable {
     private Button new_project_button ;
     
     @FXML
+    private Button print_code_button ;
+    
+    @FXML
     private Button open_project_button ;
     
     @FXML
@@ -1020,6 +1023,10 @@ public class FXMLDocumentController implements Initializable {
         
         return null ;
         
+    }
+    
+    public Button getPrintButton(){
+        return this.print_code_button ;
     }
     
     
