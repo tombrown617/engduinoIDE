@@ -162,7 +162,7 @@ public class CodeViewController {
                         this.array_code.add("    float accelerations[3]; \n" + "    EngduinoAccelerometer.xyz(accelerations); ") ;
                     }
                     else if(output_array_code.get(i).equals("magnetometer")){
-                        this.array_code.add("   float magneticField[3];\n" + "   EngduinoMagnetometer.xyz(magneticField); ") ;
+                        this.array_code.add("    float magneticField[3];\n" + "    EngduinoMagnetometer.xyz(magneticField); ") ;
                     }
                     
                 }
@@ -341,7 +341,9 @@ public class CodeViewController {
             addNodes(this.tree_root,new TreeNode(), module_connection.get(0).getTo()) ;
         }
         else if (module_connection.size() == 0){
-            //String newName = Dialogs.showInputDialog(getStage(), "Please enter a Sketch name :", "Create a New Sketch", "New Sketch");
+            
+            Dialogs.showErrorDialog(sketch.getMainGUIController().getStage(), "Unable to generate code because no module is connected to the main Input Port", "Cannot generate Code", "Error!");
+                                                   
         }
         else if(module_connection.size() == 2){
             
@@ -357,8 +359,6 @@ public class CodeViewController {
                 
                 node_operator.addChild(new TreeNode(first_module));
                 node_operator.addChild(new TreeNode(second_module));
-                
-                //module_to.se
                 
                 if(sketch.getModuleConnectionController().getConnectedModule(module_to, 1) != null){
                     

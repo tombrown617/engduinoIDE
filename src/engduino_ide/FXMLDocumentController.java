@@ -1047,4 +1047,8 @@ public class FXMLDocumentController implements Initializable {
         return this.bottom_tab_pane ;
     }
     
+    public Stage getStage(){
+        return this.stage ;
+    }
+    
 }
