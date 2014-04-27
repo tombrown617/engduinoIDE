@@ -39,9 +39,28 @@ public class newUtility extends Utility {
                         }
                         else{
                             
-                            String newName = Dialogs.showInputDialog(stage, "Please enter a Sketch name :", "Create a New Sketch", "New Sketch");
-                            if(newName.equals("")){
-                                return ;
+                            String newName ;
+                            
+                            newName = Dialogs.showInputDialog(stage, "Please enter a Sketch name :", "Create a New Sketch", "New Sketch");
+                            
+                           
+                                
+                                 if(newName == null){
+                                        return ;
+                                  }
+                                
+                            
+                            
+                            
+                           
+                            
+                            for(int i = 0; i < sketch_controller.getSketches().size(); i++){
+                                if(sketch_controller.getSketches().get(i).getName().equals(newName)){
+                                    
+                                    Dialogs.showErrorDialog(stage, "Please choose a different name for a sketch, A Sketch with the name '"+newName+"' already exists !", "Cannot create a new Sketch", "Error!");
+                                                  
+                                    return ;
+                                }
                             }
                             
                             sketch_controller.addSketchToList(sketch_controller.createSketch(newName));

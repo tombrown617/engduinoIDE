@@ -8,6 +8,7 @@ package SketchClasses;
 
 import FlowControlClasses.Module;
 import engduino_ide.FXMLDocumentController;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -56,6 +57,10 @@ public class SketchController {
     
     public int getTotalSketches(){
         return this.sketches.size() ;
+    }
+    
+    public ArrayList<Sketch> getSketches(){
+        return new ArrayList<Sketch>(this.sketches.values()) ;
     }
     
 }
