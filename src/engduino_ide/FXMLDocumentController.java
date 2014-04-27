@@ -800,7 +800,7 @@ public class FXMLDocumentController implements Initializable {
         this.getMenuItem("save_sketch").setAccelerator(new KeyCodeCombination( KeyCode.S,KeyCombination.META_DOWN));
         this.getMenuItem("print_code").setAccelerator(new KeyCodeCombination( KeyCode.P,KeyCombination.META_DOWN));
         
-        
+        //this.getMenuItem("print_code")
         
         
         final CheckMenuItem edit_code = (CheckMenuItem)this.getMenuItem("edit_code") ;
@@ -832,10 +832,6 @@ public class FXMLDocumentController implements Initializable {
                 
             }
         });
-        
-        //this.getMenuItem("new_sketch").setAccelerator(new KeyCodeCombination( KeyCode.N,KeyCombination.META_DOWN));
-        //this.getMenuItem("new_sketch").setAccelerator(new KeyCodeCombination( KeyCode.N,KeyCombination.META_DOWN));
-        //this.getMenuItem("new_sketch").setAccelerator(new KeyCodeCombination( KeyCode.N,KeyCombination.META_DOWN));
         
         
         this.getMenuItem("exit").setOnAction(new EventHandler<ActionEvent>() {
