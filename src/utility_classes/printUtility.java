@@ -27,6 +27,8 @@ import java.util.ListIterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 
 /**
  *
@@ -114,6 +116,11 @@ public class printUtility extends Utility implements Printable {
                 linesPerPage = 50; // default
                 font = null;
                 paf = null;
+                PrintService[] printers = PrintServiceLookup.lookupPrintServices(null, null);
+                if(printers.length == 0){
+                    Dialogs.showErrorDialog(stage, "There are no printers on this system!", "No printers found","Error!");
+                    return;
+                }
                  printToPrinter();           
                     
          }   
