@@ -52,7 +52,8 @@ public class UtilitiesFactory {
             Utility open_utility = new OpenUtility(doc_controller, stage,this.sketch_controller) ;
             this.utilityList.put("open", open_utility) ;
             
-            
+            Utility print_utility = new printUtility(doc_controller, stage, this.sketch_controller);
+            this.utilityList.put("print", print_utility);
                         
         }
         catch(UnsupportedOperationException e ){
