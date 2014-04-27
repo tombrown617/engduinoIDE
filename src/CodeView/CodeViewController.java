@@ -10,6 +10,9 @@ import FlowControlClasses.CustomSketchModule;
 import FlowControlClasses.Module;
 import ModuleClasses.ModuleConnection;
 import SketchClasses.Sketch;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,13 +68,43 @@ public class CodeViewController {
        
     }
     
-    public String getCode(boolean full){
-        
+
+    public String getCode(boolean full,boolean lineNumber) throws IOException{
+
+    
         if(full == false){
-            return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyCode() ;
+           
+            if(lineNumber == true){
+                try{
+                     return addLineNumber(this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyCode()) ;
+                }
+                catch(IOException e){
+                    return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyCode();
+                }
+            }
+            else{
+             return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyCode();   
+            }
+            
+            
         }
         else{
-            return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyFullCode() ;
+            
+            if(lineNumber == true){
+                try{
+                    return addLineNumber(this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyFullCode()) ;
+                }
+                catch(IOException e){
+                    return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyFullCode() ;
+                }
+            }
+            else{
+                return this.getHeaders() + "\n" + this.getSetupCode() + "\n" + this.getMainBodyFullCode() ;
+            }
+            
+            
+            
+            
         }
         
     }
@@ -422,6 +455,22 @@ public class CodeViewController {
         return this.array_code_types ;
     }
    
+    private String addLineNumber(String code) throws IOException{
+        
+        String output = "" ;
+        BufferedReader bufReader = new BufferedReader(new StringReader(code));
+    
+        String line=null;
+        int lineNumber = 1 ;
+        while( (line=bufReader.readLine()) != null )
+        {
+           output += lineNumber + "  :  " + line + "\n" ;
+           lineNumber++ ;
+        }
+        
+        
+        return output ;
+    }
     
     
     
