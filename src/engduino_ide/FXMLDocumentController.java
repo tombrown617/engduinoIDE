@@ -170,9 +170,6 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
       
-      //System.out.println("WIdth = " + main_sketch_anchor_pane.getWidth()) ;
-        
-      Allmodules allmoduleList = new Allmodules() ; 
       this.code_view_text_area.setEditable(false);
       int i = 0 ;
       int j = 0 ;
@@ -434,7 +431,6 @@ public class FXMLDocumentController implements Initializable {
         flowControlList.add("   Equals") ;
         
         flowControlList.add("   Constant") ;
-        flowControlList.add("   Print") ;
         
         return flowControlList ;
         
@@ -800,7 +796,20 @@ public class FXMLDocumentController implements Initializable {
         this.getMenuItem("save_sketch").setAccelerator(new KeyCodeCombination( KeyCode.S,KeyCombination.META_DOWN));
         this.getMenuItem("print_code").setAccelerator(new KeyCodeCombination( KeyCode.P,KeyCombination.META_DOWN));
         
-        //this.getMenuItem("print_code")
+        
+        this.getMenuItem("documentation").setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+              Dialogs.showInformationDialog(stage, "The user manual as how to use the software can be found online at http://engduinoide.tombrown.it/manuals", "Please visit http://engduinoide.tombrown.it/manuals for more information", "Online Documentation");
+            }
+        });
+        
+        this.getMenuItem("issues").setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                
+              Dialogs.showInformationDialog(stage, "Please visit our official forum at http://engduinoide.tombrown.it/manuals to report bugs/issues !", "Please visit http://engduinoide.tombrown.it/forum ", "Report Bugs and Issues");
+            }
+        });
         
         
         final CheckMenuItem edit_code = (CheckMenuItem)this.getMenuItem("edit_code") ;

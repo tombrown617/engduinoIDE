@@ -25,12 +25,12 @@ import javafx.stage.Stage;
  */
 public class newUtility extends Utility {
     
-    private final FXMLDocumentController doc_controller ;
+    //private final FXMLDocumentController doc_controller ;
     
     public newUtility(final FXMLDocumentController doc_controller, final Stage stage, final SketchController sketch_controller){
         
         super("New", doc_controller, sketch_controller) ;
-        this.doc_controller = doc_controller ;
+        //this.doc_controller = doc_controller ;
         doc_controller.getNewProjectButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
                     public void handle(MouseEvent mouseEvent) {
                     if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
@@ -73,28 +73,19 @@ public class newUtility extends Utility {
             });
         
         
-        MenuItem new_menu = this.doc_controller.getMenuItem("new_sketch_menu") ;
-        
-        
-        
+        MenuItem new_menu = super.getDocumentController().getMenuItem("new_sketch_menu") ;
         
         new_menu.setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 
-              
+                String newName = Dialogs.showInputDialog(stage, "Please enter a Sketch name :", "Create a New Sketch", "New Sketch");
+                if(newName.equals("")){
+                      return ;
+                }
                             
-                            String newName = Dialogs.showInputDialog(stage, "Please enter a Sketch name :", "Create a New Sketch", "New Sketch");
-                            if(newName.equals("")){
-                                return ;
-                            }
+                sketch_controller.addSketchToList(sketch_controller.createSketch(newName));
+                sketch_controller.getSketch(newName).setSketchanchorPane(doc_controller.createNewSketchTab(newName));
                             
-                            sketch_controller.addSketchToList(sketch_controller.createSketch(newName));
-                            
-                            sketch_controller.getSketch(newName).setSketchanchorPane(doc_controller.createNewSketchTab(newName));
-                            
-                        
-                    
-                
             }
         });
         

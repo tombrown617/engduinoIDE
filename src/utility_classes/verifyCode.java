@@ -25,8 +25,6 @@ import javafx.stage.Stage;
  */
 public class verifyCode extends Utility {
     
-     //private final FXMLDocumentController doc_controller ;
-    
     public verifyCode(final FXMLDocumentController doc_controller, final Stage stage, final SketchController sketch_controller){
         
         super("Upload", doc_controller, sketch_controller) ;

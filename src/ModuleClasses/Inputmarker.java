@@ -47,9 +47,6 @@ public class Inputmarker extends ImageView {
         this.input_number = number ;
         this.mod_anchor = module_anchor ;
         
-        //double new_x = x - 19 ;
-        //double new_y = y + 14 ;
-        
         setX(x) ; 
         setY(y) ;
         relocate(x,y) ;

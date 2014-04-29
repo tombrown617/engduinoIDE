@@ -71,7 +71,7 @@
                        
                              <items>
                               <MenuItem text="Online Documentation and Support" fx:id="documentation" />
-                              <MenuItem text = "Report Issue" ></MenuItem>
+                              <MenuItem text = "Report Issue" fx:id = "issues" ></MenuItem>
                             </items>
                        
                        </Menu>

@@ -37,7 +37,6 @@ import javax.print.PrintServiceLookup;
 public class printUtility extends Utility implements Printable {
     
     private final Stage stage ;    
-    private final SketchToXML sketch_to_xml ;    
     public AttributedString myStyledText;
     
     private boolean firstcall;
@@ -58,9 +57,6 @@ public class printUtility extends Utility implements Printable {
         
         super("Print", doc_controller, sketch_controller) ;
         this.stage = stage ;
-        this.sketch_to_xml = new SketchToXML(stage) ;
-        
-        
         doc_controller.getPrintButton().setOnMouseClicked(new EventHandler<MouseEvent>() {
        
             public void handle(MouseEvent mouseEvent) {

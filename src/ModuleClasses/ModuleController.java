@@ -11,7 +11,6 @@ import FlowControlClasses.Accelerometer;
 import FlowControlClasses.Module;
 import FlowControlClasses.Condition;
 import FlowControlClasses.EngButton;
-import FlowControlClasses.InfinityLoop;
 import FlowControlClasses.Infrared;
 import FlowControlClasses.LED;
 import FlowControlClasses.LightSensor;
@@ -26,7 +25,6 @@ import FlowControlClasses.EqualityOperator;
 import FlowControlClasses.Print;
 import FlowControlClasses.Wait;
 import FlowControlClasses.WhileLoop;
-import FlowControlClasses.XOROperator;
 import SketchClasses.Sketch;
 import static com.sun.javafx.fxml.expression.Expression.NOT;
 import java.util.ArrayList;
@@ -146,10 +144,6 @@ public class ModuleController {
        else if(type.indexOf("NOT") != -1){
            
            new_module = new NOTOperator("notl_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,type.trim()) ;
-       }
-       else if(type.indexOf("XOR") != -1){
-           
-           new_module = new XOROperator("xorl_module_" + id_num, x_coordinate, y_coordinate,sketch, this.main_sketch,type.trim()) ;
        }
        else if(type.indexOf("OR") != -1){
            

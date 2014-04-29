@@ -31,8 +31,6 @@ public class CodeViewController {
     
     private final String main_function_body = "" ;
     
-    private ArrayList<TreeNode> tree_nodes = new ArrayList<TreeNode>() ;
-    
     private ArrayList<String> array_code = new ArrayList<String>() ;
     
     private ArrayList<String> array_code_types = new ArrayList<String>() ;
