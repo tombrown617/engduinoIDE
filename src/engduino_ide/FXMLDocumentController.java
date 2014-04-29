@@ -159,6 +159,9 @@ public class FXMLDocumentController implements Initializable {
     private Button save_project_button ;
     
     @FXML
+    private Button debug_button ;
+    
+    @FXML
     private TabPane bottom_tab_pane ;
     
     @FXML
@@ -796,6 +799,18 @@ public class FXMLDocumentController implements Initializable {
         this.getMenuItem("save_sketch").setAccelerator(new KeyCodeCombination( KeyCode.S,KeyCombination.META_DOWN));
         this.getMenuItem("print_code").setAccelerator(new KeyCodeCombination( KeyCode.P,KeyCombination.META_DOWN));
         
+        
+        this.debug_button.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    public void handle(MouseEvent mouseEvent) {
+                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                        if(mouseEvent.getClickCount() == 1){
+                            Dialogs.showInformationDialog(stage, "Select the errors tab to find errors and for Debugging", "Debug Information");
+            
+                        }
+                        
+                    }
+                }
+            });
         
         this.getMenuItem("documentation").setOnAction(new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
