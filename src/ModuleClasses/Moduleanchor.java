@@ -34,10 +34,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class Moduleanchor extends ImageView  {
     
      private final ContextMenu cm ;

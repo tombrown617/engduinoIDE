@@ -10,10 +10,7 @@ import SketchClasses.Sketch;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class Loop extends Module {
 
     private int start = 0 ;

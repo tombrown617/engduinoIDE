@@ -10,10 +10,7 @@ import SketchClasses.Sketch;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class ANDOperator extends Module {
     
      public ANDOperator(String mod_id, double x_coordinate, double y_coordinate, AnchorPane sketch, Sketch main_sketch,String type){

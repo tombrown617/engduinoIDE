@@ -40,10 +40,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.paint.Color;
 
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class Engduino_IDE extends Application {
     
     @Override

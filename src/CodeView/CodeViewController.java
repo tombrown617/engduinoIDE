@@ -19,10 +19,7 @@ import java.util.List;
 import java.util.Set;
 import javafx.scene.control.Dialogs;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class CodeViewController {
     
     private ArrayList<String> header_files ;

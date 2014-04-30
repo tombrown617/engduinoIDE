@@ -11,10 +11,7 @@ import engduino_ide.FXMLDocumentController;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class SketchController {
     
     

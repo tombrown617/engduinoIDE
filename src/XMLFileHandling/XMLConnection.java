@@ -6,10 +6,7 @@
 
 package XMLFileHandling;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class XMLConnection {
     
     String first_module ;

@@ -24,10 +24,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class MainOutputMarker extends ImageView {
     
     private double x_coordinate ;

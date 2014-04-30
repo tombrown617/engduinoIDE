@@ -17,10 +17,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class Sketch {
     
     private String name ;

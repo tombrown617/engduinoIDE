@@ -9,10 +9,7 @@ package ModuleClasses;
 import FlowControlClasses.Module;
 import engduino_ide.Beziercurve;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class ModuleConnection {
     
     private Module from_module  ;

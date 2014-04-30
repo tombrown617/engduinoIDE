@@ -32,10 +32,7 @@ import org.w3c.dom.NodeList;
 
 
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class ConvertToSketch {
     
     private Stage stage ;

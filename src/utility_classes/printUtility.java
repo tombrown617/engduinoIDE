@@ -30,10 +30,7 @@ import javafx.event.ActionEvent;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class printUtility extends Utility implements Printable {
     
     private final Stage stage ;    

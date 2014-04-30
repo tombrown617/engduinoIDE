@@ -23,10 +23,7 @@ import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeType;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class Beziercurve {
     
   private Outputmarker starting_anchor ;

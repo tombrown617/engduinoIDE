@@ -19,10 +19,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-/**
- *
- * @author shehrozebhatti
- */
 public class newUtility extends Utility {
     
     //private final FXMLDocumentController doc_controller ;

@@ -15,10 +15,7 @@ import java.util.ArrayList;
 import javafx.scene.control.Dialogs;
 import javafx.stage.Stage;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class SketchToXML {
     
     private Sketch sketch ;

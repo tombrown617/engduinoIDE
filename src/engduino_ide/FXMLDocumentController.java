@@ -71,10 +71,7 @@ import javafx.util.Callback;
 import sun.plugin.javascript.navig.Anchor;
 import javafx.scene.shape.*;
 import javafx.stage.Stage;
-/**
- *
- * @author shehrozebhatti
- */
+
 public class FXMLDocumentController implements Initializable {
     
     @FXML

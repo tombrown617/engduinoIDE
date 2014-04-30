@@ -33,10 +33,7 @@ import jssc.SerialPort;
 import jssc.SerialPortException;
 import jssc.SerialPortList;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class uploadUtility extends Utility {
     
      //private final FXMLDocumentController doc_controller ;

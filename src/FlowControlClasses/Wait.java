@@ -10,10 +10,7 @@ import SketchClasses.Sketch;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class Wait extends Module {
 
     private int waiting_time = 500 ;

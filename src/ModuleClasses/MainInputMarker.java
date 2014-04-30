@@ -20,10 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.StrokeLineCap;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class MainInputMarker extends ImageView {
     
     private double x_coordinate ;

@@ -15,10 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import utility_classes.Utility;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class UtilitiesFactory {
     
     private HashMap<String,Utility> utilityList = new HashMap<String,Utility>() ;

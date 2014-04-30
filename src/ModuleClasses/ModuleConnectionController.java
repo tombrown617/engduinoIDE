@@ -10,10 +10,7 @@ import FlowControlClasses.Module;
 import engduino_ide.Beziercurve;
 import java.util.ArrayList;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class ModuleConnectionController {
     
     private ArrayList<ModuleConnection> module_connection_list = new ArrayList<ModuleConnection>() ;

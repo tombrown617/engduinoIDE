@@ -9,10 +9,7 @@ package utility_classes;
 import SketchClasses.SketchController;
 import engduino_ide.FXMLDocumentController;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public abstract class Utility {
     
     private String utilityName ;

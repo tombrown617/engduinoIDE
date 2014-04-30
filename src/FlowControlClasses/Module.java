@@ -14,10 +14,7 @@ import java.util.HashMap;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public abstract class Module {
     
     

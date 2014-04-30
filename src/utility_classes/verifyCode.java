@@ -19,10 +19,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class verifyCode extends Utility {
     
     public verifyCode(final FXMLDocumentController doc_controller, final Stage stage, final SketchController sketch_controller){

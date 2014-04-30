@@ -9,10 +9,7 @@ package CodeView;
 import FlowControlClasses.Module;
 import java.util.ArrayList;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class TreeNode {
     
     private ArrayList<TreeNode> children_nodes = new ArrayList<TreeNode>() ;

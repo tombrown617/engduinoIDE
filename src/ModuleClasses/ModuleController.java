@@ -34,10 +34,7 @@ import javafx.scene.image.Image;
 
 import javafx.scene.layout.AnchorPane;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class ModuleController {
     
     private HashMap<String,Module> module_list = new HashMap<String,Module>() ;

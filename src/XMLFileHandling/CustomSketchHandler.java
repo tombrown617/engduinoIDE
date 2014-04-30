@@ -17,10 +17,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import utility_classes.FileUtility;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class CustomSketchHandler {
     
     private FXMLDocumentController gui_controller ;

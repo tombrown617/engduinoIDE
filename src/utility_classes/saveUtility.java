@@ -21,10 +21,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
-/**
- *
- * @author shehrozebhatti
- */
+
 public class saveUtility extends Utility {
     
     private Stage stage ;
